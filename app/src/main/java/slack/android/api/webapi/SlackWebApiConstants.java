@@ -4,7 +4,7 @@ package slack.android.api.webapi;
  * List all method names to Slack Web Api.
  * @see <a href="https://api.slack.com/methods">https://api.slack.com/methods</a>
  */
-public interface WebApiConstants {
+public interface SlackWebApiConstants {
     // base url
     String SLACK_BASE_WEB_API_URL       = "https://slack.com/api";
 
