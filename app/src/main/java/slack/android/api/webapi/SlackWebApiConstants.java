@@ -110,7 +110,6 @@ public interface SlackWebApiConstants {
     String REACTIONS_LIST               = "reactions.list";
     String REACTIONS_REMOVE             = "reactions.remove";
 
-
     // reminders
     String REMINDERS_ADD                = "reminders.add";
     String REMINDERS_COMPLETE           = "reminders.complete";
@@ -137,7 +136,7 @@ public interface SlackWebApiConstants {
     String TEAM_INFO                    = "team.info";
     String TEAM_INTEGRATION_LOGS        = "team.integrationLogs";
 
-    // tem.profile
+    // team.profile
     String TEAM_PROFILE_GET             = "team.profile.get";
 
     // usergroups
