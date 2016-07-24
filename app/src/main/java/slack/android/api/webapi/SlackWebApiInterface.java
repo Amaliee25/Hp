@@ -8,6 +8,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
+import slack.android.api.webapi.params.SlackParamsConstants;
 import slack.android.api.webapi.response.ApiTestResponse;
 import slack.android.api.webapi.response.AuthRevokeResponse;
 import slack.android.api.webapi.response.AuthTestResponse;
@@ -30,16 +31,16 @@ public interface SlackWebApiInterface {
 
     // bots
     @GET(SlackWebApiConstants.BOTS_INFO)
-    Call<BotsInfoResponse> botInfo();
+    Call<BotsInfoResponse> botInfo(@QueryMap Map<String, String> params);
 
     // channels
     @FormUrlEncoded
     @POST(SlackWebApiConstants.CHANNELS_ARCHIVE)
-    Call<BaseResponse> channelsArchive(@Field("channel") String channelId);
+    Call<BaseResponse> channelsArchive(@Field(SlackParamsConstants.CHANNEL) String channelId);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.CHANNELS_CREATE)
-    Call<ChannelCreateResponse> channelsCreate(@Field("name") String name);
+    Call<ChannelCreateResponse> channelsCreate(@Field(SlackParamsConstants.NAME) String name, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.CHANNELS_HISTORY)
     Call<BaseResponse> channelsHistory();

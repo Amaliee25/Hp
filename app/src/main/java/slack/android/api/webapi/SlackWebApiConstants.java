@@ -6,7 +6,7 @@ package slack.android.api.webapi;
  */
 public interface SlackWebApiConstants {
     // base url
-    String SLACK_BASE_WEB_API_URL       = "https://slack.com/api";
+    String SLACK_BASE_WEB_API_URL       = "https://slack.com/api/";
 
     // api
     String API_TEST                     = "api.test";
