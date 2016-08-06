@@ -25,21 +25,21 @@ import slack.android.api.webapi.response.ChannelCreateResponse;
 /**
  * Implement Slack Web Api. Use Retrofit to do it.
  */
-public class SlackWebApi {
+public class SlackWebApiAsync {
     private static SlackWebApiInterface service;
     private final String token;
     private static OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
-    private static SlackWebApi INSTANCE;
+    private static SlackWebApiAsync INSTANCE;
 
-    public static SlackWebApi getService(String authToken){
+    public static SlackWebApiAsync getService(String authToken){
         if(INSTANCE == null){
-            INSTANCE = new SlackWebApi(authToken);
+            INSTANCE = new SlackWebApiAsync(authToken);
         }
         return INSTANCE;
     }
 
-    public SlackWebApi(final String authToken) {
+    public SlackWebApiAsync(final String authToken) {
         token = authToken;
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
