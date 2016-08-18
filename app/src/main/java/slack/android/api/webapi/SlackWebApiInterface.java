@@ -14,7 +14,8 @@ import slack.android.api.webapi.response.AuthRevokeResponse;
 import slack.android.api.webapi.response.AuthTestResponse;
 import slack.android.api.webapi.response.BaseResponse;
 import slack.android.api.webapi.response.BotsInfoResponse;
-import slack.android.api.webapi.response.ChannelCreateResponse;
+import slack.android.api.webapi.response.ChannelResponse;
+import slack.android.api.webapi.response.ChannelHistoryResponse;
 
 public interface SlackWebApiInterface {
 
@@ -40,29 +41,29 @@ public interface SlackWebApiInterface {
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.CHANNELS_CREATE)
-    Call<ChannelCreateResponse> channelsCreate(@Field(SlackParamsConstants.NAME) String name, @QueryMap Map<String, String> params);
+    Call<ChannelResponse> channelsCreate(@Field(SlackParamsConstants.NAME) String name, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.CHANNELS_HISTORY)
-    Call<BaseResponse> channelsHistory();
+    Call<ChannelHistoryResponse> channelsHistory(@Field(SlackParamsConstants.CHANNEL) String channelId, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.CHANNELS_INFO)
-    Call<BaseResponse> channelsInfo();
+    Call<ChannelResponse> channelsInfo(@Field(SlackParamsConstants.CHANNEL) String channelId);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.CHANNELS_INVITE)
-    Call<BaseResponse> channelsInvite();
+    Call<ChannelResponse> channelsInvite(@Field(SlackParamsConstants.CHANNEL) String channelId, @Field(SlackParamsConstants.USER) String user);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.CHANNELS_JOIN)
-    Call<BaseResponse> channelsJoin();
+    Call<ChannelResponse> channelsJoin(@Field(SlackParamsConstants.NAME) String name);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.CHANNELS_KICK)
-    Call<BaseResponse> channelsKick();
+    Call<BaseResponse> channelsKick(@Field(SlackParamsConstants.CHANNEL) String channelId, @Field(SlackParamsConstants.USER) String user);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.CHANNELS_LEAVE)
-    Call<BaseResponse> channelsLeave();
+    Call<BaseResponse> channelsLeave(@Field(SlackParamsConstants.CHANNEL) String channelId);
 
     @GET(SlackWebApiConstants.CHANNELS_LIST)
     Call<BaseResponse> channelsList();

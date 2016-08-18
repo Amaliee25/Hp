@@ -15,4 +15,5 @@ public interface SlackParamsConstants {
     String INCLUSIVE    = "inclusive";
     String COUNT        = "count";
     String UNREADS      = "unreads";
+    String USER         = "user";
 }

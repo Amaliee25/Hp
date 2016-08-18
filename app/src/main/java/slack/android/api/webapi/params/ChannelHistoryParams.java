@@ -1,9 +1,9 @@
 package slack.android.api.webapi.params;
 
 /**
- * Set optional arguments to Slack Web Api Channels Create method
+ * Set optional arguments to Slack Web Api Channels History method
  */
-public class ChannelCreateParams extends Params {
+public class ChannelHistoryParams extends Params {
 
     /**
      * End of time range of messages to include in results.
@@ -29,6 +29,9 @@ public class ChannelCreateParams extends Params {
 
     /**
      * Include messages with latest or oldest timestamp in results.
+     *
+     * Default: 0
+     *
      * @param inclusive
      */
     public void setInclusive(boolean inclusive){
@@ -53,12 +56,15 @@ public class ChannelCreateParams extends Params {
         params.put(SlackParamsConstants.COUNT, String.valueOf(count));
     }
 
+
     /**
      * Include unread_count_display in the output?
-     * @param unreads
+     *
+     * Default: 0
+     *
+     * @param unread
      */
-    public void setUnreads(boolean unreads){
-        params.put(SlackParamsConstants.UNREADS, unreads ? "1" : "0");
+    public void setUnread(boolean unread){
+        params.put(SlackParamsConstants.UNREADS, unread ? "1" : "0");
     }
-
 }

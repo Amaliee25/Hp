@@ -1,5 +1,7 @@
 package slack.android.api.webapi;
 
+import android.support.annotation.NonNull;
+
 import java.io.IOException;
 
 import okhttp3.HttpUrl;
@@ -15,12 +17,14 @@ import slack.android.api.webapi.params.ApiTestParams;
 import slack.android.api.webapi.params.AuthRevokeParams;
 import slack.android.api.webapi.params.BotsInfoParams;
 import slack.android.api.webapi.params.ChannelCreateParams;
+import slack.android.api.webapi.params.ChannelHistoryParams;
 import slack.android.api.webapi.response.ApiTestResponse;
 import slack.android.api.webapi.response.AuthRevokeResponse;
 import slack.android.api.webapi.response.AuthTestResponse;
 import slack.android.api.webapi.response.BaseResponse;
 import slack.android.api.webapi.response.BotsInfoResponse;
-import slack.android.api.webapi.response.ChannelCreateResponse;
+import slack.android.api.webapi.response.ChannelResponse;
+import slack.android.api.webapi.response.ChannelHistoryResponse;
 
 /**
  * Implement Slack Web Api. Use Retrofit to do it.
@@ -32,14 +36,14 @@ public class SlackWebApiAsync {
 
     private static SlackWebApiAsync INSTANCE;
 
-    public static SlackWebApiAsync getService(String authToken){
+    public static SlackWebApiAsync getService(@NonNull String authToken){
         if(INSTANCE == null){
             INSTANCE = new SlackWebApiAsync(authToken);
         }
         return INSTANCE;
     }
 
-    public SlackWebApiAsync(final String authToken) {
+    public SlackWebApiAsync(@NonNull final String authToken) {
         token = authToken;
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -66,7 +70,7 @@ public class SlackWebApiAsync {
      * @param params @see {@link slack.android.api.webapi.params.ApiTestParams}
      * @param callback
      */
-    public void getApiTest(ApiTestParams params, Callback<ApiTestResponse> callback){
+    public void getApiTest(@NonNull ApiTestParams params, Callback<ApiTestResponse> callback){
         service.apiTest(params.build()).enqueue(callback);
     }
 
@@ -76,7 +80,7 @@ public class SlackWebApiAsync {
      * @param params @see {@link slack.android.api.webapi.params.AuthRevokeParams}
      * @param callback
      */
-    public void getAuthRevoke(AuthRevokeParams params, Callback<AuthRevokeResponse> callback){
+    public void getAuthRevoke(@NonNull AuthRevokeParams params, Callback<AuthRevokeResponse> callback){
         service.authRevoke(params.build()).enqueue(callback);
     }
 
@@ -102,7 +106,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getBotsInfo(BotsInfoParams params, Callback<BotsInfoResponse> callback){
+    public void getBotsInfo(@NonNull BotsInfoParams params, Callback<BotsInfoResponse> callback){
         service.botInfo(params.build()).enqueue(callback);
     }
 
@@ -114,7 +118,7 @@ public class SlackWebApiAsync {
      * @param channelId Channel to archive
      * @param callback
      */
-    public void getChannelsArchive(String channelId, Callback<BaseResponse> callback){
+    public void getChannelsArchive(@NonNull String channelId, Callback<BaseResponse> callback){
         service.channelsArchive(channelId).enqueue(callback);
     }
 
@@ -129,9 +133,84 @@ public class SlackWebApiAsync {
      * name value that is returned in the response.
      *
      * @param channelName Name of channel to create
+     * @param params
      * @param callback
      */
-    public void getChannelsCreate(String channelName, ChannelCreateParams params, Callback<ChannelCreateResponse> callback){
+    public void getChannelsCreate(@NonNull String channelName, @NonNull ChannelCreateParams params, Callback<ChannelResponse> callback){
         service.channelsCreate(channelName, params.build()).enqueue(callback);
     }
+
+    /**
+     * This method returns a portion of message events from the specified channel.
+     *
+     * Requires scope: channels:history
+     *
+     * @param channelId Channel to fetch history for.
+     * @param params
+     * @param callback
+     */
+    public void getChannelsHistory(@NonNull String channelId, @NonNull ChannelHistoryParams params, Callback<ChannelHistoryResponse> callback){
+        service.channelsHistory(channelId, params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method returns information about a team channel.
+     *
+     * Requires scope: channel:read
+     *
+     * @param channelId Channel to get info on
+     * @param callback
+     */
+    public void getChannelsInfo(@NonNull String channelId, Callback<ChannelResponse> callback){
+        service.channelsInfo(channelId).enqueue(callback);
+    }
+
+    /**
+     * This method is used to invite a user to a channel. The calling user must be a member of the channel.
+     *
+     * Requires scope: channel:write
+     *
+     * @param channelId Channel to invite user to.
+     * @param userId User to invite to channel.
+     * @param callback
+     */
+    public void getChannelsInvite(@NonNull String channelId, @NonNull String userId, Callback<ChannelResponse> callback){
+        service.channelsInvite(channelId, userId).enqueue(callback);
+    }
+
+    /**
+     * This method is used to join a channel. If the channel does not exist, it is created.
+     *
+     * Requires scope: channel:write
+     *
+     * @param channelName Name of channel to join
+     * @param callback
+     */
+    public void getChannelsJoin(@NonNull String channelName, Callback<ChannelResponse> callback){
+        service.channelsJoin(channelName).enqueue(callback);
+    }
+
+    /**
+     * This method allows a user to remove another member from a team channel.
+     *
+     * Requires scope: channel:write
+     *
+     * @param channelId Channel to remove user from.
+     * @param userId User to remove from channel.
+     * @param callback
+     */
+    public void getChannelsKick(@NonNull String channelId, @NonNull String userId, Callback<BaseResponse> callback){
+        service.channelsKick(channelId, userId).enqueue(callback);
+    }
+
+    /**
+     * This method is used to leave a channel.
+     *
+     * @param channelId Channel to leave
+     * @param callback
+     */
+    public void getChannelLeave(@NonNull String channelId, Callback<BaseResponse> callback){
+        service.channelsLeave(channelId).enqueue(callback);
+    }
+
 }

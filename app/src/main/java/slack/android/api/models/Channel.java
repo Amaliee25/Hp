@@ -18,7 +18,7 @@ public class Channel {
     private boolean         isMember;
 
     private String          lastRead;
-    private String          latest; //TODO create Message object
+    private Message         latest;
     private int             unreadCount;
     private int             unreadCountDisplay;
 
@@ -110,11 +110,11 @@ public class Channel {
         this.lastRead = lastRead;
     }
 
-    public String getLatest() {
+    public Message getLatest() {
         return latest;
     }
 
-    public void setLatest(String latest) {
+    public void setLatest(Message latest) {
         this.latest = latest;
     }
 
