@@ -14,8 +14,11 @@ import slack.android.api.webapi.response.AuthRevokeResponse;
 import slack.android.api.webapi.response.AuthTestResponse;
 import slack.android.api.webapi.response.BaseResponse;
 import slack.android.api.webapi.response.BotsInfoResponse;
+import slack.android.api.webapi.response.ChannelListResponse;
+import slack.android.api.webapi.response.ChannelPurposeResponse;
 import slack.android.api.webapi.response.ChannelResponse;
 import slack.android.api.webapi.response.ChannelHistoryResponse;
+import slack.android.api.webapi.response.ChannelTopicResponse;
 
 public interface SlackWebApiInterface {
 
@@ -63,30 +66,30 @@ public interface SlackWebApiInterface {
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.CHANNELS_LEAVE)
-    Call<BaseResponse> channelsLeave(@Field(SlackParamsConstants.CHANNEL) String channelId);
+    Call<BaseResponse> channelsLeave(@Field(SlackParamsConstants.CHANNEL) String channel);
 
     @GET(SlackWebApiConstants.CHANNELS_LIST)
-    Call<BaseResponse> channelsList();
+    Call<ChannelListResponse> channelsList(@QueryMap Map<String, String> params);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.CHANNELS_MARK)
-    Call<BaseResponse> channelsMark();
+    Call<BaseResponse> channelsMark(@Field(SlackParamsConstants.CHANNEL) String channelId, @Field(SlackParamsConstants.TS) String ts);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.CHANNELS_RENAME)
-    Call<BaseResponse> channelsRename();
+    Call<ChannelResponse> channelsRename(@Field(SlackParamsConstants.CHANNEL) String channelId, @Field(SlackParamsConstants.NAME) String name);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.CHANNELS_SET_PURPOSE)
-    Call<BaseResponse> channelsSetPurpose();
+    Call<ChannelPurposeResponse> channelsSetPurpose(@Field(SlackParamsConstants.CHANNEL) String channelId, @Field(SlackParamsConstants.PURPOSE) String purpose);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.CHANNELS_SET_TOPIC)
-    Call<BaseResponse> channelsSetTopic();
+    Call<ChannelTopicResponse> channelsSetTopic(@Field(SlackParamsConstants.CHANNEL) String channelId, @Field(SlackParamsConstants.PURPOSE) String topic);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.CHANNELS_UNARCHIVE)
-    Call<BaseResponse> channelsUnarchive();
+    Call<BaseResponse> channelsUnarchive(@Field(SlackParamsConstants.CHANNEL) String channelId);
 
     // chat
     @FormUrlEncoded

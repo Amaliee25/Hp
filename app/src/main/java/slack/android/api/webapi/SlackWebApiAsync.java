@@ -10,6 +10,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -18,13 +19,17 @@ import slack.android.api.webapi.params.AuthRevokeParams;
 import slack.android.api.webapi.params.BotsInfoParams;
 import slack.android.api.webapi.params.ChannelCreateParams;
 import slack.android.api.webapi.params.ChannelHistoryParams;
+import slack.android.api.webapi.params.ChannelListParams;
 import slack.android.api.webapi.response.ApiTestResponse;
 import slack.android.api.webapi.response.AuthRevokeResponse;
 import slack.android.api.webapi.response.AuthTestResponse;
 import slack.android.api.webapi.response.BaseResponse;
 import slack.android.api.webapi.response.BotsInfoResponse;
+import slack.android.api.webapi.response.ChannelListResponse;
+import slack.android.api.webapi.response.ChannelPurposeResponse;
 import slack.android.api.webapi.response.ChannelResponse;
 import slack.android.api.webapi.response.ChannelHistoryResponse;
+import slack.android.api.webapi.response.ChannelTopicResponse;
 
 /**
  * Implement Slack Web Api. Use Retrofit to do it.
@@ -213,4 +218,85 @@ public class SlackWebApiAsync {
         service.channelsLeave(channelId).enqueue(callback);
     }
 
+    /**
+     * This method returns a list of all channels in the team. This includes channels the caller
+     * is in, channels they are not currently in, and archived channels but does not include private
+     * channels. The number of (non-deactivated) members in each channel is also returned.
+     *
+     * Requires scope: channels:read
+     *
+     * @param params
+     * @param callback
+     */
+    public void getChannelList(@NonNull ChannelListParams params, Callback<ChannelListResponse> callback){
+        service.channelsList(params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method moves the read cursor in a channel.
+     *
+     * Requires scope: channels:write
+     *
+     * @param channelId Channel to set reading cursor in.
+     * @param ts Timestamp of the most recently seen message.
+     * @param callback
+     */
+    public void getChannelMark(@NonNull String channelId, @NonNull String ts, Callback<BaseResponse> callback){
+        service.channelsMark(channelId, ts).enqueue(callback);
+    }
+
+    /**
+     * This method renames a team channel.
+     *
+     * The only people who can rename a channel are Team Admins, or the person that originally
+     * created the channel. Others will receive a "not_authorized" error.
+     *
+     * Requires scope: channels:write
+     *
+     * @param channelId Channel to rename
+     * @param name New name for channel.
+     * @param callback
+     */
+    public void getChannelRename(@NonNull String channelId, @NonNull String name, Callback<ChannelResponse> callback){
+        service.channelsRename(channelId, name).enqueue(callback);
+    }
+
+    /**
+     * This method is used to change the purpose of a channel. The calling user must be a member of the channel.
+     *
+     * Requires scope: channels:write
+     *
+     * @param channelId Channel to set the purpose of
+     * @param purpose The new purpose
+     * @param callback
+     */
+    public void getChannelSetPurpose(@NonNull String channelId, @NonNull String purpose, Callback<ChannelPurposeResponse> callback){
+        service.channelsSetPurpose(channelId, purpose).enqueue(callback);
+    }
+
+
+    /**
+     * This method is used to change the topic of a channel. The calling user must be a member of the channel.
+     *
+     * Requires scope: channels:write
+     *
+     * @param channelId Channel to set the purpose of
+     * @param topic The new topic
+     * @param callback
+     */
+    public void getChannelSetTopic(@NonNull String channelId, @NonNull String topic, Callback<ChannelTopicResponse> callback){
+        service.channelsSetTopic(channelId, topic).enqueue(callback);
+    }
+
+    /**
+     * This method unarchives a channel. The calling user is added to the channel.
+     *
+     * Requires scope: channels:write
+     *
+     * @param channelId Channel to unarchive
+     * @param callback
+     */
+    public void getChannelUnarchive(@NonNull String channelId, Callback<BaseResponse> callback){
+        service.channelsUnarchive(channelId).enqueue(callback);
+    }
 }
