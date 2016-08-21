@@ -10,9 +10,9 @@ Add Slack Web Api methods; (in progress):
 |api                                |OK          |
 |auth                               |OK          |
 |bots                               |OK          |
-|channels                           |In progress |
-|chat                               |Coming soon |
-|dnd (Do Not Disturb)               |Coming soon |
+|channels                           |OK          |
+|chat                               |OK          |
+|dnd (Do Not Disturb)               |In progress |
 |emoji                              |Coming soon |
 |files.comments                     |Coming soon |
 |files                              |Coming soon |

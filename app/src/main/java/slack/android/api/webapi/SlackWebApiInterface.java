@@ -19,6 +19,9 @@ import slack.android.api.webapi.response.ChannelPurposeResponse;
 import slack.android.api.webapi.response.ChannelResponse;
 import slack.android.api.webapi.response.ChannelHistoryResponse;
 import slack.android.api.webapi.response.ChannelTopicResponse;
+import slack.android.api.webapi.response.ChatPostResponse;
+import slack.android.api.webapi.response.ChatResponse;
+import slack.android.api.webapi.response.ChatUpdateResponse;
 
 public interface SlackWebApiInterface {
 
@@ -85,7 +88,7 @@ public interface SlackWebApiInterface {
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.CHANNELS_SET_TOPIC)
-    Call<ChannelTopicResponse> channelsSetTopic(@Field(SlackParamsConstants.CHANNEL) String channelId, @Field(SlackParamsConstants.PURPOSE) String topic);
+    Call<ChannelTopicResponse> channelsSetTopic(@Field(SlackParamsConstants.CHANNEL) String channelId, @Field(SlackParamsConstants.TOPIC) String topic);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.CHANNELS_UNARCHIVE)
@@ -94,19 +97,19 @@ public interface SlackWebApiInterface {
     // chat
     @FormUrlEncoded
     @POST(SlackWebApiConstants.CHAT_DELETE)
-    Call<BaseResponse> chatDelete();
+    Call<ChatResponse> chatDelete(@Field(SlackParamsConstants.TS) String ts, @Field(SlackParamsConstants.CHANNEL) String channelId, @QueryMap Map<String, String> params);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.CHAT_ME_MESSAGE)
-    Call<BaseResponse> chatMeMessage();
+    Call<ChatResponse> chatMeMessage(@Field(SlackParamsConstants.CHANNEL) String channelId, @Field(SlackParamsConstants.TEXT) String text);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.CHAT_POST_MESSAGE)
-    Call<BaseResponse> chatPostMessage();
+    Call<ChatPostResponse> chatPostMessage(@Field(SlackParamsConstants.CHANNEL) String channelId, @Field(SlackParamsConstants.TEXT) String text, @QueryMap Map<String, String> params);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.CHAT_UPDATE)
-    Call<BaseResponse> chatUpdate();
+    Call<ChatUpdateResponse> chatUpdate(@Field(SlackParamsConstants.TS) String ts, @Field(SlackParamsConstants.CHANNEL) String channelId, @Field(SlackParamsConstants.TEXT) String text, @QueryMap Map<String, String> params);
 
     // dnd (Do Not Disturb)
     @FormUrlEncoded
