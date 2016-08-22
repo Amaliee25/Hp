@@ -12,9 +12,9 @@ Add Slack Web Api methods; (in progress):
 |bots                               |OK          |
 |channels                           |OK          |
 |chat                               |OK          |
-|dnd (Do Not Disturb)               |In progress |
-|emoji                              |Coming soon |
-|files.comments                     |Coming soon |
+|dnd (Do Not Disturb)               |OK          |
+|emoji                              |OK          |
+|files.comments                     |In progress |
 |files                              |Coming soon |
 |group (team's private channels)    |Coming soon |
 |im (direct messages)               |Coming soon |

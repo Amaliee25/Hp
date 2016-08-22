@@ -26,6 +26,7 @@ import slack.android.api.webapi.response.DndEndSnoozeResponse;
 import slack.android.api.webapi.response.DndInfoResponse;
 import slack.android.api.webapi.response.DndSetSnoozeResponse;
 import slack.android.api.webapi.response.DndTeamInfoResponse;
+import slack.android.api.webapi.response.EmojiListResponse;
 
 public interface SlackWebApiInterface {
 
@@ -136,7 +137,7 @@ public interface SlackWebApiInterface {
 
     // emoji
     @GET(SlackWebApiConstants.EMOJI_LIST)
-    Call<BaseResponse> emojList();
+    Call<EmojiListResponse> emojList();
 
     // files.comments
     @FormUrlEncoded

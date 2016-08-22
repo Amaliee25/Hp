@@ -41,6 +41,7 @@ import slack.android.api.webapi.response.DndEndSnoozeResponse;
 import slack.android.api.webapi.response.DndInfoResponse;
 import slack.android.api.webapi.response.DndSetSnoozeResponse;
 import slack.android.api.webapi.response.DndTeamInfoResponse;
+import slack.android.api.webapi.response.EmojiListResponse;
 
 /**
  * Implement Slack Web Api. Use Retrofit to do it.
@@ -424,5 +425,16 @@ public class SlackWebApiAsync {
      */
     public void getDndTeamInfo(@NonNull DndTeamInfoParams params, Callback<DndTeamInfoResponse> callback){
         service.dndTeamInfo(params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method lists the custom emoji for a team.
+     *
+     * Requires scope: emoji:read
+     *
+     * @param callback
+     */
+    public void getEmojiList(Callback<EmojiListResponse> callback){
+        service.emojList().enqueue(callback);
     }
 }
