@@ -16,6 +16,7 @@ public interface SlackParamsConstants {
     String COUNT            = "count";
     String UNREADS          = "unreads";
     String USER             = "user";
+    String USERS            = "users";
     String EXCLUDE_ARCHIVED = "exclude_archived";
     String TS               = "ts";
     String PURPOSE          = "purpose";
@@ -30,4 +31,5 @@ public interface SlackParamsConstants {
     String AS_USER          = "as_user";
     String ICON_URL         = "icon_url";
     String ICON_EMOJI       = "icon_emoji";
+    String NUM_MINUTES      = "num_minutes";
 }

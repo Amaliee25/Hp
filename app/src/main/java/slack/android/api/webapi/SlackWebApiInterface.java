@@ -22,6 +22,10 @@ import slack.android.api.webapi.response.ChannelTopicResponse;
 import slack.android.api.webapi.response.ChatPostResponse;
 import slack.android.api.webapi.response.ChatResponse;
 import slack.android.api.webapi.response.ChatUpdateResponse;
+import slack.android.api.webapi.response.DndEndSnoozeResponse;
+import slack.android.api.webapi.response.DndInfoResponse;
+import slack.android.api.webapi.response.DndSetSnoozeResponse;
+import slack.android.api.webapi.response.DndTeamInfoResponse;
 
 public interface SlackWebApiInterface {
 
@@ -118,17 +122,17 @@ public interface SlackWebApiInterface {
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.DND_END_SNOOZE)
-    Call<BaseResponse> dndEndSnooze();
+    Call<DndEndSnoozeResponse> dndEndSnooze();
 
     @GET(SlackWebApiConstants.DND_INFO)
-    Call<BaseResponse> dndInfo();
+    Call<DndInfoResponse> dndInfo(@QueryMap Map<String, String> params);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.DND_SET_SNOOZE)
-    Call<BaseResponse> dndSetSnooze();
+    Call<DndSetSnoozeResponse> dndSetSnooze(@Field(SlackParamsConstants.NUM_MINUTES) String numMinutes);
 
     @GET(SlackWebApiConstants.DND_TEAM_INFO)
-    Call<BaseResponse> dndTeamInfo();
+    Call<DndTeamInfoResponse> dndTeamInfo(@QueryMap Map<String, String> params);
 
     // emoji
     @GET(SlackWebApiConstants.EMOJI_LIST)
