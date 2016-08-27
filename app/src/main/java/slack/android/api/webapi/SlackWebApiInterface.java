@@ -27,6 +27,7 @@ import slack.android.api.webapi.response.DndInfoResponse;
 import slack.android.api.webapi.response.DndSetSnoozeResponse;
 import slack.android.api.webapi.response.DndTeamInfoResponse;
 import slack.android.api.webapi.response.EmojiListResponse;
+import slack.android.api.webapi.response.FileCommentResponse;
 
 public interface SlackWebApiInterface {
 
@@ -142,20 +143,20 @@ public interface SlackWebApiInterface {
     // files.comments
     @FormUrlEncoded
     @POST(SlackWebApiConstants.FILES_COMMENTS_ADD)
-    Call<BaseResponse> filesCommentsAdd();
+    Call<FileCommentResponse> filesCommentsAdd(@Field(SlackParamsConstants.FILE) String file, @Field(SlackParamsConstants.COMMENT) String comment, @QueryMap Map<String, String> params);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.FILES_COMMENTS_DELETE)
-    Call<BaseResponse> filesCommentsDelete();
+    Call<BaseResponse> filesCommentsDelete(@Field(SlackParamsConstants.FILE) String file, @Field(SlackParamsConstants.ID) String id);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.FILES_COMMENTS_EDIT)
-    Call<BaseResponse> filesCommentsEdit();
+    Call<FileCommentResponse> filesCommentsEdit(@Field(SlackParamsConstants.FILE) String file, @Field(SlackParamsConstants.ID) String id, @Field(SlackParamsConstants.COMMENT) String comment);
 
     // files
     @FormUrlEncoded
     @POST(SlackWebApiConstants.FILES_DELETE)
-    Call<BaseResponse> filesDelete();
+    Call<BaseResponse> filesDelete(@Field(SlackParamsConstants.FILE) String file);
 
     @GET(SlackWebApiConstants.FILES_INFO)
     Call<BaseResponse> filesInfo();

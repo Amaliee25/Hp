@@ -24,6 +24,7 @@ import slack.android.api.webapi.params.ChatPostParams;
 import slack.android.api.webapi.params.ChatUpdateParams;
 import slack.android.api.webapi.params.DndInfoParams;
 import slack.android.api.webapi.params.DndTeamInfoParams;
+import slack.android.api.webapi.params.FileCommentAddParams;
 import slack.android.api.webapi.response.ApiTestResponse;
 import slack.android.api.webapi.response.AuthRevokeResponse;
 import slack.android.api.webapi.response.AuthTestResponse;
@@ -42,6 +43,7 @@ import slack.android.api.webapi.response.DndInfoResponse;
 import slack.android.api.webapi.response.DndSetSnoozeResponse;
 import slack.android.api.webapi.response.DndTeamInfoResponse;
 import slack.android.api.webapi.response.EmojiListResponse;
+import slack.android.api.webapi.response.FileCommentResponse;
 
 /**
  * Implement Slack Web Api. Use Retrofit to do it.
@@ -436,5 +438,58 @@ public class SlackWebApiAsync {
      */
     public void getEmojiList(Callback<EmojiListResponse> callback){
         service.emojList().enqueue(callback);
+    }
+
+    /**
+     * Add a comment to an existing file.
+     *
+     * Requires scope: files:write:user
+     *
+     * @param fileId File to add a comment to.
+     * @param comment Text of the comment to add.
+     * @param params
+     * @param callback
+     */
+    public void getFileCommentAdd(@NonNull String fileId, @NonNull String comment, @NonNull FileCommentAddParams params, Callback<FileCommentResponse> callback){
+        service.filesCommentsAdd(fileId, comment, params.build()).enqueue(callback);
+    }
+
+    /**
+     * Delete an existing comment on a file. Only the original author of the comment or a Team Administrator may delete a file comment.
+     *
+     * Requires scope: files:write:user
+     *
+     * @param fileId File to delete a comment from.
+     * @param commentId The comment to delete.
+     * @param callback
+     */
+    public void getFileCommentDelete(@NonNull String fileId, @NonNull String commentId, Callback<BaseResponse> callback){
+        service.filesCommentsDelete(fileId, commentId).enqueue(callback);
+    }
+
+    /**
+     * Edit an existing comment on a file. Only the user who created a comment may make edits. Teams may configure a limited time window during which file comment edits are allowed.
+     *
+     * Requires scope: files:write:user
+     *
+     * @param fileId File containing the comment to edit.
+     * @param commentId The comment to edit.
+     * @param comment Text of the comment to edit.
+     * @param callback
+     */
+    public void getFileCommentEdit(@NonNull String fileId, @NonNull String commentId, @NonNull String comment, Callback<FileCommentResponse> callback){
+        service.filesCommentsEdit(fileId, commentId, comment).enqueue(callback);
+    }
+
+    /**
+     * This method deletes a file from your team.
+     *
+     * Requires scope: files:write:user
+     *
+     * @param fileId ID of file to delete.
+     * @param callback
+     */
+    public void getFilesDelete(@NonNull String fileId, Callback<BaseResponse> callback){
+        service.filesDelete(fileId).enqueue(callback);
     }
 }

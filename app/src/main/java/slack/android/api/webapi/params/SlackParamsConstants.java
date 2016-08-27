@@ -32,4 +32,7 @@ public interface SlackParamsConstants {
     String ICON_URL         = "icon_url";
     String ICON_EMOJI       = "icon_emoji";
     String NUM_MINUTES      = "num_minutes";
+    String FILE             = "file";
+    String COMMENT          = "comment";
+    String ID               = "id";
 }
