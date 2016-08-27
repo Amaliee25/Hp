@@ -28,6 +28,9 @@ import slack.android.api.webapi.response.DndSetSnoozeResponse;
 import slack.android.api.webapi.response.DndTeamInfoResponse;
 import slack.android.api.webapi.response.EmojiListResponse;
 import slack.android.api.webapi.response.FileCommentResponse;
+import slack.android.api.webapi.response.FileInfoResponse;
+import slack.android.api.webapi.response.FileListResponse;
+import slack.android.api.webapi.response.FileResponse;
 
 public interface SlackWebApiInterface {
 
@@ -159,22 +162,26 @@ public interface SlackWebApiInterface {
     Call<BaseResponse> filesDelete(@Field(SlackParamsConstants.FILE) String file);
 
     @GET(SlackWebApiConstants.FILES_INFO)
-    Call<BaseResponse> filesInfo();
+    Call<FileInfoResponse> filesInfo(@Field(SlackParamsConstants.FILE) String file, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.FILES_LIST)
-    Call<BaseResponse> filesList();
+    Call<FileListResponse> filesList(@QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.FILES_REVOKE_PUBLIC_URL)
-    Call<BaseResponse> filesRevokePublicUrl();
+    Call<FileResponse> filesRevokePublicUrl(@Field(SlackParamsConstants.FILE) String file);
 
     @GET(SlackWebApiConstants.FILES_SHARED_PUBLIC_URL)
-    Call<BaseResponse> filesSharedPublicUrl();
+    Call<FileInfoResponse> filesSharedPublicUrl(@Field(SlackParamsConstants.FILE) String file);
 
-    @GET(SlackWebApiConstants.FILES_START_PARTIAL_UPLOAD)
+    //TODO
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.FILES_START_PARTIAL_UPLOAD)
     Call<BaseResponse> filesStartPartialUpload();
 
-    @GET(SlackWebApiConstants.FILES_UPLOAD)
-    Call<BaseResponse> filesUpload();
+    //TODO
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.FILES_UPLOAD)
+    Call<FileResponse> filesUpload(@Field(SlackParamsConstants.FILENAME) String filename, @QueryMap Map<String, String> params);
 
     // group (team's private channels)
     @FormUrlEncoded

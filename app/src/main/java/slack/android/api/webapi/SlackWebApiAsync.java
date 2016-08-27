@@ -25,6 +25,9 @@ import slack.android.api.webapi.params.ChatUpdateParams;
 import slack.android.api.webapi.params.DndInfoParams;
 import slack.android.api.webapi.params.DndTeamInfoParams;
 import slack.android.api.webapi.params.FileCommentAddParams;
+import slack.android.api.webapi.params.FileInfoParams;
+import slack.android.api.webapi.params.FileListParams;
+import slack.android.api.webapi.params.FileUploadParams;
 import slack.android.api.webapi.response.ApiTestResponse;
 import slack.android.api.webapi.response.AuthRevokeResponse;
 import slack.android.api.webapi.response.AuthTestResponse;
@@ -44,6 +47,9 @@ import slack.android.api.webapi.response.DndSetSnoozeResponse;
 import slack.android.api.webapi.response.DndTeamInfoResponse;
 import slack.android.api.webapi.response.EmojiListResponse;
 import slack.android.api.webapi.response.FileCommentResponse;
+import slack.android.api.webapi.response.FileInfoResponse;
+import slack.android.api.webapi.response.FileListResponse;
+import slack.android.api.webapi.response.FileResponse;
 
 /**
  * Implement Slack Web Api. Use Retrofit to do it.
@@ -491,5 +497,67 @@ public class SlackWebApiAsync {
      */
     public void getFilesDelete(@NonNull String fileId, Callback<BaseResponse> callback){
         service.filesDelete(fileId).enqueue(callback);
+    }
+
+    /**
+     * This method returns information about a file in your team.
+     *
+     * Requires scope: files:read
+     *
+     * @param fileId Specify a file by providing its ID.
+     * @param params
+     * @param callback
+     */
+    public void getFilesInfo(@NonNull String fileId, @NonNull FileInfoParams params, Callback<FileInfoResponse> callback){
+        service.filesInfo(fileId, params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method returns a list of files within the team. It can be filtered and sliced in various ways.
+     *
+     * Requires scope: files:read
+     *
+     * @param params
+     * @param callback
+     */
+    public void getFilesList(@NonNull FileListParams params, Callback<FileListResponse> callback){
+        service.filesList(params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method disables public/external sharing for a file.
+     *
+     * Requires scope: files:write:user
+     *
+     * @param fileId File to revoke
+     * @param callback
+     */
+    public void getFilesRevokePublicUrl(@NonNull String fileId, Callback<FileResponse> callback){
+        service.filesRevokePublicUrl(fileId).enqueue(callback);
+    }
+
+    /**
+     * This method enables public/external sharing for a file.
+     *
+     * Requires scope: files:write:user
+     *
+     * @param fileId File to share
+     * @param callback
+     */
+    public void getFilesSharedPublicUrl(@NonNull String fileId, Callback<FileInfoResponse> callback){
+        service.filesSharedPublicUrl(fileId).enqueue(callback);
+    }
+
+    /**
+     * This method allows you to create or upload an existing file.
+     *
+     * Requires scope: files:write:user
+     *
+     * @param filename Filename of file.
+     * @param params
+     * @param callback
+     */
+    public void getFilesUpload(@NonNull String filename, @NonNull FileUploadParams params, Callback<FileResponse> callback){
+        service.filesUpload(filename, params.build()).enqueue(callback);
     }
 }

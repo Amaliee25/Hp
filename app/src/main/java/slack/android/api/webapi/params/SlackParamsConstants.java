@@ -9,6 +9,7 @@ public interface SlackParamsConstants {
     String TEST             = "test";
     String BOT              = "bot";
     String CHANNEL          = "channel";
+    String CHANNELS         = "channels";
     String NAME             = "name";
     String LATEST           = "latest";
     String OLDEST           = "oldest";
@@ -19,6 +20,8 @@ public interface SlackParamsConstants {
     String USERS            = "users";
     String EXCLUDE_ARCHIVED = "exclude_archived";
     String TS               = "ts";
+    String TS_FROM          = "ts_from";
+    String TS_TO            = "ts_to";
     String PURPOSE          = "purpose";
     String TOPIC            = "topic";
     String TEXT             = "text";
@@ -33,6 +36,13 @@ public interface SlackParamsConstants {
     String ICON_EMOJI       = "icon_emoji";
     String NUM_MINUTES      = "num_minutes";
     String FILE             = "file";
+    String FILENAME         = "filename";
+    String FILETYPE         = "filetype";
     String COMMENT          = "comment";
     String ID               = "id";
+    String PAGE             = "page";
+    String TYPES            = "types";
+    String CONTENT          = "content";
+    String TITLE            = "title";
+    String INITIAL_COMMENT  = "initial_comment";
 }
