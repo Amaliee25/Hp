@@ -1,0 +1,19 @@
+package slack.android.api.webapi.params;
+
+/**
+ * Set optional arguments to Slack Web Api Channels List method
+ */
+public class GroupListParams extends Params {
+
+    /**
+     * Don't return archived channels.
+     *
+     * Default: 0
+     *
+     * @param excludeArchived
+     */
+    public void setExcludeArchived(boolean excludeArchived){
+        params.put(SlackParamsConstants.EXCLUDE_ARCHIVED, excludeArchived ? "1" : "0");
+    }
+
+}

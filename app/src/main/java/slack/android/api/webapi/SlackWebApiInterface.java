@@ -31,6 +31,10 @@ import slack.android.api.webapi.response.FileCommentResponse;
 import slack.android.api.webapi.response.FileInfoResponse;
 import slack.android.api.webapi.response.FileListResponse;
 import slack.android.api.webapi.response.FileResponse;
+import slack.android.api.webapi.response.GroupCloseResponse;
+import slack.android.api.webapi.response.GroupCreateResponse;
+import slack.android.api.webapi.response.GroupHistoryResponse;
+import slack.android.api.webapi.response.GroupListResponse;
 
 public interface SlackWebApiInterface {
 
@@ -186,64 +190,64 @@ public interface SlackWebApiInterface {
     // group (team's private channels)
     @FormUrlEncoded
     @POST(SlackWebApiConstants.GROUPS_ARCHIVE)
-    Call<BaseResponse> groupsArchive();
+    Call<BaseResponse> groupsArchive(@Field(SlackParamsConstants.CHANNEL) String channelId);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.GROUPS_CLOSE)
-    Call<BaseResponse> groupsClose();
+    Call<GroupCloseResponse> groupsClose(@Field(SlackParamsConstants.CHANNEL) String channelId);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.GROUPS_CREATE)
-    Call<BaseResponse> groupsCreate();
+    Call<GroupCreateResponse> groupsCreate(@Field(SlackParamsConstants.NAME) String name);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.GROUPS_CREATE_CHILD)
-    Call<BaseResponse> groupsCreateChild();
+    Call<GroupCreateResponse> groupsCreateChild(@Field(SlackParamsConstants.CHANNEL) String channelId);
 
     @GET(SlackWebApiConstants.GROUPS_HISTORY)
-    Call<BaseResponse> groupsHistory();
+    Call<GroupHistoryResponse> groupsHistory(@Field(SlackParamsConstants.CHANNEL) String channelId, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.GROUPS_INFO)
-    Call<BaseResponse> groupsInfo();
+    Call<GroupCreateResponse> groupsInfo(@Field(SlackParamsConstants.CHANNEL) String channelId);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.GROUPS_INVITE)
-    Call<BaseResponse> groupsInvite();
+    Call<GroupCreateResponse> groupsInvite(@Field(SlackParamsConstants.CHANNEL) String channelId, @Field(SlackParamsConstants.USER) String userId);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.GROUPS_KICK)
-    Call<BaseResponse> groupsKick();
+    Call<BaseResponse> groupsKick(@Field(SlackParamsConstants.CHANNEL) String channelId, @Field(SlackParamsConstants.USER) String userId);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.GROUPS_LEAVE)
-    Call<BaseResponse> groupsLeave();
+    Call<BaseResponse> groupsLeave(@Field(SlackParamsConstants.CHANNEL) String channelId);
 
     @GET(SlackWebApiConstants.GROUPS_LIST)
-    Call<BaseResponse> groupsList();
+    Call<GroupListResponse> groupsList(@QueryMap Map<String, String> params);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.GROUPS_MARK)
-    Call<BaseResponse> groupsMark();
+    Call<BaseResponse> groupsMark(@Field(SlackParamsConstants.CHANNEL) String channelId, @Field(SlackParamsConstants.TS) String ts);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.GROUPS_OPEN)
-    Call<BaseResponse> groupsOpen();
+    Call<BaseResponse> groupsOpen(@Field(SlackParamsConstants.CHANNEL) String channelId);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.GROUPS_RENAME)
-    Call<BaseResponse> groupsRename();
+    Call<GroupCreateResponse> groupsRename(@Field(SlackParamsConstants.CHANNEL) String channelId, @Field(SlackParamsConstants.NAME) String name);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.GROUPS_SET_PURPOSE)
-    Call<BaseResponse> groupsSetPurpose();
+    Call<ChannelPurposeResponse> groupsSetPurpose(@Field(SlackParamsConstants.CHANNEL) String channelId, @Field(SlackParamsConstants.PURPOSE) String purpose);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.GROUPS_SET_TOPIC)
-    Call<BaseResponse> groupsSetTopic();
+    Call<ChannelTopicResponse> groupsSetTopic(@Field(SlackParamsConstants.CHANNEL) String channelId, @Field(SlackParamsConstants.TOPIC) String topic);
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.GROUPS_UNARCHIVE)
-    Call<BaseResponse> groupsUnarchive();
+    Call<BaseResponse> groupsUnarchive(@Field(SlackParamsConstants.CHANNEL) String channelId);
 
     // im (direct messages)
     @GET(SlackWebApiConstants.IM_CLOSE)
