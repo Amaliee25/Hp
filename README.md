@@ -1,6 +1,6 @@
 # slack-android-api
 
-slack-android-api is a library to integrate Android project to Slack Web Api.
+slack-android-api is a library to integrate Android project to [Slack Api](https://api.slack.com).
 
 ## Alpha 1
 Add Slack Web Api methods; (in progress):
@@ -65,6 +65,9 @@ SlackWebApiAsync.getService("YOUR_TOKEN").getApiTest(new ApiTestParams(), new Ca
 - Utils to formmating Slack texts;
 - Support Emoji;
 
+## Developed by
+
+Flavio Kreis - [flaviokreis@gmail.com](mailto:flaviokreis@gmail.com)
 
 ## Lisence
 
