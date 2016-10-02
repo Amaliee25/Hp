@@ -17,7 +17,6 @@ import slack.android.api.webapi.response.BotsInfoResponse;
 import slack.android.api.webapi.response.ChannelListResponse;
 import slack.android.api.webapi.response.ChannelPurposeResponse;
 import slack.android.api.webapi.response.ChannelResponse;
-import slack.android.api.webapi.response.ChannelHistoryResponse;
 import slack.android.api.webapi.response.ChannelTopicResponse;
 import slack.android.api.webapi.response.ChatPostResponse;
 import slack.android.api.webapi.response.ChatResponse;
@@ -33,8 +32,10 @@ import slack.android.api.webapi.response.FileListResponse;
 import slack.android.api.webapi.response.FileResponse;
 import slack.android.api.webapi.response.GroupCloseResponse;
 import slack.android.api.webapi.response.GroupCreateResponse;
-import slack.android.api.webapi.response.GroupHistoryResponse;
 import slack.android.api.webapi.response.GroupListResponse;
+import slack.android.api.webapi.response.HistoryResponse;
+import slack.android.api.webapi.response.ImListResponse;
+import slack.android.api.webapi.response.ImOpenResponse;
 
 public interface SlackWebApiInterface {
 
@@ -63,7 +64,7 @@ public interface SlackWebApiInterface {
     Call<ChannelResponse> channelsCreate(@Field(SlackParamsConstants.NAME) String name, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.CHANNELS_HISTORY)
-    Call<ChannelHistoryResponse> channelsHistory(@Field(SlackParamsConstants.CHANNEL) String channelId, @QueryMap Map<String, String> params);
+    Call<HistoryResponse> channelsHistory(@Field(SlackParamsConstants.CHANNEL) String channelId, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.CHANNELS_INFO)
     Call<ChannelResponse> channelsInfo(@Field(SlackParamsConstants.CHANNEL) String channelId);
@@ -205,7 +206,7 @@ public interface SlackWebApiInterface {
     Call<GroupCreateResponse> groupsCreateChild(@Field(SlackParamsConstants.CHANNEL) String channelId);
 
     @GET(SlackWebApiConstants.GROUPS_HISTORY)
-    Call<GroupHistoryResponse> groupsHistory(@Field(SlackParamsConstants.CHANNEL) String channelId, @QueryMap Map<String, String> params);
+    Call<HistoryResponse> groupsHistory(@Field(SlackParamsConstants.CHANNEL) String channelId, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.GROUPS_INFO)
     Call<GroupCreateResponse> groupsInfo(@Field(SlackParamsConstants.CHANNEL) String channelId);
@@ -251,19 +252,19 @@ public interface SlackWebApiInterface {
 
     // im (direct messages)
     @GET(SlackWebApiConstants.IM_CLOSE)
-    Call<BaseResponse> imClose();
+    Call<BaseResponse> imClose(@Field(SlackParamsConstants.CHANNEL) String channelId);
 
     @GET(SlackWebApiConstants.IM_HISTORY)
-    Call<BaseResponse> imHistory();
+    Call<HistoryResponse> imHistory(@Field(SlackParamsConstants.CHANNEL) String channelId, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.IM_LIST)
-    Call<BaseResponse> imList();
+    Call<ImListResponse> imList();
 
     @GET(SlackWebApiConstants.IM_MARK)
-    Call<BaseResponse> imMark();
+    Call<BaseResponse> imMark(@Field(SlackParamsConstants.CHANNEL) String channelId, @Field(SlackParamsConstants.TS) String ts);
 
     @GET(SlackWebApiConstants.IM_OPEN)
-    Call<BaseResponse> imOpen();
+    Call<ImOpenResponse> imOpen(@Field(SlackParamsConstants.USER) String userId, @QueryMap Map<String, String> params);
 
     // mipm (multiparty direct messages)
     @GET(SlackWebApiConstants.MPIM_CLOSE)

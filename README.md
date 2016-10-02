@@ -17,8 +17,8 @@ Add Slack Web Api methods; (in progress):
 |files.comments                     |OK          |
 |files                              |In progress |
 |group (team's private channels)    |OK          |
-|im (direct messages)               |In progress |
-|mipm (multiparty direct messages)  |Coming soon |
+|im (direct messages)               |OK          |
+|mipm (multiparty direct messages)  |In progress |
 |oauth                              |Coming soon |
 |pins                               |Coming soon |
 |reactions                          |Coming soon |

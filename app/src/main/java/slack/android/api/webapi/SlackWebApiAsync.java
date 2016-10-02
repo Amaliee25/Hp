@@ -17,7 +17,6 @@ import slack.android.api.webapi.params.ApiTestParams;
 import slack.android.api.webapi.params.AuthRevokeParams;
 import slack.android.api.webapi.params.BotsInfoParams;
 import slack.android.api.webapi.params.ChannelCreateParams;
-import slack.android.api.webapi.params.ChannelHistoryParams;
 import slack.android.api.webapi.params.ChannelListParams;
 import slack.android.api.webapi.params.ChatParams;
 import slack.android.api.webapi.params.ChatPostParams;
@@ -28,14 +27,14 @@ import slack.android.api.webapi.params.FileCommentAddParams;
 import slack.android.api.webapi.params.FileInfoParams;
 import slack.android.api.webapi.params.FileListParams;
 import slack.android.api.webapi.params.FileUploadParams;
-import slack.android.api.webapi.params.GroupHistoryParams;
 import slack.android.api.webapi.params.GroupListParams;
+import slack.android.api.webapi.params.HistoryParams;
+import slack.android.api.webapi.params.ImOpenParams;
 import slack.android.api.webapi.response.ApiTestResponse;
 import slack.android.api.webapi.response.AuthRevokeResponse;
 import slack.android.api.webapi.response.AuthTestResponse;
 import slack.android.api.webapi.response.BaseResponse;
 import slack.android.api.webapi.response.BotsInfoResponse;
-import slack.android.api.webapi.response.ChannelHistoryResponse;
 import slack.android.api.webapi.response.ChannelListResponse;
 import slack.android.api.webapi.response.ChannelPurposeResponse;
 import slack.android.api.webapi.response.ChannelResponse;
@@ -54,8 +53,10 @@ import slack.android.api.webapi.response.FileListResponse;
 import slack.android.api.webapi.response.FileResponse;
 import slack.android.api.webapi.response.GroupCloseResponse;
 import slack.android.api.webapi.response.GroupCreateResponse;
-import slack.android.api.webapi.response.GroupHistoryResponse;
 import slack.android.api.webapi.response.GroupListResponse;
+import slack.android.api.webapi.response.HistoryResponse;
+import slack.android.api.webapi.response.ImListResponse;
+import slack.android.api.webapi.response.ImOpenResponse;
 
 /**
  * Implement Slack Web Api. Use Retrofit to do it.
@@ -180,7 +181,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getChannelsHistory(@NonNull String channelId, @NonNull ChannelHistoryParams params, Callback<ChannelHistoryResponse> callback){
+    public void getChannelsHistory(@NonNull String channelId, @NonNull HistoryParams params, Callback<HistoryResponse> callback){
         service.channelsHistory(channelId, params.build()).enqueue(callback);
     }
 
@@ -639,7 +640,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getGroupsHistory(@NonNull String channelId, @NonNull GroupHistoryParams params, Callback<GroupHistoryResponse> callback){
+    public void getGroupsHistory(@NonNull String channelId, @NonNull HistoryParams params, Callback<HistoryResponse> callback){
         service.groupsHistory(channelId, params.build()).enqueue(callback);
     }
 
@@ -787,5 +788,72 @@ public class SlackWebApiAsync {
      */
     public void getGroupsUnarchive(@NonNull String channelId, Callback<BaseResponse> callback){
         service.groupsUnarchive(channelId).enqueue(callback);
+    }
+
+    /**
+     * This method closes a direct message channel.
+     *
+     * Requires scope: im:write
+     *
+     * @param channelId Direct message channel to close.
+     * @param callback
+     */
+    public void getImClose(@NonNull String channelId, Callback<BaseResponse> callback){
+        service.imClose(channelId).enqueue(callback);
+    }
+
+    /**
+     * This method returns a portion of messages/events from the specified direct message channel.
+     * To read the entire history for a direct message channel, call the method with no latest or
+     * oldest arguments, and then continue paging using the instructions below.
+     *
+     * Requires scope: im:history
+     *
+     * @param channelId Direct message channel to fetch history for.
+     * @param params
+     * @param callback
+     */
+    public void getImHistory(@NonNull String channelId, @NonNull HistoryParams params, Callback<HistoryResponse> callback){
+        service.imHistory(channelId, params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method returns a list of all im channels that the user has.
+     *
+     * Requires scope: im:read
+     *
+     * @param callback
+     */
+    public void getImList(Callback<ImListResponse> callback){
+        service.imList().enqueue(callback);
+    }
+
+    /**
+     * This method moves the read cursor in a direct message channel.
+     *
+     * Requires scope: im:write
+     *
+     * @param channelId Direct message channel to set reading cursor in.
+     * @param ts Timestamp of the most recently seen message.
+     * @param callback
+     */
+    public void getImMark(@NonNull String channelId, @NonNull String ts, Callback<BaseResponse> callback){
+        service.imMark(channelId, ts).enqueue(callback);
+    }
+
+    /**
+     * This method opens a direct message channel with another member of your Slack team.
+     *
+     * If the return_im argument was passed, the channel object will contain the
+     * full channel definition:
+     *
+     * Requires scope: im:write
+     *
+     * @param userId User to open a direct message channel with.
+     * @param params
+     * @param callback
+     */
+    public void getImOpen(@NonNull String userId, @NonNull ImOpenParams params, Callback<ImOpenResponse> callback){
+        service.imOpen(userId, params.build()).enqueue(callback);
     }
 }

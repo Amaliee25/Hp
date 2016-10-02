@@ -45,4 +45,5 @@ public interface SlackParamsConstants {
     String CONTENT          = "content";
     String TITLE            = "title";
     String INITIAL_COMMENT  = "initial_comment";
+    String RETURN_IM        = "return_im";
 }

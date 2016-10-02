@@ -1,9 +1,9 @@
 package slack.android.api.webapi.params;
 
 /**
- * Set optional arguments to Slack Web Api Channels History method
+ * Set optional arguments to Slack Web Api Channels, Groups or Im History method
  */
-public class GroupHistoryParams extends Params {
+public class HistoryParams extends Params {
 
     /**
      * End of time range of messages to include in results.

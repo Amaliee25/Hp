@@ -4,7 +4,7 @@ import java.util.List;
 
 import slack.android.api.models.Message;
 
-public class ChannelHistoryResponse extends BaseResponse {
+public class HistoryResponse extends BaseResponse {
     private String latest;
     private List<Message> messages;
     private boolean hasMore;
