@@ -36,6 +36,7 @@ import slack.android.api.webapi.response.GroupListResponse;
 import slack.android.api.webapi.response.HistoryResponse;
 import slack.android.api.webapi.response.ImListResponse;
 import slack.android.api.webapi.response.ImOpenResponse;
+import slack.android.api.webapi.response.MpimCreateResponse;
 
 public interface SlackWebApiInterface {
 
@@ -268,19 +269,19 @@ public interface SlackWebApiInterface {
 
     // mipm (multiparty direct messages)
     @GET(SlackWebApiConstants.MPIM_CLOSE)
-    Call<BaseResponse> mpimClose();
+    Call<BaseResponse> mpimClose(@Field(SlackParamsConstants.CHANNEL) String channelId);
 
     @GET(SlackWebApiConstants.MPIM_HISTORY)
-    Call<BaseResponse> mpimHistory();
+    Call<HistoryResponse> mpimHistory(@Field(SlackParamsConstants.CHANNEL) String channelId, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.MPIM_LIST)
-    Call<BaseResponse> mpimList();
+    Call<GroupListResponse> mpimList();
 
     @GET(SlackWebApiConstants.MPIM_MARK)
-    Call<BaseResponse> mpimMark();
+    Call<BaseResponse> mpimMark(@Field(SlackParamsConstants.CHANNEL) String channelId, @Field(SlackParamsConstants.TS) String ts);
 
     @GET(SlackWebApiConstants.MPIM_OPEN)
-    Call<BaseResponse> mpimOpen();
+    Call<MpimCreateResponse> mpimOpen(@Field(SlackParamsConstants.USERS) String users);
 
     // oauth
     @GET(SlackWebApiConstants.OAUTH_ACCESS)

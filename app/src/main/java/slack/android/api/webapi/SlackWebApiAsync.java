@@ -57,6 +57,7 @@ import slack.android.api.webapi.response.GroupListResponse;
 import slack.android.api.webapi.response.HistoryResponse;
 import slack.android.api.webapi.response.ImListResponse;
 import slack.android.api.webapi.response.ImOpenResponse;
+import slack.android.api.webapi.response.MpimCreateResponse;
 
 /**
  * Implement Slack Web Api. Use Retrofit to do it.
@@ -855,5 +856,75 @@ public class SlackWebApiAsync {
      */
     public void getImOpen(@NonNull String userId, @NonNull ImOpenParams params, Callback<ImOpenResponse> callback){
         service.imOpen(userId, params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method closes a multiparty direct message channel.
+     *
+     * Requires scope: mpim:write
+     *
+     * @param channelId MPIM to close.
+     * @param callback
+     */
+    public void getMpimClose(@NonNull String channelId, Callback<BaseResponse> callback){
+        service.mpimClose(channelId).enqueue(callback);
+    }
+
+    /**
+     * This method returns a portion of messages/events from the specified multiparty direct
+     * message channel. To read the entire history for a multiparty direct message, call the
+     * method with no latest or oldest arguments, and then continue paging using the
+     * instructions below.
+     *
+     * Requires scope: mpim:history
+     *
+     * @param channelId Multiparty direct message to fetch history for.
+     * @param params
+     * @param callback
+     */
+    public void getMpimHistory(@NonNull String channelId, @NonNull HistoryParams params, Callback<HistoryResponse> callback){
+        service.mpimHistory(channelId, params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method returns a list of all multiparty direct message channels that the user has.
+     *
+     * Requires scope: mpim:read
+     *
+     * @param callback
+     */
+    public void getMpimList(Callback<GroupListResponse> callback){
+        service.mpimList().enqueue(callback);
+    }
+
+    /**
+     * This method moves the read cursor in a multiparty direct message channel.
+     *
+     * Requires scope: mpim:write
+     *
+     * @param channelId multiparty direct message channel to set reading cursor in.
+     * @param ts Timestamp of the most recently seen message.
+     * @param callback
+     */
+    public void getMpimMark(@NonNull String channelId, @NonNull String ts, Callback<BaseResponse> callback){
+        service.mpimMark(channelId, ts).enqueue(callback);
+    }
+
+    /**
+     * This method opens a multiparty direct message.
+     * Opening a multiparty direct message takes a list of up-to 8 encoded user ids. If there is
+     * no MPIM already created that includes that exact set of members, a new MPIM will be created.
+     * Subsequent calls to mpim.open with the same set of users will return the already existing
+     * MPIM conversation.
+     *
+     * Requires scope: mpim:write
+     *
+     * @param users Comma separated lists of users. The ordering of the users is preserved whenever
+     *              a MPIM group is returned.
+     *
+     * @param callback
+     */
+    public void getMpimOpen(@NonNull String users, Callback<MpimCreateResponse> callback){
+        service.mpimOpen(users).enqueue(callback);
     }
 }
