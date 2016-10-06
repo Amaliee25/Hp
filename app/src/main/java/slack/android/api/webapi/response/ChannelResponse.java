@@ -2,7 +2,7 @@ package slack.android.api.webapi.response;
 
 import slack.android.api.models.Channel;
 
-public class ChannelResponse extends BaseResponse{
+public class ChannelResponse extends BaseResponse {
     private Channel channel;
 
     public Channel getChannel() {

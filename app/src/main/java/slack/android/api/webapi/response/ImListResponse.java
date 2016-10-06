@@ -4,7 +4,7 @@ import slack.android.api.models.Im;
 
 import java.util.List;
 
-public class ImListResponse {
+public class ImListResponse extends BaseResponse {
     private List<Im> ims;
 
     public List<Im> getIms() {

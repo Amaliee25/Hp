@@ -5,7 +5,7 @@ import java.util.List;
 import slack.android.api.models.File;
 import slack.android.api.models.Paging;
 
-public class FileListResponse {
+public class FileListResponse extends BaseResponse {
     private List<File> files;
     private Paging paging;
 

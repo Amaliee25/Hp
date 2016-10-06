@@ -1,6 +1,6 @@
 package slack.android.api.webapi.response;
 
-public class ChannelPurposeResponse extends BaseResponse{
+public class ChannelPurposeResponse extends BaseResponse {
     private String purpose;
 
     public String getPurpose() {

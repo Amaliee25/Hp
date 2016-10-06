@@ -1,8 +1,5 @@
 package slack.android.api.webapi.response;
 
-/**
- * Created by flaviokreis on 22/08/16.
- */
 public class EmojiListResponse extends BaseResponse {
     private String emoji;
 

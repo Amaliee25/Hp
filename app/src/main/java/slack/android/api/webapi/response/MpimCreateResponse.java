@@ -2,7 +2,7 @@ package slack.android.api.webapi.response;
 
 import slack.android.api.models.Mpim;
 
-public class MpimCreateResponse {
+public class MpimCreateResponse extends BaseResponse {
     private Mpim group;
 
     public Mpim getGroup() {

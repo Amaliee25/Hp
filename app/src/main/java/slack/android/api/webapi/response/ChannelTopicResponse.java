@@ -1,6 +1,6 @@
 package slack.android.api.webapi.response;
 
-public class ChannelTopicResponse extends BaseResponse{
+public class ChannelTopicResponse extends BaseResponse {
     private String topic;
 
     public String getTopic() {

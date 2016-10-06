@@ -6,7 +6,7 @@ import slack.android.api.models.Paging;
 
 import java.util.List;
 
-public class FileInfoResponse extends BaseResponse{
+public class FileInfoResponse extends BaseResponse {
     private File file;
     private List<Comment> comments;
     private Paging paging;
