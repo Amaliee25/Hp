@@ -30,6 +30,8 @@ import slack.android.api.webapi.params.FileUploadParams;
 import slack.android.api.webapi.params.GroupListParams;
 import slack.android.api.webapi.params.HistoryParams;
 import slack.android.api.webapi.params.ImOpenParams;
+import slack.android.api.webapi.params.PinAddParams;
+import slack.android.api.webapi.params.PinRemoveParams;
 import slack.android.api.webapi.response.ApiTestResponse;
 import slack.android.api.webapi.response.AuthRevokeResponse;
 import slack.android.api.webapi.response.AuthTestResponse;
@@ -58,6 +60,7 @@ import slack.android.api.webapi.response.HistoryResponse;
 import slack.android.api.webapi.response.ImListResponse;
 import slack.android.api.webapi.response.ImOpenResponse;
 import slack.android.api.webapi.response.MpimCreateResponse;
+import slack.android.api.webapi.response.PinListResponse;
 
 /**
  * Implement Slack Web Api. Use Retrofit to do it.
@@ -926,5 +929,47 @@ public class SlackWebApiAsync {
      */
     public void getMpimOpen(@NonNull String users, Callback<MpimCreateResponse> callback){
         service.mpimOpen(users).enqueue(callback);
+    }
+
+    /**
+     * This method pins an item (file, file comment, channel message, or group message) to a
+     * particular channel. The channel argument is required and one of file, file_comment,
+     * or timestamp must also be specified.
+     *
+     * Requires scope: pins:write
+     *
+     * @param channelId Channel to pin the item in.
+     * @param params
+     * @param callback
+     */
+    public void getPinsAdd(@NonNull String channelId, @NonNull PinAddParams params, Callback<BaseResponse> callback){
+        service.pinsAdd(channelId, params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method lists the items pinned to a channel.
+     *
+     * Requires scope: pins:read
+     *
+     * @param channelId Channel to get pinned items for.
+     * @param callback
+     */
+    public void getPinList(@NonNull String channelId, Callback<PinListResponse> callback){
+        service.pinsList(channelId).enqueue(callback);
+    }
+
+    /**
+     * This method un-pins an item (file, file comment, channel message, or group message) from a
+     * channel. The channel argument is required and one of file, file_comment, or timestamp must
+     * also be specified.
+     *
+     * Requires scope: pins:write
+     *
+     * @param channelId Channel where the item is pinned to.
+     * @param params
+     * @param callback
+     */
+    public void getPinsRemove(@NonNull String channelId, @NonNull PinRemoveParams params, Callback<BaseResponse> callback){
+        service.pinsRemove(channelId, params.build()).enqueue(callback);
     }
 }

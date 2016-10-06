@@ -37,6 +37,7 @@ import slack.android.api.webapi.response.HistoryResponse;
 import slack.android.api.webapi.response.ImListResponse;
 import slack.android.api.webapi.response.ImOpenResponse;
 import slack.android.api.webapi.response.MpimCreateResponse;
+import slack.android.api.webapi.response.PinListResponse;
 
 public interface SlackWebApiInterface {
 
@@ -289,13 +290,13 @@ public interface SlackWebApiInterface {
 
     // pins
     @GET(SlackWebApiConstants.PINS_ADD)
-    Call<BaseResponse> pinsAdd();
+    Call<BaseResponse> pinsAdd(@Field(SlackParamsConstants.CHANNEL) String channelId, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.PINS_LIST)
-    Call<BaseResponse> pinsList();
+    Call<PinListResponse> pinsList(@Field(SlackParamsConstants.CHANNEL) String channelId);
 
     @GET(SlackWebApiConstants.PINS_REMOVE)
-    Call<BaseResponse> pinsRemove();
+    Call<BaseResponse> pinsRemove(@Field(SlackParamsConstants.CHANNEL) String channelId, @QueryMap Map<String, String> params);
 
     // reactions
     @GET(SlackWebApiConstants.REACTIONS_ADD)

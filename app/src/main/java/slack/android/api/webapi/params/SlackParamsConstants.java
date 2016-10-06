@@ -19,6 +19,7 @@ public interface SlackParamsConstants {
     String USER             = "user";
     String USERS            = "users";
     String EXCLUDE_ARCHIVED = "exclude_archived";
+    String TIMESTAMP        = "timestamp";
     String TS               = "ts";
     String TS_FROM          = "ts_from";
     String TS_TO            = "ts_to";
@@ -36,6 +37,7 @@ public interface SlackParamsConstants {
     String ICON_EMOJI       = "icon_emoji";
     String NUM_MINUTES      = "num_minutes";
     String FILE             = "file";
+    String FILE_COMMENT     = "file_comment";
     String FILENAME         = "filename";
     String FILETYPE         = "filetype";
     String COMMENT          = "comment";
