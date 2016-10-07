@@ -1,6 +1,7 @@
 package slack.android.api.webapi;
 
 import android.support.annotation.NonNull;
+import android.telecom.Call;
 
 import java.io.IOException;
 
@@ -32,6 +33,10 @@ import slack.android.api.webapi.params.HistoryParams;
 import slack.android.api.webapi.params.ImOpenParams;
 import slack.android.api.webapi.params.PinAddParams;
 import slack.android.api.webapi.params.PinRemoveParams;
+import slack.android.api.webapi.params.ReactionAddParams;
+import slack.android.api.webapi.params.ReactionGetParams;
+import slack.android.api.webapi.params.ReactionListParams;
+import slack.android.api.webapi.params.ReactionRemoveParams;
 import slack.android.api.webapi.response.ApiTestResponse;
 import slack.android.api.webapi.response.AuthRevokeResponse;
 import slack.android.api.webapi.response.AuthTestResponse;
@@ -61,6 +66,8 @@ import slack.android.api.webapi.response.ImListResponse;
 import slack.android.api.webapi.response.ImOpenResponse;
 import slack.android.api.webapi.response.MpimCreateResponse;
 import slack.android.api.webapi.response.PinListResponse;
+import slack.android.api.webapi.response.ReactionGetResponse;
+import slack.android.api.webapi.response.ReactionListResponse;
 
 /**
  * Implement Slack Web Api. Use Retrofit to do it.
@@ -971,5 +978,61 @@ public class SlackWebApiAsync {
      */
     public void getPinsRemove(@NonNull String channelId, @NonNull PinRemoveParams params, Callback<BaseResponse> callback){
         service.pinsRemove(channelId, params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method adds a reaction (emoji) to an item (file, file comment, channel message,
+     * group message, or direct message). One of file, file_comment, or the combination of
+     * channel and timestamp must be specified.
+     *
+     * Requires scope: reactions:write
+     *
+     * @param name Reaction (emoji) name.
+     * @param params
+     * @param callback
+     */
+    public void getReactionAdd(@NonNull String name, @NonNull ReactionAddParams params, Callback<BaseResponse> callback){
+        service.reactionsAdd(name, params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method returns a list of all reactions for a single item (file, file comment,
+     * channel message, group message, or direct message).
+     *
+     * Requires scope: reactions:read
+     *
+     * @param params
+     * @param callback
+     */
+    public void getReactionGet(@NonNull ReactionGetParams params, Callback<ReactionGetResponse> callback){
+        service.reactionsGet(params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method returns a list of all items (file, file comment, channel message, group message,
+     * or direct message) reacted to by a user.
+     *
+     * Requires scope: reactions:read
+     *
+     * @param params
+     * @param callback
+     */
+    public void getReactionList(@NonNull ReactionListParams params, Callback<ReactionListResponse> callback){
+        service.reactionsList(params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method removes a reaction (emoji) from an item (file, file comment, channel message,
+     * group message, or direct message). One of file, file_comment, or the combination of channel
+     * and timestamp must be specified.
+     *
+     * Requires scope: reactions:write
+     *
+     * @param name Reaction (emoji) name.
+     * @param params
+     * @param callback
+     */
+    public void getReactionRemove(@NonNull String name, @NonNull ReactionRemoveParams params, Callback<BaseResponse> callback){
+        service.reactionsRemove(name, params.build()).enqueue(callback);
     }
 }

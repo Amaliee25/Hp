@@ -1,7 +1,7 @@
 package slack.android.api.webapi.params;
 
 /**
- * Set optional arguments to Slack Web Api Pins Add method
+ * Set optional arguments to Slack Web Api Pins Remove method
  */
 public class PinRemoveParams extends Params {
 

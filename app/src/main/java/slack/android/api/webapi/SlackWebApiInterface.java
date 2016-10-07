@@ -38,6 +38,8 @@ import slack.android.api.webapi.response.ImListResponse;
 import slack.android.api.webapi.response.ImOpenResponse;
 import slack.android.api.webapi.response.MpimCreateResponse;
 import slack.android.api.webapi.response.PinListResponse;
+import slack.android.api.webapi.response.ReactionGetResponse;
+import slack.android.api.webapi.response.ReactionListResponse;
 
 public interface SlackWebApiInterface {
 
@@ -300,16 +302,16 @@ public interface SlackWebApiInterface {
 
     // reactions
     @GET(SlackWebApiConstants.REACTIONS_ADD)
-    Call<BaseResponse> reactionsAdd();
+    Call<BaseResponse> reactionsAdd(@Field(SlackParamsConstants.NAME) String name, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.REACTIONS_GET)
-    Call<BaseResponse> reactionsGet();
+    Call<ReactionGetResponse> reactionsGet(@QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.REACTIONS_LIST)
-    Call<BaseResponse> reactionsList();
+    Call<ReactionListResponse> reactionsList(@QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.REACTIONS_REMOVE)
-    Call<BaseResponse> reactionsRemove();
+    Call<BaseResponse> reactionsRemove(@Field(SlackParamsConstants.NAME) String name, @QueryMap Map<String, String> params);
 
     // reminders
     @GET(SlackWebApiConstants.REMINDERS_ADD)
