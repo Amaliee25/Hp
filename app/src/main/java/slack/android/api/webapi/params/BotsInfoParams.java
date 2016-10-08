@@ -10,6 +10,6 @@ public class BotsInfoParams extends Params {
      * @param bot Bot user to get info on
      */
     public void setBot(String bot){
-        params.put(SlackParamsConstants.BOT, bot);
+        put(SlackParamsConstants.BOT, bot);
     }
 }

@@ -13,7 +13,7 @@ public class ChatPostParams extends Params {
      * @param parse
      */
     public void setParse(String parse){
-        params.put(SlackParamsConstants.PARSE, parse);
+        put(SlackParamsConstants.PARSE, parse);
     }
 
     /**
@@ -22,7 +22,7 @@ public class ChatPostParams extends Params {
      * @param linkNames
      */
     public void setLinkNames(boolean linkNames){
-        params.put(SlackParamsConstants.LINK_NAMES, linkNames ? "1" : "0");
+        put(SlackParamsConstants.LINK_NAMES, linkNames);
     }
 
     /**
@@ -31,7 +31,7 @@ public class ChatPostParams extends Params {
      * @param attachments
      */
     public void setAttachments(String attachments){
-        params.put(SlackParamsConstants.ATTACHMENTS, attachments);
+        put(SlackParamsConstants.ATTACHMENTS, attachments);
     }
 
     /**
@@ -40,7 +40,7 @@ public class ChatPostParams extends Params {
      * @param unfurlLinks
      */
     public void setUnfurlLinks(boolean unfurlLinks){
-        params.put(SlackParamsConstants.UNURL_LINKS, unfurlLinks ? "1" : "0");
+        put(SlackParamsConstants.UNURL_LINKS, unfurlLinks);
     }
 
     /**
@@ -49,7 +49,7 @@ public class ChatPostParams extends Params {
      * @param unfurlMedia
      */
     public void setUnfurlMedia(boolean unfurlMedia){
-        params.put(SlackParamsConstants.UNURL_MEDIA, unfurlMedia ? "1" : "0");
+        put(SlackParamsConstants.UNURL_MEDIA, unfurlMedia);
     }
 
     /**
@@ -59,7 +59,7 @@ public class ChatPostParams extends Params {
      * @param username
      */
     public void setUsername(String username){
-        params.put(SlackParamsConstants.USERNAME, username);
+        put(SlackParamsConstants.USERNAME, username);
     }
 
     /**
@@ -69,7 +69,7 @@ public class ChatPostParams extends Params {
      * @param asUser
      */
     public void setAsUser(boolean asUser){
-        params.put(SlackParamsConstants.AS_USER, asUser ? "1" : "0");
+        put(SlackParamsConstants.AS_USER, asUser);
     }
 
     /**
@@ -79,7 +79,7 @@ public class ChatPostParams extends Params {
      * @param iconUrl
      */
     public void setIconUrl(String iconUrl){
-        params.put(SlackParamsConstants.ICON_URL, iconUrl);
+        put(SlackParamsConstants.ICON_URL, iconUrl);
     }
 
     /**
@@ -89,7 +89,7 @@ public class ChatPostParams extends Params {
      * @param iconEmoji
      */
     public void setIconEmoji(String iconEmoji){
-        params.put(SlackParamsConstants.ICON_EMOJI, iconEmoji);
+        put(SlackParamsConstants.ICON_EMOJI, iconEmoji);
     }
 
 }

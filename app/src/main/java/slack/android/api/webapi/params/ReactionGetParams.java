@@ -11,7 +11,7 @@ public class ReactionGetParams extends Params {
      * @param file
      */
     private void setFile(String file){
-        params.put(SlackParamsConstants.FILE, file);
+        put(SlackParamsConstants.FILE, file);
     }
 
     /**
@@ -20,7 +20,7 @@ public class ReactionGetParams extends Params {
      * @param fileComment
      */
     private void setFileComment(String fileComment){
-        params.put(SlackParamsConstants.FILE_COMMENT, fileComment);
+        put(SlackParamsConstants.FILE_COMMENT, fileComment);
     }
 
     /**
@@ -29,7 +29,7 @@ public class ReactionGetParams extends Params {
      * @param channel
      */
     private void setChannel(String channel){
-        params.put(SlackParamsConstants.CHANNEL, channel);
+        put(SlackParamsConstants.CHANNEL, channel);
     }
 
     /**
@@ -38,7 +38,7 @@ public class ReactionGetParams extends Params {
      * @param timestamp
      */
     private void setTimestamp(String timestamp){
-        params.put(SlackParamsConstants.TIMESTAMP, timestamp);
+        put(SlackParamsConstants.TIMESTAMP, timestamp);
     }
 
     /**
@@ -46,6 +46,6 @@ public class ReactionGetParams extends Params {
      * @param isFull
      */
     private void setIsFull(boolean isFull){
-        params.put(SlackParamsConstants.IS_FULL, isFull ? "1" : "0");
+        put(SlackParamsConstants.IS_FULL, isFull);
     }
 }

@@ -10,7 +10,7 @@ public class ApiTestParams extends Params {
      * @param error Error response to return
      */
     public void setError(String error){
-        params.put(SlackParamsConstants.ERROR, error);
+        put(SlackParamsConstants.ERROR, error);
     }
 
     /**
@@ -18,6 +18,6 @@ public class ApiTestParams extends Params {
      * @param foo example property to return
      */
     public void setFoo(String foo){
-        params.put(SlackParamsConstants.FOO, foo);
+        put(SlackParamsConstants.FOO, foo);
     }
 }

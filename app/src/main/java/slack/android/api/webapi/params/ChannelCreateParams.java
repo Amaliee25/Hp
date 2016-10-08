@@ -13,7 +13,7 @@ public class ChannelCreateParams extends Params {
      * @param latest e.g.: 1234567890.123456
      */
     public void setLatest(String latest){
-        params.put(SlackParamsConstants.LATEST, latest);
+        put(SlackParamsConstants.LATEST, latest);
     }
 
     /**
@@ -24,7 +24,7 @@ public class ChannelCreateParams extends Params {
      * @param oldest e.g.: 1234567890.123456
      */
     public void setOldest(String oldest){
-        params.put(SlackParamsConstants.OLDEST, oldest);
+        put(SlackParamsConstants.OLDEST, oldest);
     }
 
     /**
@@ -32,7 +32,7 @@ public class ChannelCreateParams extends Params {
      * @param inclusive
      */
     public void setInclusive(boolean inclusive){
-        params.put(SlackParamsConstants.INCLUSIVE, inclusive ? "1" : "0");
+        put(SlackParamsConstants.INCLUSIVE, inclusive);
     }
 
     /**
@@ -43,14 +43,7 @@ public class ChannelCreateParams extends Params {
      * @param count
      */
     public void setCount(int count){
-        if(count < 1){
-            count = 1;
-        }
-        else if(count > 1000){
-            count = 1000;
-        }
-
-        params.put(SlackParamsConstants.COUNT, String.valueOf(count));
+        put(SlackParamsConstants.COUNT, count, 1, 1000);
     }
 
     /**
@@ -58,7 +51,7 @@ public class ChannelCreateParams extends Params {
      * @param unreads
      */
     public void setUnreads(boolean unreads){
-        params.put(SlackParamsConstants.UNREADS, unreads ? "1" : "0");
+        put(SlackParamsConstants.UNREADS, unreads);
     }
 
 }

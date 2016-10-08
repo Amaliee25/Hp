@@ -10,7 +10,7 @@ public class ReactionListParams extends Params {
      * @param user e.g. U1234567890
      */
     private void serUser(String user){
-        params.put(SlackParamsConstants.USER, user);
+        put(SlackParamsConstants.USER, user);
     }
 
     /**
@@ -19,22 +19,22 @@ public class ReactionListParams extends Params {
      * @param isFull
      */
     private void setIsFulll(boolean isFull){
-        params.put(SlackParamsConstants.IS_FULL, isFull ? "1" : "0" );
+        put(SlackParamsConstants.IS_FULL, isFull);
     }
 
     /**
      * Number of items to return per page.
-     * @param value e.g. 100
+     * @param count e.g. 100
      */
-    private void setCount(int value){
-        params.put(SlackParamsConstants.COUNT, String.valueOf(value));
+    private void setCount(int count){
+        put(SlackParamsConstants.COUNT, count, 1, 1000);
     }
 
     /**
      * Page number of results to return.
-     * @param value e.g. 1
+     * @param page e.g. 1
      */
-    private void setPage(int value){
-        params.put(SlackParamsConstants.PAGE, String.valueOf(value));
+    private void setPage(int page){
+        put(SlackParamsConstants.PAGE, page);
     }
 }

@@ -11,7 +11,7 @@ public class FileCommentAddParams extends Params {
      * @param channel
      */
     public void setChannel(String channel){
-        params.put(SlackParamsConstants.CHANNEL, channel);
+        put(SlackParamsConstants.CHANNEL, channel);
     }
 }
 

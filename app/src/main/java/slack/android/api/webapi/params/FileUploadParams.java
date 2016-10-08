@@ -5,14 +5,13 @@ package slack.android.api.webapi.params;
  */
 public class FileUploadParams extends Params {
 
-    //TODO need implement it
     /**
      * File contents via multipart/form-data. If omitting this parameter, you must submit content.
      *
      * @param file
      */
     public void setFile(String file){
-        params.put(SlackParamsConstants.FILE, file);
+        put(SlackParamsConstants.FILE, file);
     }
 
     /**
@@ -21,7 +20,7 @@ public class FileUploadParams extends Params {
      * @param content
      */
     public void setContent(String content){
-        params.put(SlackParamsConstants.CONTENT, content);
+        put(SlackParamsConstants.CONTENT, content);
     }
 
     /**
@@ -30,7 +29,7 @@ public class FileUploadParams extends Params {
      * @param filetype
      */
     public void setFiletype(String filetype){
-        params.put(SlackParamsConstants.FILETYPE, filetype);
+        put(SlackParamsConstants.FILETYPE, filetype);
     }
 
     /**
@@ -39,7 +38,7 @@ public class FileUploadParams extends Params {
      * @param title
      */
     public void setTitle(String title){
-        params.put(SlackParamsConstants.TITLE, title);
+        put(SlackParamsConstants.TITLE, title);
     }
 
     /**
@@ -48,7 +47,7 @@ public class FileUploadParams extends Params {
      * @param initialComment
      */
     public void setInitialComment(String initialComment){
-        params.put(SlackParamsConstants.INITIAL_COMMENT, initialComment);
+        put(SlackParamsConstants.INITIAL_COMMENT, initialComment);
     }
 
     /**
@@ -57,6 +56,6 @@ public class FileUploadParams extends Params {
      * @param channels
      */
     public void setChannels(String channels){
-        params.put(SlackParamsConstants.CHANNELS, channels);
+        put(SlackParamsConstants.CHANNELS, channels);
     }
 }

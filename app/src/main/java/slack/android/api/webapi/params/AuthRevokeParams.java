@@ -12,6 +12,6 @@ public class AuthRevokeParams extends Params {
      *               token will not actually be revoked.
      */
     public void setTest(boolean isTest){
-        params.put(SlackParamsConstants.TEST, isTest ? "1" : "0");
+        put(SlackParamsConstants.TEST, isTest);
     }
 }

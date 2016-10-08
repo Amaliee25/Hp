@@ -11,6 +11,6 @@ public class ImOpenParams extends Params{
      * @param isReturn e.g.: true
      */
     public void setReturnIm(boolean isReturn){
-        params.put(SlackParamsConstants.RETURN_IM, isReturn ? "1" : "0");
+        put(SlackParamsConstants.RETURN_IM, isReturn);
     }
 }

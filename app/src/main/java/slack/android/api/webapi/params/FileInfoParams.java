@@ -13,10 +13,7 @@ public class FileInfoParams extends Params {
      * @param count
      */
     public void setCount(int count){
-        if(count < 1){
-            count = 1;
-        }
-        params.put(SlackParamsConstants.COUNT, String.valueOf(count));
+        put(SlackParamsConstants.COUNT, count, 1, 1000);
     }
 
     /**
@@ -27,10 +24,7 @@ public class FileInfoParams extends Params {
      * @param page
      */
     public void setPage(int page){
-        if(page < 1){
-            page = 1;
-        }
-        params.put(SlackParamsConstants.PAGE, String.valueOf(page));
+        put(SlackParamsConstants.PAGE, page);
     }
 
 }

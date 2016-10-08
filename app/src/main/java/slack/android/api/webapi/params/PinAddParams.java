@@ -11,7 +11,7 @@ public class PinAddParams extends Params {
      * @param fileId
      */
     public void setFile(String fileId){
-        params.put(SlackParamsConstants.FILE, fileId);
+        put(SlackParamsConstants.FILE, fileId);
     }
 
     /**
@@ -20,7 +20,7 @@ public class PinAddParams extends Params {
      * @param comment
      */
     public void setFileComment(String comment){
-        params.put(SlackParamsConstants.FILE_COMMENT, comment);
+        put(SlackParamsConstants.FILE_COMMENT, comment);
     }
 
     /**
@@ -28,6 +28,6 @@ public class PinAddParams extends Params {
      * @param ts
      */
     public void setTimestamp(String ts){
-        params.put(SlackParamsConstants.TIMESTAMP, ts);
+        put(SlackParamsConstants.TIMESTAMP, ts);
     }
 }

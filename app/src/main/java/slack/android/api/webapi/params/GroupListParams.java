@@ -13,7 +13,7 @@ public class GroupListParams extends Params {
      * @param excludeArchived
      */
     public void setExcludeArchived(boolean excludeArchived){
-        params.put(SlackParamsConstants.EXCLUDE_ARCHIVED, excludeArchived ? "1" : "0");
+        put(SlackParamsConstants.EXCLUDE_ARCHIVED, excludeArchived);
     }
 
 }

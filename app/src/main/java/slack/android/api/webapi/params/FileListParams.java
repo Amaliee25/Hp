@@ -11,7 +11,7 @@ public class FileListParams extends Params {
      * @param user
      */
     public void setUser(String user){
-        params.put(SlackParamsConstants.USER, user);
+        put(SlackParamsConstants.USER, user);
     }
 
     /**
@@ -20,7 +20,7 @@ public class FileListParams extends Params {
      * @param channel
      */
     public void setChannel(String channel){
-        params.put(SlackParamsConstants.CHANNEL, channel);
+        put(SlackParamsConstants.CHANNEL, channel);
     }
 
     /**
@@ -29,7 +29,7 @@ public class FileListParams extends Params {
      * @param tsFrom
      */
     public void setTsFrom(String tsFrom){
-        params.put(SlackParamsConstants.TS_FROM, tsFrom);
+        put(SlackParamsConstants.TS_FROM, tsFrom);
     }
 
     /**
@@ -38,7 +38,7 @@ public class FileListParams extends Params {
      * @param tsTo
      */
     public void setTsTo(String tsTo){
-        params.put(SlackParamsConstants.TS_TO, tsTo);
+        put(SlackParamsConstants.TS_TO, tsTo);
     }
 
     /**
@@ -58,7 +58,7 @@ public class FileListParams extends Params {
      * @param types
      */
     public void setTypes(String types){
-        params.put(SlackParamsConstants.TYPES, types);
+        put(SlackParamsConstants.TYPES, types);
     }
 
     /**
@@ -69,10 +69,7 @@ public class FileListParams extends Params {
      * @param count
      */
     public void setCount(int count){
-        if(count < 1){
-            count = 1;
-        }
-        params.put(SlackParamsConstants.COUNT, String.valueOf(count));
+        put(SlackParamsConstants.COUNT, count, 1, 1000);
     }
 
     /**
@@ -83,9 +80,6 @@ public class FileListParams extends Params {
      * @param page
      */
     public void setPage(int page){
-        if(page < 1){
-            page = 1;
-        }
-        params.put(SlackParamsConstants.PAGE, String.valueOf(page));
+        put(SlackParamsConstants.PAGE, page);
     }
 }

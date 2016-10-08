@@ -11,7 +11,7 @@ public class ChatParams extends Params {
      * @param asUser
      */
     public void setAsUser(boolean asUser){
-        params.put("as_user", asUser ? "1" : "0");
+        put(SlackParamsConstants.AS_USER, asUser);
     }
 
 }

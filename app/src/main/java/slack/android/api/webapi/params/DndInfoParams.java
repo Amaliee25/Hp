@@ -11,6 +11,6 @@ public class DndInfoParams extends Params {
      * @param user
      */
     public void setUser(String user){
-        params.put(SlackParamsConstants.USER, user);
+        put(SlackParamsConstants.USER, user);
     }
 }
