@@ -26,6 +26,7 @@ public interface SlackParamsConstants {
     String PURPOSE          = "purpose";
     String TOPIC            = "topic";
     String TEXT             = "text";
+    String TIME             = "time";
     String PARSE            = "parse";
     String LINK_NAMES       = "link_names";
     String ATTACHMENTS      = "attachments";
@@ -49,4 +50,5 @@ public interface SlackParamsConstants {
     String INITIAL_COMMENT  = "initial_comment";
     String RETURN_IM        = "return_im";
     String IS_FULL          = "is_full";
+    String REMINDER         = "reminder";
 }

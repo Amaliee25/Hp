@@ -40,6 +40,8 @@ import slack.android.api.webapi.response.MpimCreateResponse;
 import slack.android.api.webapi.response.PinListResponse;
 import slack.android.api.webapi.response.ReactionGetResponse;
 import slack.android.api.webapi.response.ReactionListResponse;
+import slack.android.api.webapi.response.ReminderAddResponse;
+import slack.android.api.webapi.response.ReminderListResponse;
 
 public interface SlackWebApiInterface {
 
@@ -315,19 +317,19 @@ public interface SlackWebApiInterface {
 
     // reminders
     @GET(SlackWebApiConstants.REMINDERS_ADD)
-    Call<BaseResponse> remindersAdd();
+    Call<ReminderAddResponse> remindersAdd(@Field(SlackParamsConstants.TEXT) String text, @Field(SlackParamsConstants.TIME) String time, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.REMINDERS_COMPLETE)
-    Call<BaseResponse> remindersComplete();
+    Call<BaseResponse> remindersComplete(@Field(SlackParamsConstants.REMINDER) String reminder);
 
     @GET(SlackWebApiConstants.REMINDERS_DELETE)
-    Call<BaseResponse> remindersDelete();
+    Call<BaseResponse> remindersDelete(@Field(SlackParamsConstants.REMINDER) String reminder);
 
     @GET(SlackWebApiConstants.REMINDERS_INFO)
-    Call<BaseResponse> remindersInfo();
+    Call<ReminderAddResponse> remindersInfo(@Field(SlackParamsConstants.REMINDER) String reminder);
 
     @GET(SlackWebApiConstants.REMINDERS_LIST)
-    Call<BaseResponse> remindersList();
+    Call<ReminderListResponse> remindersList();
 
     // rtm
     @GET(SlackWebApiConstants.RTM_START)

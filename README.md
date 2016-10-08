@@ -21,8 +21,9 @@ Add Slack Web Api methods; (in progress):
 |mipm (multiparty direct messages)  |OK          |
 |oauth                              |In progress |
 |pins                               |OK          |
-|reactions                          |In progress |
-|rtm                                |Coming soon |
+|reactions                          |OK          |
+|reminders                          |OK          |
+|rtm                                |In progress |
 |search                             |Coming soon |
 |stars                              |Coming soon |
 |team                               |Coming soon |

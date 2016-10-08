@@ -37,6 +37,7 @@ import slack.android.api.webapi.params.ReactionAddParams;
 import slack.android.api.webapi.params.ReactionGetParams;
 import slack.android.api.webapi.params.ReactionListParams;
 import slack.android.api.webapi.params.ReactionRemoveParams;
+import slack.android.api.webapi.params.ReminderAddParams;
 import slack.android.api.webapi.response.ApiTestResponse;
 import slack.android.api.webapi.response.AuthRevokeResponse;
 import slack.android.api.webapi.response.AuthTestResponse;
@@ -68,6 +69,8 @@ import slack.android.api.webapi.response.MpimCreateResponse;
 import slack.android.api.webapi.response.PinListResponse;
 import slack.android.api.webapi.response.ReactionGetResponse;
 import slack.android.api.webapi.response.ReactionListResponse;
+import slack.android.api.webapi.response.ReminderAddResponse;
+import slack.android.api.webapi.response.ReminderListResponse;
 
 /**
  * Implement Slack Web Api. Use Retrofit to do it.
@@ -1034,5 +1037,67 @@ public class SlackWebApiAsync {
      */
     public void getReactionRemove(@NonNull String name, @NonNull ReactionRemoveParams params, Callback<BaseResponse> callback){
         service.reactionsRemove(name, params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method creates a reminder.
+     *
+     * Requires scope: reminders:write
+     *
+     * @param text The content of the reminder
+     * @param time When this reminder should happen: the Unix timestamp (up to five years from now),
+     *             the number of seconds until the reminder (if within 24 hours), or a natural language
+     *             description (Ex. "in 15 minutes," or "every Thursday")
+     * @param params
+     * @param callback
+     */
+    public void getRemindersAdd(@NonNull String text, @NonNull String time, @NonNull ReminderAddParams params, Callback<ReminderAddResponse> callback){
+        service.remindersAdd(text, time, params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method completes a reminder.
+     *
+     * Requires scope: reminders:write
+     *
+     * @param reminderId The ID of the reminder to be marked as complete
+     */
+    public void getRemindersComplete(@NonNull String reminderId, Callback<BaseResponse> callback){
+        service.remindersComplete(reminderId).enqueue(callback);
+    }
+
+    /**
+     * This method deletes a reminder.
+     *
+     * Requires scope: reminders:write
+     *
+     * @param reminderId The ID of the reminder
+     * @param callback
+     */
+    public void getRemindersDelete(@NonNull String reminderId, Callback<BaseResponse> callback){
+        service.remindersDelete(reminderId).enqueue(callback);
+    }
+
+    /**
+     * This method returns information about a reminder.
+     *
+     * Requires scope: reminders:read
+     *
+     * @param reminderId The ID of the reminder
+     * @param callback
+     */
+    public void getRemindersInfo(@NonNull String reminderId, Callback<ReminderAddResponse> callback){
+        service.remindersInfo(reminderId).enqueue(callback);
+    }
+
+    /**
+     * This method lists all reminders created by or for a given user.
+     *
+     * Requires scope: reminders:read
+     *
+     * @param callback
+     */
+    public void getRemindersList(Callback<ReminderListResponse> callback){
+        service.remindersList().enqueue(callback);
     }
 }
