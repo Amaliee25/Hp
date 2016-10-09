@@ -23,8 +23,8 @@ Add Slack Web Api methods; (in progress):
 |pins                               |OK          |
 |reactions                          |OK          |
 |reminders                          |OK          |
-|rtm                                |In progress |
-|search                             |Coming soon |
+|rtm                                |OK          |
+|search                             |In progress |
 |stars                              |Coming soon |
 |team                               |Coming soon |
 |usergroups                         |Coming soon |

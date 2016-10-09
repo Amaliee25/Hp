@@ -38,6 +38,7 @@ import slack.android.api.webapi.params.ReactionGetParams;
 import slack.android.api.webapi.params.ReactionListParams;
 import slack.android.api.webapi.params.ReactionRemoveParams;
 import slack.android.api.webapi.params.ReminderAddParams;
+import slack.android.api.webapi.params.RtmStartParams;
 import slack.android.api.webapi.response.ApiTestResponse;
 import slack.android.api.webapi.response.AuthRevokeResponse;
 import slack.android.api.webapi.response.AuthTestResponse;
@@ -71,6 +72,7 @@ import slack.android.api.webapi.response.ReactionGetResponse;
 import slack.android.api.webapi.response.ReactionListResponse;
 import slack.android.api.webapi.response.ReminderAddResponse;
 import slack.android.api.webapi.response.ReminderListResponse;
+import slack.android.api.webapi.response.RtmStartResponse;
 
 /**
  * Implement Slack Web Api. Use Retrofit to do it.
@@ -1099,5 +1101,17 @@ public class SlackWebApiAsync {
      */
     public void getRemindersList(Callback<ReminderListResponse> callback){
         service.remindersList().enqueue(callback);
+    }
+
+    /**
+     * This method starts a Real Time Messaging API session.
+     *
+     * Requires scope: client
+     *
+     * @param params
+     * @param callback
+     */
+    public void getRtmStart(@NonNull RtmStartParams params, Callback<RtmStartResponse> callback){
+        service.rtmStart(params.build()).enqueue(callback);
     }
 }

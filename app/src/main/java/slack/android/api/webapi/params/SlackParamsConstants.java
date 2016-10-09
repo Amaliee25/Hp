@@ -51,4 +51,7 @@ public interface SlackParamsConstants {
     String RETURN_IM        = "return_im";
     String IS_FULL          = "is_full";
     String REMINDER         = "reminder";
+    String SIMPLE_LATEST    = "simple_latest";
+    String NO_UNREADS       = "no_unreads";
+    String MPIM_AWARE       = "mpim_aware";
 }

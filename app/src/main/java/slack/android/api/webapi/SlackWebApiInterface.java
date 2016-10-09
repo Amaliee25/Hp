@@ -42,6 +42,7 @@ import slack.android.api.webapi.response.ReactionGetResponse;
 import slack.android.api.webapi.response.ReactionListResponse;
 import slack.android.api.webapi.response.ReminderAddResponse;
 import slack.android.api.webapi.response.ReminderListResponse;
+import slack.android.api.webapi.response.RtmStartResponse;
 
 public interface SlackWebApiInterface {
 
@@ -333,7 +334,7 @@ public interface SlackWebApiInterface {
 
     // rtm
     @GET(SlackWebApiConstants.RTM_START)
-    Call<BaseResponse> rtmStart();
+    Call<RtmStartResponse> rtmStart(@QueryMap Map<String, String> params);
 
     // search
     @GET(SlackWebApiConstants.SEARCH_ALL)
