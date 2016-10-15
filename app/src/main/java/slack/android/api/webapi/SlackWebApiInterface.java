@@ -43,6 +43,9 @@ import slack.android.api.webapi.response.ReactionListResponse;
 import slack.android.api.webapi.response.ReminderAddResponse;
 import slack.android.api.webapi.response.ReminderListResponse;
 import slack.android.api.webapi.response.RtmStartResponse;
+import slack.android.api.webapi.response.SearchAllResponse;
+import slack.android.api.webapi.response.SearchFilesResponse;
+import slack.android.api.webapi.response.SearchMessagesResponse;
 
 public interface SlackWebApiInterface {
 
@@ -338,13 +341,13 @@ public interface SlackWebApiInterface {
 
     // search
     @GET(SlackWebApiConstants.SEARCH_ALL)
-    Call<BaseResponse> searchAll();
+    Call<SearchAllResponse> searchAll(@Field(SlackParamsConstants.QUERY) String query, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.SEARCH_FILES)
-    Call<BaseResponse> searchFiles();
+    Call<SearchFilesResponse> searchFiles(@Field(SlackParamsConstants.QUERY) String query, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.SEARCH_MESSAGES)
-    Call<BaseResponse> searchMessages();
+    Call<SearchMessagesResponse> searchMessages(@Field(SlackParamsConstants.QUERY) String query, @QueryMap Map<String, String> params);
 
     // stars
     @GET(SlackWebApiConstants.STARS_ADD)

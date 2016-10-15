@@ -52,6 +52,10 @@ public interface SlackParamsConstants {
     String IS_FULL          = "is_full";
     String REMINDER         = "reminder";
     String SIMPLE_LATEST    = "simple_latest";
+    String SORT             = "sort";
+    String SORT_DIR         = "sort_dir";
+    String HIGHLIGHT        = "highlight";
     String NO_UNREADS       = "no_unreads";
     String MPIM_AWARE       = "mpim_aware";
+    String QUERY            = "query";
 }

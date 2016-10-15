@@ -15,17 +15,17 @@ Add Slack Web Api methods; (in progress):
 |dnd (Do Not Disturb)               |OK          |
 |emoji                              |OK          |
 |files.comments                     |OK          |
-|files                              |In progress |
+|files                              |Stopped     |
 |group (team's private channels)    |OK          |
 |im (direct messages)               |OK          |
 |mipm (multiparty direct messages)  |OK          |
-|oauth                              |In progress |
+|oauth                              |Stopped     |
 |pins                               |OK          |
 |reactions                          |OK          |
 |reminders                          |OK          |
 |rtm                                |OK          |
-|search                             |In progress |
-|stars                              |Coming soon |
+|search                             |OK          |
+|stars                              |In progress |
 |team                               |Coming soon |
 |usergroups                         |Coming soon |
 |usergroups.users                   |Coming soon |

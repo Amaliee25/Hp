@@ -1,7 +1,6 @@
 package slack.android.api.webapi;
 
 import android.support.annotation.NonNull;
-import android.telecom.Call;
 
 import java.io.IOException;
 
@@ -39,6 +38,7 @@ import slack.android.api.webapi.params.ReactionListParams;
 import slack.android.api.webapi.params.ReactionRemoveParams;
 import slack.android.api.webapi.params.ReminderAddParams;
 import slack.android.api.webapi.params.RtmStartParams;
+import slack.android.api.webapi.params.SearchParams;
 import slack.android.api.webapi.response.ApiTestResponse;
 import slack.android.api.webapi.response.AuthRevokeResponse;
 import slack.android.api.webapi.response.AuthTestResponse;
@@ -73,6 +73,9 @@ import slack.android.api.webapi.response.ReactionListResponse;
 import slack.android.api.webapi.response.ReminderAddResponse;
 import slack.android.api.webapi.response.ReminderListResponse;
 import slack.android.api.webapi.response.RtmStartResponse;
+import slack.android.api.webapi.response.SearchAllResponse;
+import slack.android.api.webapi.response.SearchFilesResponse;
+import slack.android.api.webapi.response.SearchMessagesResponse;
 
 /**
  * Implement Slack Web Api. Use Retrofit to do it.
@@ -1113,5 +1116,44 @@ public class SlackWebApiAsync {
      */
     public void getRtmStart(@NonNull RtmStartParams params, Callback<RtmStartResponse> callback){
         service.rtmStart(params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method allows users and applications to search both messages and files in a single call.
+     *
+     * Requires scope: search:read
+     *
+     * @param query Search query. May contains booleans, etc.
+     * @param params
+     * @param callback
+     */
+    public void getSearchAll(@NonNull String query, @NonNull SearchParams params, Callback<SearchAllResponse> callback){
+        service.searchAll(query, params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method returns files matching a search query.
+     *
+     * Requires scope: search:read
+     *
+     * @param query Search query. May contains booleans, etc.
+     * @param params
+     * @param callback
+     */
+    public void getSearchFiles(@NonNull String query, @NonNull SearchParams params, Callback<SearchFilesResponse> callback){
+        service.searchFiles(query, params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method returns messages matching a search query.
+     *
+     * Requires scope: search:read
+     *
+     * @param query Search query. May contains booleans, etc.
+     * @param params
+     * @param callback
+     */
+    public void getSearchMessages(@NonNull String query, @NonNull SearchParams params, Callback<SearchMessagesResponse> callback){
+        service.searchMessages(query, params.build()).enqueue(callback);
     }
 }
