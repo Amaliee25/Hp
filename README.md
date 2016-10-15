@@ -25,8 +25,8 @@ Add Slack Web Api methods; (in progress):
 |reminders                          |OK          |
 |rtm                                |OK          |
 |search                             |OK          |
-|stars                              |In progress |
-|team                               |Coming soon |
+|stars                              |OK          |
+|team                               |In progress |
 |usergroups                         |Coming soon |
 |usergroups.users                   |Coming soon |
 |users                              |Coming soon |

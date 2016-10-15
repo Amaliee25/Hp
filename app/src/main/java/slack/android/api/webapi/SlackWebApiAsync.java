@@ -1,6 +1,7 @@
 package slack.android.api.webapi;
 
 import android.support.annotation.NonNull;
+import android.telecom.Call;
 
 import java.io.IOException;
 
@@ -39,6 +40,9 @@ import slack.android.api.webapi.params.ReactionRemoveParams;
 import slack.android.api.webapi.params.ReminderAddParams;
 import slack.android.api.webapi.params.RtmStartParams;
 import slack.android.api.webapi.params.SearchParams;
+import slack.android.api.webapi.params.StarAddParams;
+import slack.android.api.webapi.params.StarListParams;
+import slack.android.api.webapi.params.StarRemoveParams;
 import slack.android.api.webapi.response.ApiTestResponse;
 import slack.android.api.webapi.response.AuthRevokeResponse;
 import slack.android.api.webapi.response.AuthTestResponse;
@@ -76,6 +80,7 @@ import slack.android.api.webapi.response.RtmStartResponse;
 import slack.android.api.webapi.response.SearchAllResponse;
 import slack.android.api.webapi.response.SearchFilesResponse;
 import slack.android.api.webapi.response.SearchMessagesResponse;
+import slack.android.api.webapi.response.StarListResponse;
 
 /**
  * Implement Slack Web Api. Use Retrofit to do it.
@@ -1155,5 +1160,45 @@ public class SlackWebApiAsync {
      */
     public void getSearchMessages(@NonNull String query, @NonNull SearchParams params, Callback<SearchMessagesResponse> callback){
         service.searchMessages(query, params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method adds a star to an item (message, file, file comment, channel, private group, or DM)
+     * on behalf of the authenticated user. One of file, file_comment, channel, or the combination of
+     * channel and timestamp must be specified.
+     *
+     * Requires scope: stars:write
+     *
+     * @param params
+     * @param callback
+     */
+    public void getStarsAdd(@NonNull StarAddParams params, Callback<BaseResponse> callback){
+        service.starsAdd(params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method lists the items starred by the authed user.
+     *
+     * Requires scope: stars:read
+     *
+     * @param params
+     * @param callback
+     */
+    public void getStarsList(@NonNull StarListParams params, Callback<StarListResponse> callback){
+        service.starsList(params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method removes a star from an item (message, file, file comment, channel, private group,
+     * or DM) on behalf of the authenticated user. One of file, file_comment, channel, or the
+     * combination of channel and timestamp must be specified.
+     *
+     * Requires scope: stars:write
+     *
+     * @param params
+     * @param callback
+     */
+    public void getStarsRemove(@NonNull StarRemoveParams params, Callback<BaseResponse> callback){
+        service.starsRemove(params.build()).enqueue(callback);
     }
 }

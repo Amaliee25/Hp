@@ -46,6 +46,7 @@ import slack.android.api.webapi.response.RtmStartResponse;
 import slack.android.api.webapi.response.SearchAllResponse;
 import slack.android.api.webapi.response.SearchFilesResponse;
 import slack.android.api.webapi.response.SearchMessagesResponse;
+import slack.android.api.webapi.response.StarListResponse;
 
 public interface SlackWebApiInterface {
 
@@ -351,13 +352,13 @@ public interface SlackWebApiInterface {
 
     // stars
     @GET(SlackWebApiConstants.STARS_ADD)
-    Call<BaseResponse> starsAdd();
+    Call<BaseResponse> starsAdd(@QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.STARS_LIST)
-    Call<BaseResponse> starsList();
+    Call<StarListResponse> starsList(@QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.STARS_REMOVE)
-    Call<BaseResponse> starsRemove();
+    Call<BaseResponse> starsRemove(@QueryMap Map<String, String> params);
 
     // team
     @GET(SlackWebApiConstants.TEAM_ACCESS_LOGS)
