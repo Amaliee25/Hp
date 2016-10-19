@@ -27,12 +27,11 @@ Add Slack Web Api methods; (in progress):
 |search                             |OK          |
 |stars                              |OK          |
 |team                               |OK          |
-|usergroups                         |In progress |
-|usergroups.users                   |In progress |
-|users                              |Coming soon |
-|users.profile                      |Coming soon |
-|team.profile                       |Coming soon |
-|team.profile                       |Coming soon |
+|team.profile                       |OK          |
+|usergroups                         |OK          |
+|usergroups.users                   |OK          |
+|users                              |In progress |
+|users.profile                      |In progress |
 
 
 ## Usage

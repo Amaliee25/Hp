@@ -18,6 +18,7 @@ public interface SlackParamsConstants {
     String UNREADS          = "unreads";
     String USER             = "user";
     String USERS            = "users";
+    String USERGROUP        = "usergroup";
     String EXCLUDE_ARCHIVED = "exclude_archived";
     String TIMESTAMP        = "timestamp";
     String TS               = "ts";
@@ -61,4 +62,10 @@ public interface SlackParamsConstants {
     String SERVICE_ID       = "service_id";
     String APP_ID           = "app_id";
     String CHANGE_TYPE      = "change_type";
+    String VISIBILITY       = "visibility";
+    String HANDLE           = "handle";
+    String DESCRIPTION      = "description";
+    String INCLUDE_COUNT    = "include_count";
+    String INCLUDE_DISABLED = "include_disabled";
+    String INCLUDE_USERS    = "include_users";
 }

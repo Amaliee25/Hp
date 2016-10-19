@@ -51,6 +51,10 @@ import slack.android.api.webapi.response.StarListResponse;
 import slack.android.api.webapi.response.TeamBillableInfoResponse;
 import slack.android.api.webapi.response.TeamInfoResponse;
 import slack.android.api.webapi.response.TeamIntegrationLogsResponse;
+import slack.android.api.webapi.response.TeamProfileGetResponse;
+import slack.android.api.webapi.response.UsergroupListResponse;
+import slack.android.api.webapi.response.UsergroupResponse;
+import slack.android.api.webapi.response.UsergroupUserListResponse;
 
 public interface SlackWebApiInterface {
 
@@ -379,30 +383,30 @@ public interface SlackWebApiInterface {
 
     // team.profile
     @GET(SlackWebApiConstants.TEAM_PROFILE_GET)
-    Call<BaseResponse> teamProfileGet();
+    Call<TeamProfileGetResponse> teamProfileGet(@QueryMap Map<String, String> params);
 
     // usergroups
     @GET(SlackWebApiConstants.USERGROUPS_CREATE)
-    Call<BaseResponse> usergroupsCreate();
+    Call<UsergroupResponse> usergroupsCreate(@Field(SlackParamsConstants.NAME) String name, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.USERGROUPS_DISABLE)
-    Call<BaseResponse> usergroupsDisable();
+    Call<UsergroupResponse> usergroupsDisable(@Field(SlackParamsConstants.USERGROUP) String usergroupId, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.USERGROUPS_ENABLE)
-    Call<BaseResponse> usergroupsEnable();
+    Call<UsergroupResponse> usergroupsEnable(@Field(SlackParamsConstants.USERGROUP) String usergroupId, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.USERGROUPS_LIST)
-    Call<BaseResponse> usergroupsList();
+    Call<UsergroupListResponse> usergroupsList(@QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.USERGROUPS_UPDATE)
-    Call<BaseResponse> usergroupsUpdate();
+    Call<UsergroupResponse> usergroupsUpdate(@Field(SlackParamsConstants.USERGROUP) String usergroupId, @QueryMap Map<String, String> params);
 
     // usergroups.users
     @GET(SlackWebApiConstants.USERGROUPS_USERS_LIST)
-    Call<BaseResponse> usergroupsUsersList();
+    Call<UsergroupUserListResponse> usergroupsUsersList(@Field(SlackParamsConstants.USERGROUP) String usergroupId, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.USERGROUPS_USERS_UPDATE)
-    Call<BaseResponse> usergroupsUsersUpdate();
+    Call<UsergroupResponse> usergroupsUsersUpdate(@Field(SlackParamsConstants.USERGROUP) String usergroupId, @Field(SlackParamsConstants.USERS) String users, @QueryMap Map<String, String> params);
 
     // users
     @GET(SlackWebApiConstants.USERS_GET_PRESENCE)
