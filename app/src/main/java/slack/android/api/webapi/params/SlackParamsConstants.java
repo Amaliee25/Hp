@@ -58,4 +58,7 @@ public interface SlackParamsConstants {
     String NO_UNREADS       = "no_unreads";
     String MPIM_AWARE       = "mpim_aware";
     String QUERY            = "query";
+    String SERVICE_ID       = "service_id";
+    String APP_ID           = "app_id";
+    String CHANGE_TYPE      = "change_type";
 }

@@ -9,6 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
 import slack.android.api.webapi.params.SlackParamsConstants;
+import slack.android.api.webapi.response.AccessLogResponse;
 import slack.android.api.webapi.response.ApiTestResponse;
 import slack.android.api.webapi.response.AuthRevokeResponse;
 import slack.android.api.webapi.response.AuthTestResponse;
@@ -47,6 +48,9 @@ import slack.android.api.webapi.response.SearchAllResponse;
 import slack.android.api.webapi.response.SearchFilesResponse;
 import slack.android.api.webapi.response.SearchMessagesResponse;
 import slack.android.api.webapi.response.StarListResponse;
+import slack.android.api.webapi.response.TeamBillableInfoResponse;
+import slack.android.api.webapi.response.TeamInfoResponse;
+import slack.android.api.webapi.response.TeamIntegrationLogsResponse;
 
 public interface SlackWebApiInterface {
 
@@ -362,16 +366,16 @@ public interface SlackWebApiInterface {
 
     // team
     @GET(SlackWebApiConstants.TEAM_ACCESS_LOGS)
-    Call<BaseResponse> teamAccessLogs();
+    Call<AccessLogResponse> teamAccessLogs(@QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.TEAM_BILLABLE_INFO)
-    Call<BaseResponse> teamBillableInfo();
+    Call<TeamBillableInfoResponse> teamBillableInfo(@QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.TEAM_INFO)
-    Call<BaseResponse> teamInfo();
+    Call<TeamInfoResponse> teamInfo();
 
     @GET(SlackWebApiConstants.TEAM_INTEGRATION_LOGS)
-    Call<BaseResponse> teamIntegrationLogs();
+    Call<TeamIntegrationLogsResponse> teamIntegrationLogs(@QueryMap Map<String, String> params);
 
     // team.profile
     @GET(SlackWebApiConstants.TEAM_PROFILE_GET)

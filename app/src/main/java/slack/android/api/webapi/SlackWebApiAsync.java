@@ -43,6 +43,10 @@ import slack.android.api.webapi.params.SearchParams;
 import slack.android.api.webapi.params.StarAddParams;
 import slack.android.api.webapi.params.StarListParams;
 import slack.android.api.webapi.params.StarRemoveParams;
+import slack.android.api.webapi.params.TeamAccessLogParams;
+import slack.android.api.webapi.params.TeamBillableInfoParams;
+import slack.android.api.webapi.params.TeamIntegrationLogsParams;
+import slack.android.api.webapi.response.AccessLogResponse;
 import slack.android.api.webapi.response.ApiTestResponse;
 import slack.android.api.webapi.response.AuthRevokeResponse;
 import slack.android.api.webapi.response.AuthTestResponse;
@@ -81,6 +85,9 @@ import slack.android.api.webapi.response.SearchAllResponse;
 import slack.android.api.webapi.response.SearchFilesResponse;
 import slack.android.api.webapi.response.SearchMessagesResponse;
 import slack.android.api.webapi.response.StarListResponse;
+import slack.android.api.webapi.response.TeamBillableInfoResponse;
+import slack.android.api.webapi.response.TeamInfoResponse;
+import slack.android.api.webapi.response.TeamIntegrationLogsResponse;
 
 /**
  * Implement Slack Web Api. Use Retrofit to do it.
@@ -1200,5 +1207,54 @@ public class SlackWebApiAsync {
      */
     public void getStarsRemove(@NonNull StarRemoveParams params, Callback<BaseResponse> callback){
         service.starsRemove(params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method is used to get the access logs for users on a team.
+     *
+     * Requires scope: admin
+     *
+     * @param params
+     * @param callback
+     */
+    public void getTeamAccessLogs(@NonNull TeamAccessLogParams params, Callback<AccessLogResponse> callback){
+        service.teamAccessLogs(params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method lists billable information for each user on the team. Currently this consists
+     * solely of whether the user is subject to billing per Slack's Fair Billing policy.
+     *
+     * Requires scope: admin
+     *
+     * @param params
+     * @param callback
+     */
+    public void getTeamBillableInfo(@NonNull TeamBillableInfoParams params, Callback<TeamBillableInfoResponse> callback){
+        service.teamBillableInfo(params.build()).enqueue(callback);
+    }
+
+    /**
+     * This method provides information about your team.
+     *
+     * Requires scope: team:read
+     *
+     * @param callback
+     */
+    public void getTeamInfo(Callback<TeamInfoResponse> callback){
+        service.teamInfo().enqueue(callback);
+    }
+
+    /**
+     * This method lists the integration activity logs for a team, including when integrations are
+     * added, modified and removed. This method can only be called by Admins.
+     *
+     * Requires scope: admin
+     *
+     * @param params
+     * @param callback
+     */
+    public void getTeamIntegrationLogs(@NonNull TeamIntegrationLogsParams params, Callback<TeamIntegrationLogsResponse> callback){
+        service.teamIntegrationLogs(params.build()).enqueue(callback);
     }
 }
