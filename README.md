@@ -1,3 +1,5 @@
+[![Release](https://jitpack.io/v/User/Repo.svg)](https://jitpack.io/#flaviokreis/slack-android-api)
+
 # slack-android-api
 
 slack-android-api is a library to integrate Android project to [Slack Api](https://api.slack.com).
