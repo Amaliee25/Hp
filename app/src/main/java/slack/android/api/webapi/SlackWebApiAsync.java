@@ -8,6 +8,7 @@ import java.io.IOException;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -33,6 +34,7 @@ import slack.android.api.webapi.params.FileUploadParams;
 import slack.android.api.webapi.params.GroupListParams;
 import slack.android.api.webapi.params.HistoryParams;
 import slack.android.api.webapi.params.ImOpenParams;
+import slack.android.api.webapi.params.OauthAccessParams;
 import slack.android.api.webapi.params.PinAddParams;
 import slack.android.api.webapi.params.PinRemoveParams;
 import slack.android.api.webapi.params.ReactionAddParams;
@@ -42,6 +44,7 @@ import slack.android.api.webapi.params.ReactionRemoveParams;
 import slack.android.api.webapi.params.ReminderAddParams;
 import slack.android.api.webapi.params.RtmStartParams;
 import slack.android.api.webapi.params.SearchParams;
+import slack.android.api.webapi.params.SlackParamsConstants;
 import slack.android.api.webapi.params.StarAddParams;
 import slack.android.api.webapi.params.StarListParams;
 import slack.android.api.webapi.params.StarRemoveParams;
@@ -89,6 +92,7 @@ import slack.android.api.webapi.response.HistoryResponse;
 import slack.android.api.webapi.response.ImListResponse;
 import slack.android.api.webapi.response.ImOpenResponse;
 import slack.android.api.webapi.response.MpimCreateResponse;
+import slack.android.api.webapi.response.OauthAccessResponse;
 import slack.android.api.webapi.response.PinListResponse;
 import slack.android.api.webapi.response.ReactionGetResponse;
 import slack.android.api.webapi.response.ReactionListResponse;
@@ -111,6 +115,8 @@ import slack.android.api.webapi.response.UserProfileResponse;
 import slack.android.api.webapi.response.UsergroupListResponse;
 import slack.android.api.webapi.response.UsergroupResponse;
 import slack.android.api.webapi.response.UsergroupUserListResponse;
+import slack.android.api.webapi.utils.ProgressListener;
+import slack.android.api.webapi.utils.ProgressRequestBody;
 
 /**
  * Implement Slack Web Api. Use Retrofit to do it.
@@ -618,8 +624,11 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getFilesUpload(@NonNull String filename, @NonNull FileUploadParams params, Callback<FileResponse> callback){
-        service.filesUpload(filename, params.build()).enqueue(callback);
+    public void getFilesUpload(@NonNull java.io.File file, @NonNull String filename, @NonNull FileUploadParams params, ProgressListener listener, Callback<FileResponse> callback){
+        RequestBody fileToUpload = new ProgressRequestBody( RequestBody.create(MultipartBody.FORM, file), listener );
+        MultipartBody.Part body = MultipartBody.Part.createFormData(SlackParamsConstants.FILE, filename, fileToUpload);
+
+        service.filesUpload(body, filename, params.build()).enqueue(callback);
     }
 
     /**
@@ -979,6 +988,26 @@ public class SlackWebApiAsync {
      */
     public void getMpimOpen(@NonNull String users, Callback<MpimCreateResponse> callback){
         service.mpimOpen(users).enqueue(callback);
+    }
+
+    /**
+     * This method allows you to exchange a temporary OAuth code for an API access token. This is used as part of the OAuth authentication flow.
+     *
+     * As discussed in RFC 6749 it is possible to supply the Client ID and Client Secret using the
+     * HTTP Basic authentication scheme. If HTTP Basic authentication is used you do not need to
+     * supply the client_id and client_secret parameters as part of the request.
+     *
+     * Keep your tokens secure. Do not share tokens with users or anyone else.
+     *
+     * @param clientId Issued when you created your application.
+     * @param clientSecret Issued when you created your application.
+     * @param code The code param returned via the OAuth callback.
+     * @param params
+     * @param callback
+     */
+    public void getOauthAccess(@NonNull String clientId, @NonNull String clientSecret,
+                               @NonNull String code, @NonNull OauthAccessParams params, Callback<OauthAccessResponse> callback){
+        service.oauthAccess(clientId, clientSecret, code, params.build()).enqueue(callback);
     }
 
     /**

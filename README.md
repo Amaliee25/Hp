@@ -15,7 +15,7 @@ Add Slack Web Api methods; (in progress):
 |dnd (Do Not Disturb)               |OK          |
 |emoji                              |OK          |
 |files.comments                     |OK          |
-|files                              |In progress |
+|files                              |OK          |
 |group (team's private channels)    |OK          |
 |im (direct messages)               |OK          |
 |mipm (multiparty direct messages)  |OK          |

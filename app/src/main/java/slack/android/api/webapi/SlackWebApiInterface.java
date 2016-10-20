@@ -2,6 +2,7 @@ package slack.android.api.webapi;
 
 import java.util.Map;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -41,6 +42,7 @@ import slack.android.api.webapi.response.HistoryResponse;
 import slack.android.api.webapi.response.ImListResponse;
 import slack.android.api.webapi.response.ImOpenResponse;
 import slack.android.api.webapi.response.MpimCreateResponse;
+import slack.android.api.webapi.response.OauthAccessResponse;
 import slack.android.api.webapi.response.PinListResponse;
 import slack.android.api.webapi.response.ReactionGetResponse;
 import slack.android.api.webapi.response.ReactionListResponse;
@@ -205,15 +207,9 @@ public interface SlackWebApiInterface {
     @GET(SlackWebApiConstants.FILES_SHARED_PUBLIC_URL)
     Call<FileInfoResponse> filesSharedPublicUrl(@Field(SlackParamsConstants.FILE) String file);
 
-    //TODO
-    @FormUrlEncoded
-    @POST(SlackWebApiConstants.FILES_START_PARTIAL_UPLOAD)
-    Call<BaseResponse> filesStartPartialUpload();
-
-    //TODO
-    @FormUrlEncoded
+    @Multipart
     @POST(SlackWebApiConstants.FILES_UPLOAD)
-    Call<FileResponse> filesUpload(@Field(SlackParamsConstants.FILENAME) String filename, @QueryMap Map<String, String> params);
+    Call<FileResponse> filesUpload(@Part MultipartBody.Part file, @Field(SlackParamsConstants.FILENAME) String filename, @QueryMap Map<String, String> params);
 
     // group (team's private channels)
     @FormUrlEncoded
@@ -311,7 +307,8 @@ public interface SlackWebApiInterface {
 
     // oauth
     @GET(SlackWebApiConstants.OAUTH_ACCESS)
-    Call<BaseResponse> oauthAccess();
+    Call<OauthAccessResponse> oauthAccess(@Field(SlackParamsConstants.CLIENT_ID) String clientId, @Field(SlackParamsConstants.CLIENT_SECRET) String clientSecret,
+                                          @Field(SlackParamsConstants.CODE) String code, @QueryMap Map<String, String> params);
 
     // pins
     @GET(SlackWebApiConstants.PINS_ADD)

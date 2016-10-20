@@ -5,23 +5,23 @@ package slack.android.api.webapi.params;
  */
 public class FileUploadParams extends Params {
 
-    /**
-     * File contents via multipart/form-data. If omitting this parameter, you must submit content.
-     *
-     * @param file
-     */
-    public void setFile(String file){
-        put(SlackParamsConstants.FILE, file);
-    }
-
-    /**
-     * File contents via a POST variable. If omitting this parameter, you must provide a file.
-     *
-     * @param content
-     */
-    public void setContent(String content){
-        put(SlackParamsConstants.CONTENT, content);
-    }
+//    /**
+//     * File contents via multipart/form-data. If omitting this parameter, you must submit content.
+//     *
+//     * @param file
+//     */
+//    public void setFile(String file){
+//        put(SlackParamsConstants.FILE, file);
+//    }
+//
+//    /**
+//     * File contents via a POST variable. If omitting this parameter, you must provide a file.
+//     *
+//     * @param content
+//     */
+//    public void setContent(String content){
+//        put(SlackParamsConstants.CONTENT, content);
+//    }
 
     /**
      * A file type identifier.

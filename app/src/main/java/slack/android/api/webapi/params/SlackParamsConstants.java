@@ -52,6 +52,7 @@ public interface SlackParamsConstants {
     String RETURN_IM        = "return_im";
     String IS_FULL          = "is_full";
     String REMINDER         = "reminder";
+    String REDIRECT_URI     = "redirect_uri";
     String SIMPLE_LATEST    = "simple_latest";
     String SORT             = "sort";
     String SORT_DIR         = "sort_dir";
@@ -76,4 +77,7 @@ public interface SlackParamsConstants {
     String IMAGE            = "image";
     String PROFILE          = "profile";
     String VALUE            = "value";
+    String CLIENT_ID        = "client_id";
+    String CLIENT_SECRET    = "client_secret";
+    String CODE             = "code";
 }
