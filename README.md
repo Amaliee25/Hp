@@ -1,4 +1,4 @@
-[![Release](https://jitpack.io/v/User/Repo.svg)](https://jitpack.io/#flaviokreis/slack-android-api)
+[![](https://jitpack.io/v/flaviokreis/slack-android-api.svg)](https://jitpack.io/#flaviokreis/slack-android-api)
 
 # slack-android-api
 
