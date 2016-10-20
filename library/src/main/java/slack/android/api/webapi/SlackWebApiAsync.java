@@ -129,6 +129,8 @@ public class SlackWebApiAsync {
 
     private static Map<String, SlackWebApiAsync> INSTANCES = new HashMap<>();
 
+    public Api api;
+
     public static SlackWebApiAsync getService(@NonNull String authToken){
         if(!INSTANCES.containsKey(authToken)){
             SlackWebApiAsync async = new SlackWebApiAsync(authToken);
@@ -158,6 +160,8 @@ public class SlackWebApiAsync {
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         service = retrofit.create(SlackWebApiInterface.class);
+
+        api = new Api(service);
     }
 
     /**
