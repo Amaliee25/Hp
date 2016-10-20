@@ -2,37 +2,9 @@
 
 slack-android-api is a library to integrate Android project to [Slack Api](https://api.slack.com).
 
-## Alpha 1
-Add Slack Web Api methods; (in progress):
-
-|Methods                            |Status      |
-|-----------------------------------|-----------:|
-|api                                |OK          |
-|auth                               |OK          |
-|bots                               |OK          |
-|channels                           |OK          |
-|chat                               |OK          |
-|dnd (Do Not Disturb)               |OK          |
-|emoji                              |OK          |
-|files.comments                     |OK          |
-|files                              |OK          |
-|group (team's private channels)    |OK          |
-|im (direct messages)               |OK          |
-|mipm (multiparty direct messages)  |OK          |
-|oauth                              |In progress |
-|pins                               |OK          |
-|reactions                          |OK          |
-|reminders                          |OK          |
-|rtm                                |OK          |
-|search                             |OK          |
-|stars                              |OK          |
-|team                               |OK          |
-|team.profile                       |OK          |
-|usergroups                         |OK          |
-|usergroups.users                   |OK          |
-|users                              |OK          |
-|users.profile                      |OK          |
-
+## Version 0.1 (Alpha)
+Created Library;
+Added Slack Web Api methods;
 
 ## Usage
 
@@ -43,7 +15,7 @@ Add internet permission in AndroidManifest
 
 Call the SlackWebApiAsync
 ```java
-SlackWebApiAsync.getService("YOUR_TOKEN").getApiTest(new ApiTestParams(), new Callback<ApiTestResponse>() {
+SlackWebApiAsync.getService("YOUR_TOKEN").apiTest(new ApiTestParams(), new Callback<ApiTestResponse>() {
     @Override
     public void onResponse(Call<ApiTestResponse> call, Response<ApiTestResponse> response) {
         if(response.isSuccessful()){
