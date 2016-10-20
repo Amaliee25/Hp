@@ -4,6 +4,8 @@ import android.support.annotation.NonNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -122,23 +124,24 @@ import slack.android.api.webapi.utils.ProgressRequestBody;
  * Implement Slack Web Api. Use Retrofit to do it.
  */
 public class SlackWebApiAsync {
-    private static SlackWebApiInterface service;
+    private SlackWebApiInterface service;
     private final String token;
-    private static OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
-    private static SlackWebApiAsync INSTANCE;
+    private static Map<String, SlackWebApiAsync> INSTANCES = new HashMap<>();
 
     public static SlackWebApiAsync getService(@NonNull String authToken){
-        if(INSTANCE == null){
-            INSTANCE = new SlackWebApiAsync(authToken);
+        if(!INSTANCES.containsKey(authToken)){
+            SlackWebApiAsync async = new SlackWebApiAsync(authToken);
+            INSTANCES.put(authToken, async);
         }
-        return INSTANCE;
+        return INSTANCES.get(authToken);
     }
 
     public SlackWebApiAsync(@NonNull final String authToken) {
         token = authToken;
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.interceptors().add(interceptor);
         builder.interceptors().add(new Interceptor() {
             @Override
@@ -153,6 +156,7 @@ public class SlackWebApiAsync {
         });
         Retrofit retrofit = new Retrofit.Builder().baseUrl(SlackWebApiConstants.SLACK_BASE_WEB_API_URL).client(builder.build())
                 .addConverterFactory(GsonConverterFactory.create()).build();
+
         service = retrofit.create(SlackWebApiInterface.class);
     }
 
@@ -162,7 +166,7 @@ public class SlackWebApiAsync {
      * @param params @see {@link slack.android.api.webapi.params.ApiTestParams}
      * @param callback
      */
-    public void getApiTest(@NonNull ApiTestParams params, Callback<ApiTestResponse> callback){
+    public void apiTest(@NonNull ApiTestParams params, Callback<ApiTestResponse> callback){
         service.apiTest(params.build()).enqueue(callback);
     }
 
@@ -172,7 +176,7 @@ public class SlackWebApiAsync {
      * @param params @see {@link slack.android.api.webapi.params.AuthRevokeParams}
      * @param callback
      */
-    public void getAuthRevoke(@NonNull AuthRevokeParams params, Callback<AuthRevokeResponse> callback){
+    public void authRevoke(@NonNull AuthRevokeParams params, Callback<AuthRevokeResponse> callback){
         service.authRevoke(params.build()).enqueue(callback);
     }
 
@@ -184,7 +188,7 @@ public class SlackWebApiAsync {
      * @see <a href="https://api.slack.com/methods/auth.test">https://api.slack.com/methods/auth.test</a>
      * @param callback
      */
-    public void getAuthTest(Callback<AuthTestResponse> callback){
+    public void authTest(Callback<AuthTestResponse> callback){
         service.authTest().enqueue(callback);
     }
 
@@ -198,7 +202,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getBotsInfo(@NonNull BotsInfoParams params, Callback<BotsInfoResponse> callback){
+    public void botsInfo(@NonNull BotsInfoParams params, Callback<BotsInfoResponse> callback){
         service.botInfo(params.build()).enqueue(callback);
     }
 
@@ -210,7 +214,7 @@ public class SlackWebApiAsync {
      * @param channelId Channel to archive
      * @param callback
      */
-    public void getChannelsArchive(@NonNull String channelId, Callback<BaseResponse> callback){
+    public void channelsArchive(@NonNull String channelId, Callback<BaseResponse> callback){
         service.channelsArchive(channelId).enqueue(callback);
     }
 
@@ -228,7 +232,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getChannelsCreate(@NonNull String channelName, @NonNull ChannelCreateParams params, Callback<ChannelResponse> callback){
+    public void channelsCreate(@NonNull String channelName, @NonNull ChannelCreateParams params, Callback<ChannelResponse> callback){
         service.channelsCreate(channelName, params.build()).enqueue(callback);
     }
 
@@ -241,7 +245,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getChannelsHistory(@NonNull String channelId, @NonNull HistoryParams params, Callback<HistoryResponse> callback){
+    public void channelsHistory(@NonNull String channelId, @NonNull HistoryParams params, Callback<HistoryResponse> callback){
         service.channelsHistory(channelId, params.build()).enqueue(callback);
     }
 
@@ -253,7 +257,7 @@ public class SlackWebApiAsync {
      * @param channelId Channel to get info on
      * @param callback
      */
-    public void getChannelsInfo(@NonNull String channelId, Callback<ChannelResponse> callback){
+    public void channelsInfo(@NonNull String channelId, Callback<ChannelResponse> callback){
         service.channelsInfo(channelId).enqueue(callback);
     }
 
@@ -266,7 +270,7 @@ public class SlackWebApiAsync {
      * @param userId User to invite to channel.
      * @param callback
      */
-    public void getChannelsInvite(@NonNull String channelId, @NonNull String userId, Callback<ChannelResponse> callback){
+    public void channelsInvite(@NonNull String channelId, @NonNull String userId, Callback<ChannelResponse> callback){
         service.channelsInvite(channelId, userId).enqueue(callback);
     }
 
@@ -278,7 +282,7 @@ public class SlackWebApiAsync {
      * @param channelName Name of channel to join
      * @param callback
      */
-    public void getChannelsJoin(@NonNull String channelName, Callback<ChannelResponse> callback){
+    public void channelsJoin(@NonNull String channelName, Callback<ChannelResponse> callback){
         service.channelsJoin(channelName).enqueue(callback);
     }
 
@@ -291,7 +295,7 @@ public class SlackWebApiAsync {
      * @param userId User to remove from channel.
      * @param callback
      */
-    public void getChannelsKick(@NonNull String channelId, @NonNull String userId, Callback<BaseResponse> callback){
+    public void channelsKick(@NonNull String channelId, @NonNull String userId, Callback<BaseResponse> callback){
         service.channelsKick(channelId, userId).enqueue(callback);
     }
 
@@ -301,7 +305,7 @@ public class SlackWebApiAsync {
      * @param channelId Channel to leave
      * @param callback
      */
-    public void getChannelLeave(@NonNull String channelId, Callback<BaseResponse> callback){
+    public void channelsLeave(@NonNull String channelId, Callback<BaseResponse> callback){
         service.channelsLeave(channelId).enqueue(callback);
     }
 
@@ -315,7 +319,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getChannelList(@NonNull ChannelListParams params, Callback<ChannelListResponse> callback){
+    public void channelsList(@NonNull ChannelListParams params, Callback<ChannelListResponse> callback){
         service.channelsList(params.build()).enqueue(callback);
     }
 
@@ -328,7 +332,7 @@ public class SlackWebApiAsync {
      * @param ts Timestamp of the most recently seen message.
      * @param callback
      */
-    public void getChannelMark(@NonNull String channelId, @NonNull String ts, Callback<BaseResponse> callback){
+    public void channelsMark(@NonNull String channelId, @NonNull String ts, Callback<BaseResponse> callback){
         service.channelsMark(channelId, ts).enqueue(callback);
     }
 
@@ -344,7 +348,7 @@ public class SlackWebApiAsync {
      * @param name New name for channel.
      * @param callback
      */
-    public void getChannelRename(@NonNull String channelId, @NonNull String name, Callback<ChannelResponse> callback){
+    public void channelsRename(@NonNull String channelId, @NonNull String name, Callback<ChannelResponse> callback){
         service.channelsRename(channelId, name).enqueue(callback);
     }
 
@@ -357,7 +361,7 @@ public class SlackWebApiAsync {
      * @param purpose The new purpose
      * @param callback
      */
-    public void getChannelSetPurpose(@NonNull String channelId, @NonNull String purpose, Callback<ChannelPurposeResponse> callback){
+    public void channelsSetPurpose(@NonNull String channelId, @NonNull String purpose, Callback<ChannelPurposeResponse> callback){
         service.channelsSetPurpose(channelId, purpose).enqueue(callback);
     }
 
@@ -371,7 +375,7 @@ public class SlackWebApiAsync {
      * @param topic The new topic
      * @param callback
      */
-    public void getChannelSetTopic(@NonNull String channelId, @NonNull String topic, Callback<ChannelTopicResponse> callback){
+    public void channelsSetTopic(@NonNull String channelId, @NonNull String topic, Callback<ChannelTopicResponse> callback){
         service.channelsSetTopic(channelId, topic).enqueue(callback);
     }
 
@@ -383,7 +387,7 @@ public class SlackWebApiAsync {
      * @param channelId Channel to unarchive
      * @param callback
      */
-    public void getChannelUnarchive(@NonNull String channelId, Callback<BaseResponse> callback){
+    public void channelsUnarchive(@NonNull String channelId, Callback<BaseResponse> callback){
         service.channelsUnarchive(channelId).enqueue(callback);
     }
 
@@ -397,7 +401,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getChatDelete(@NonNull String ts, @NonNull String channelId, @NonNull ChatParams params, Callback<ChatResponse> callback){
+    public void chatDelete(@NonNull String ts, @NonNull String channelId, @NonNull ChatParams params, Callback<ChatResponse> callback){
         service.chatDelete(ts, channelId, params.build()).enqueue(callback);
     }
 
@@ -410,7 +414,7 @@ public class SlackWebApiAsync {
      * @param text Text of the message to send.
      * @param callback
      */
-    public void getChatMeMessage(@NonNull String channelId, @NonNull String text, Callback<ChatResponse> callback){
+    public void chatMeMessage(@NonNull String channelId, @NonNull String text, Callback<ChatResponse> callback){
         service.chatMeMessage(channelId, text).enqueue(callback);
     }
 
@@ -424,7 +428,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getChatPostMessage(@NonNull String channelId, @NonNull String text, ChatPostParams params, Callback<ChatPostResponse> callback){
+    public void chatPostMessage(@NonNull String channelId, @NonNull String text, ChatPostParams params, Callback<ChatPostResponse> callback){
         service.chatPostMessage(channelId, text, params.build()).enqueue(callback);
     }
 
@@ -439,7 +443,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getChatUpdate(@NonNull String ts, @NonNull String channelId, @NonNull String text, ChatUpdateParams params, Callback<ChatUpdateResponse> callback){
+    public void chatUpdate(@NonNull String ts, @NonNull String channelId, @NonNull String text, ChatUpdateParams params, Callback<ChatUpdateResponse> callback){
         service.chatUpdate(ts, channelId, text, params.build()).enqueue(callback);
     }
 
@@ -450,7 +454,7 @@ public class SlackWebApiAsync {
      *
      * @param callback
      */
-    public void getDndEndDnd(Callback<BaseResponse> callback){
+    public void dndEndDnd(Callback<BaseResponse> callback){
         service.dndEndDnd().enqueue(callback);
     }
 
@@ -461,7 +465,7 @@ public class SlackWebApiAsync {
      *
      * @param callback
      */
-    public void getDndEndSnooze(Callback<DndEndSnoozeResponse> callback){
+    public void dndEndSnooze(Callback<DndEndSnoozeResponse> callback){
         service.dndEndSnooze().enqueue(callback);
     }
 
@@ -473,7 +477,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getDndInfo(@NonNull DndInfoParams params, Callback<DndInfoResponse> callback){
+    public void dndInfo(@NonNull DndInfoParams params, Callback<DndInfoResponse> callback){
         service.dndInfo(params.build()).enqueue(callback);
     }
 
@@ -486,7 +490,7 @@ public class SlackWebApiAsync {
      * @param minutes Number of minutes, from now, to snooze until.
      * @param callback
      */
-    public void getDndSetSnooze(int minutes, Callback<DndSetSnoozeResponse> callback){
+    public void dndSetSnooze(int minutes, Callback<DndSetSnoozeResponse> callback){
         service.dndSetSnooze(String.valueOf(minutes)).enqueue(callback);
     }
 
@@ -498,7 +502,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getDndTeamInfo(@NonNull DndTeamInfoParams params, Callback<DndTeamInfoResponse> callback){
+    public void dndTeamInfo(@NonNull DndTeamInfoParams params, Callback<DndTeamInfoResponse> callback){
         service.dndTeamInfo(params.build()).enqueue(callback);
     }
 
@@ -509,7 +513,7 @@ public class SlackWebApiAsync {
      *
      * @param callback
      */
-    public void getEmojiList(Callback<EmojiListResponse> callback){
+    public void emojiList(Callback<EmojiListResponse> callback){
         service.emojList().enqueue(callback);
     }
 
@@ -523,7 +527,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getFileCommentAdd(@NonNull String fileId, @NonNull String comment, @NonNull FileCommentAddParams params, Callback<FileCommentResponse> callback){
+    public void filesCommentsAdd(@NonNull String fileId, @NonNull String comment, @NonNull FileCommentAddParams params, Callback<FileCommentResponse> callback){
         service.filesCommentsAdd(fileId, comment, params.build()).enqueue(callback);
     }
 
@@ -536,7 +540,7 @@ public class SlackWebApiAsync {
      * @param commentId The comment to delete.
      * @param callback
      */
-    public void getFileCommentDelete(@NonNull String fileId, @NonNull String commentId, Callback<BaseResponse> callback){
+    public void filesCommentsDelete(@NonNull String fileId, @NonNull String commentId, Callback<BaseResponse> callback){
         service.filesCommentsDelete(fileId, commentId).enqueue(callback);
     }
 
@@ -550,7 +554,7 @@ public class SlackWebApiAsync {
      * @param comment Text of the comment to edit.
      * @param callback
      */
-    public void getFileCommentEdit(@NonNull String fileId, @NonNull String commentId, @NonNull String comment, Callback<FileCommentResponse> callback){
+    public void filesCommentsEdit(@NonNull String fileId, @NonNull String commentId, @NonNull String comment, Callback<FileCommentResponse> callback){
         service.filesCommentsEdit(fileId, commentId, comment).enqueue(callback);
     }
 
@@ -562,7 +566,7 @@ public class SlackWebApiAsync {
      * @param fileId ID of file to delete.
      * @param callback
      */
-    public void getFilesDelete(@NonNull String fileId, Callback<BaseResponse> callback){
+    public void filesDelete(@NonNull String fileId, Callback<BaseResponse> callback){
         service.filesDelete(fileId).enqueue(callback);
     }
 
@@ -575,7 +579,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getFilesInfo(@NonNull String fileId, @NonNull FileInfoParams params, Callback<FileInfoResponse> callback){
+    public void filesInfo(@NonNull String fileId, @NonNull FileInfoParams params, Callback<FileInfoResponse> callback){
         service.filesInfo(fileId, params.build()).enqueue(callback);
     }
 
@@ -587,7 +591,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getFilesList(@NonNull FileListParams params, Callback<FileListResponse> callback){
+    public void filesList(@NonNull FileListParams params, Callback<FileListResponse> callback){
         service.filesList(params.build()).enqueue(callback);
     }
 
@@ -599,7 +603,7 @@ public class SlackWebApiAsync {
      * @param fileId File to revoke
      * @param callback
      */
-    public void getFilesRevokePublicUrl(@NonNull String fileId, Callback<FileResponse> callback){
+    public void filesRevokePublicUrl(@NonNull String fileId, Callback<FileResponse> callback){
         service.filesRevokePublicUrl(fileId).enqueue(callback);
     }
 
@@ -611,7 +615,7 @@ public class SlackWebApiAsync {
      * @param fileId File to share
      * @param callback
      */
-    public void getFilesSharedPublicUrl(@NonNull String fileId, Callback<FileInfoResponse> callback){
+    public void filesSharedPublicUrl(@NonNull String fileId, Callback<FileInfoResponse> callback){
         service.filesSharedPublicUrl(fileId).enqueue(callback);
     }
 
@@ -624,7 +628,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getFilesUpload(@NonNull java.io.File file, @NonNull String filename, @NonNull FileUploadParams params, ProgressListener listener, Callback<FileResponse> callback){
+    public void filesUpload(@NonNull java.io.File file, @NonNull String filename, @NonNull FileUploadParams params, ProgressListener listener, Callback<FileResponse> callback){
         RequestBody fileToUpload = new ProgressRequestBody( RequestBody.create(MultipartBody.FORM, file), listener );
         MultipartBody.Part body = MultipartBody.Part.createFormData(SlackParamsConstants.FILE, filename, fileToUpload);
 
@@ -639,7 +643,7 @@ public class SlackWebApiAsync {
      * @param channelId Private channel to archive
      * @param callback
      */
-    public void getGroupsArchive(@NonNull String channelId, Callback<BaseResponse> callback){
+    public void groupsArchive(@NonNull String channelId, Callback<BaseResponse> callback){
         service.groupsArchive(channelId).enqueue(callback);
     }
 
@@ -651,7 +655,7 @@ public class SlackWebApiAsync {
      * @param channelId Private channel to close.
      * @param callback
      */
-    public void getGroupsClose(@NonNull String channelId, Callback<GroupCloseResponse> callback){
+    public void groupsClose(@NonNull String channelId, Callback<GroupCloseResponse> callback){
         service.groupsClose(channelId).enqueue(callback);
     }
 
@@ -663,7 +667,7 @@ public class SlackWebApiAsync {
      * @param name Name of private channel to create
      * @param callback
      */
-    public void getGroupsCreate(@NonNull String name, Callback<GroupCreateResponse> callback){
+    public void groupsCreate(@NonNull String name, Callback<GroupCreateResponse> callback){
         service.groupsCreate(name).enqueue(callback);
     }
 
@@ -688,7 +692,7 @@ public class SlackWebApiAsync {
      * @param channelId Private channel to clone and archive.
      * @param callback
      */
-    public void getGroupsCreateChild(@NonNull String channelId, Callback<GroupCreateResponse> callback){
+    public void groupsCreateChild(@NonNull String channelId, Callback<GroupCreateResponse> callback){
         service.groupsCreateChild(channelId).enqueue(callback);
     }
 
@@ -703,7 +707,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getGroupsHistory(@NonNull String channelId, @NonNull HistoryParams params, Callback<HistoryResponse> callback){
+    public void groupsHistory(@NonNull String channelId, @NonNull HistoryParams params, Callback<HistoryResponse> callback){
         service.groupsHistory(channelId, params.build()).enqueue(callback);
     }
 
@@ -715,7 +719,7 @@ public class SlackWebApiAsync {
      * @param channelId Private channel to get info on
      * @param callback
      */
-    public void getGroupsInfo(@NonNull String channelId, Callback<GroupCreateResponse> callback){
+    public void groupsInfo(@NonNull String channelId, Callback<GroupCreateResponse> callback){
         service.groupsInfo(channelId).enqueue(callback);
     }
 
@@ -732,7 +736,7 @@ public class SlackWebApiAsync {
      * @param userId User to invite.
      * @param callback
      */
-    public void getGroupsInvite(@NonNull String channelId, @NonNull String userId, Callback<GroupCreateResponse> callback){
+    public void groupsInvite(@NonNull String channelId, @NonNull String userId, Callback<GroupCreateResponse> callback){
         service.groupsInvite(channelId, userId).enqueue(callback);
     }
 
@@ -745,7 +749,7 @@ public class SlackWebApiAsync {
      * @param userId User to remove from private channel.
      * @param callback
      */
-    public void getGroupsKick(@NonNull String channelId, @NonNull String userId, Callback<BaseResponse> callback){
+    public void groupsKick(@NonNull String channelId, @NonNull String userId, Callback<BaseResponse> callback){
         service.groupsKick(channelId, userId).enqueue(callback);
     }
 
@@ -757,7 +761,7 @@ public class SlackWebApiAsync {
      * @param channelId Private channel to leave
      * @param callback
      */
-    public void getGroupsLeave(@NonNull String channelId, Callback<BaseResponse> callback){
+    public void groupsLeave(@NonNull String channelId, Callback<BaseResponse> callback){
         service.groupsLeave(channelId).enqueue(callback);
     }
 
@@ -771,7 +775,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getGroupsList(@NonNull GroupListParams params, Callback<GroupListResponse> callback){
+    public void groupsList(@NonNull GroupListParams params, Callback<GroupListResponse> callback){
         service.groupsList(params.build()).enqueue(callback);
     }
 
@@ -784,7 +788,7 @@ public class SlackWebApiAsync {
      * @param ts Timestamp of the most recently seen message.
      * @param callback
      */
-    public void getGroupsMark(@NonNull String channelId, @NonNull String ts, Callback<BaseResponse> callback){
+    public void groupsMark(@NonNull String channelId, @NonNull String ts, Callback<BaseResponse> callback){
         service.groupsMark(channelId, ts).enqueue(callback);
     }
 
@@ -796,7 +800,7 @@ public class SlackWebApiAsync {
      * @param channelId Private channel to open.
      * @param callback
      */
-    public void getGroupsOpen(@NonNull String channelId, Callback<BaseResponse> callback){
+    public void groupsOpen(@NonNull String channelId, Callback<BaseResponse> callback){
         service.groupsOpen(channelId).enqueue(callback);
     }
 
@@ -809,7 +813,7 @@ public class SlackWebApiAsync {
      * @param name New name for private channel.
      * @param callback
      */
-    public void getGroupsRename(@NonNull String channelId, @NonNull String name, Callback<GroupCreateResponse> callback){
+    public void groupsRename(@NonNull String channelId, @NonNull String name, Callback<GroupCreateResponse> callback){
         service.groupsRename(channelId, name).enqueue(callback);
     }
 
@@ -823,7 +827,7 @@ public class SlackWebApiAsync {
      * @param purpose The new purpose
      * @param callback
      */
-    public void getGroupsSetPurpose(@NonNull String channelId, @NonNull String purpose, Callback<ChannelPurposeResponse> callback){
+    public void groupsSetPurpose(@NonNull String channelId, @NonNull String purpose, Callback<ChannelPurposeResponse> callback){
         service.groupsSetPurpose(channelId, purpose).enqueue(callback);
     }
 
@@ -837,7 +841,7 @@ public class SlackWebApiAsync {
      * @param topic The new topic
      * @param callback
      */
-    public void getGroupsSetTopic(@NonNull String channelId, @NonNull String topic, Callback<ChannelTopicResponse> callback){
+    public void groupsSetTopic(@NonNull String channelId, @NonNull String topic, Callback<ChannelTopicResponse> callback){
         service.groupsSetTopic(channelId, topic).enqueue(callback);
     }
 
@@ -849,7 +853,7 @@ public class SlackWebApiAsync {
      * @param channelId Private channel to unarchive
      * @param callback
      */
-    public void getGroupsUnarchive(@NonNull String channelId, Callback<BaseResponse> callback){
+    public void groupsUnarchive(@NonNull String channelId, Callback<BaseResponse> callback){
         service.groupsUnarchive(channelId).enqueue(callback);
     }
 
@@ -861,7 +865,7 @@ public class SlackWebApiAsync {
      * @param channelId Direct message channel to close.
      * @param callback
      */
-    public void getImClose(@NonNull String channelId, Callback<BaseResponse> callback){
+    public void imClose(@NonNull String channelId, Callback<BaseResponse> callback){
         service.imClose(channelId).enqueue(callback);
     }
 
@@ -876,7 +880,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getImHistory(@NonNull String channelId, @NonNull HistoryParams params, Callback<HistoryResponse> callback){
+    public void imHistory(@NonNull String channelId, @NonNull HistoryParams params, Callback<HistoryResponse> callback){
         service.imHistory(channelId, params.build()).enqueue(callback);
     }
 
@@ -887,7 +891,7 @@ public class SlackWebApiAsync {
      *
      * @param callback
      */
-    public void getImList(Callback<ImListResponse> callback){
+    public void imList(Callback<ImListResponse> callback){
         service.imList().enqueue(callback);
     }
 
@@ -900,7 +904,7 @@ public class SlackWebApiAsync {
      * @param ts Timestamp of the most recently seen message.
      * @param callback
      */
-    public void getImMark(@NonNull String channelId, @NonNull String ts, Callback<BaseResponse> callback){
+    public void imMark(@NonNull String channelId, @NonNull String ts, Callback<BaseResponse> callback){
         service.imMark(channelId, ts).enqueue(callback);
     }
 
@@ -916,7 +920,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getImOpen(@NonNull String userId, @NonNull ImOpenParams params, Callback<ImOpenResponse> callback){
+    public void imOpen(@NonNull String userId, @NonNull ImOpenParams params, Callback<ImOpenResponse> callback){
         service.imOpen(userId, params.build()).enqueue(callback);
     }
 
@@ -928,7 +932,7 @@ public class SlackWebApiAsync {
      * @param channelId MPIM to close.
      * @param callback
      */
-    public void getMpimClose(@NonNull String channelId, Callback<BaseResponse> callback){
+    public void mpimClose(@NonNull String channelId, Callback<BaseResponse> callback){
         service.mpimClose(channelId).enqueue(callback);
     }
 
@@ -944,7 +948,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getMpimHistory(@NonNull String channelId, @NonNull HistoryParams params, Callback<HistoryResponse> callback){
+    public void mpimHistory(@NonNull String channelId, @NonNull HistoryParams params, Callback<HistoryResponse> callback){
         service.mpimHistory(channelId, params.build()).enqueue(callback);
     }
 
@@ -955,7 +959,7 @@ public class SlackWebApiAsync {
      *
      * @param callback
      */
-    public void getMpimList(Callback<GroupListResponse> callback){
+    public void mpimList(Callback<GroupListResponse> callback){
         service.mpimList().enqueue(callback);
     }
 
@@ -968,7 +972,7 @@ public class SlackWebApiAsync {
      * @param ts Timestamp of the most recently seen message.
      * @param callback
      */
-    public void getMpimMark(@NonNull String channelId, @NonNull String ts, Callback<BaseResponse> callback){
+    public void mpimMark(@NonNull String channelId, @NonNull String ts, Callback<BaseResponse> callback){
         service.mpimMark(channelId, ts).enqueue(callback);
     }
 
@@ -986,7 +990,7 @@ public class SlackWebApiAsync {
      *
      * @param callback
      */
-    public void getMpimOpen(@NonNull String users, Callback<MpimCreateResponse> callback){
+    public void mpimOpen(@NonNull String users, Callback<MpimCreateResponse> callback){
         service.mpimOpen(users).enqueue(callback);
     }
 
@@ -1005,7 +1009,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getOauthAccess(@NonNull String clientId, @NonNull String clientSecret,
+    public void oauthAccess(@NonNull String clientId, @NonNull String clientSecret,
                                @NonNull String code, @NonNull OauthAccessParams params, Callback<OauthAccessResponse> callback){
         service.oauthAccess(clientId, clientSecret, code, params.build()).enqueue(callback);
     }
@@ -1021,7 +1025,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getPinsAdd(@NonNull String channelId, @NonNull PinAddParams params, Callback<BaseResponse> callback){
+    public void pinsAdd(@NonNull String channelId, @NonNull PinAddParams params, Callback<BaseResponse> callback){
         service.pinsAdd(channelId, params.build()).enqueue(callback);
     }
 
@@ -1033,7 +1037,7 @@ public class SlackWebApiAsync {
      * @param channelId Channel to get pinned items for.
      * @param callback
      */
-    public void getPinList(@NonNull String channelId, Callback<PinListResponse> callback){
+    public void pinsList(@NonNull String channelId, Callback<PinListResponse> callback){
         service.pinsList(channelId).enqueue(callback);
     }
 
@@ -1048,7 +1052,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getPinsRemove(@NonNull String channelId, @NonNull PinRemoveParams params, Callback<BaseResponse> callback){
+    public void pinsRemove(@NonNull String channelId, @NonNull PinRemoveParams params, Callback<BaseResponse> callback){
         service.pinsRemove(channelId, params.build()).enqueue(callback);
     }
 
@@ -1063,7 +1067,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getReactionAdd(@NonNull String name, @NonNull ReactionAddParams params, Callback<BaseResponse> callback){
+    public void reactionsAdd(@NonNull String name, @NonNull ReactionAddParams params, Callback<BaseResponse> callback){
         service.reactionsAdd(name, params.build()).enqueue(callback);
     }
 
@@ -1076,7 +1080,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getReactionGet(@NonNull ReactionGetParams params, Callback<ReactionGetResponse> callback){
+    public void reactionsGet(@NonNull ReactionGetParams params, Callback<ReactionGetResponse> callback){
         service.reactionsGet(params.build()).enqueue(callback);
     }
 
@@ -1089,7 +1093,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getReactionList(@NonNull ReactionListParams params, Callback<ReactionListResponse> callback){
+    public void reactionsList(@NonNull ReactionListParams params, Callback<ReactionListResponse> callback){
         service.reactionsList(params.build()).enqueue(callback);
     }
 
@@ -1104,7 +1108,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getReactionRemove(@NonNull String name, @NonNull ReactionRemoveParams params, Callback<BaseResponse> callback){
+    public void reactionsRemove(@NonNull String name, @NonNull ReactionRemoveParams params, Callback<BaseResponse> callback){
         service.reactionsRemove(name, params.build()).enqueue(callback);
     }
 
@@ -1120,7 +1124,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getRemindersAdd(@NonNull String text, @NonNull String time, @NonNull ReminderAddParams params, Callback<ReminderAddResponse> callback){
+    public void remindersAdd(@NonNull String text, @NonNull String time, @NonNull ReminderAddParams params, Callback<ReminderAddResponse> callback){
         service.remindersAdd(text, time, params.build()).enqueue(callback);
     }
 
@@ -1131,7 +1135,7 @@ public class SlackWebApiAsync {
      *
      * @param reminderId The ID of the reminder to be marked as complete
      */
-    public void getRemindersComplete(@NonNull String reminderId, Callback<BaseResponse> callback){
+    public void remindersComplete(@NonNull String reminderId, Callback<BaseResponse> callback){
         service.remindersComplete(reminderId).enqueue(callback);
     }
 
@@ -1143,7 +1147,7 @@ public class SlackWebApiAsync {
      * @param reminderId The ID of the reminder
      * @param callback
      */
-    public void getRemindersDelete(@NonNull String reminderId, Callback<BaseResponse> callback){
+    public void remindersDelete(@NonNull String reminderId, Callback<BaseResponse> callback){
         service.remindersDelete(reminderId).enqueue(callback);
     }
 
@@ -1155,7 +1159,7 @@ public class SlackWebApiAsync {
      * @param reminderId The ID of the reminder
      * @param callback
      */
-    public void getRemindersInfo(@NonNull String reminderId, Callback<ReminderAddResponse> callback){
+    public void remindersInfo(@NonNull String reminderId, Callback<ReminderAddResponse> callback){
         service.remindersInfo(reminderId).enqueue(callback);
     }
 
@@ -1166,7 +1170,7 @@ public class SlackWebApiAsync {
      *
      * @param callback
      */
-    public void getRemindersList(Callback<ReminderListResponse> callback){
+    public void remindersList(Callback<ReminderListResponse> callback){
         service.remindersList().enqueue(callback);
     }
 
@@ -1178,7 +1182,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getRtmStart(@NonNull RtmStartParams params, Callback<RtmStartResponse> callback){
+    public void rtmStart(@NonNull RtmStartParams params, Callback<RtmStartResponse> callback){
         service.rtmStart(params.build()).enqueue(callback);
     }
 
@@ -1191,7 +1195,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getSearchAll(@NonNull String query, @NonNull SearchParams params, Callback<SearchAllResponse> callback){
+    public void searchAll(@NonNull String query, @NonNull SearchParams params, Callback<SearchAllResponse> callback){
         service.searchAll(query, params.build()).enqueue(callback);
     }
 
@@ -1204,7 +1208,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getSearchFiles(@NonNull String query, @NonNull SearchParams params, Callback<SearchFilesResponse> callback){
+    public void searchFiles(@NonNull String query, @NonNull SearchParams params, Callback<SearchFilesResponse> callback){
         service.searchFiles(query, params.build()).enqueue(callback);
     }
 
@@ -1217,7 +1221,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getSearchMessages(@NonNull String query, @NonNull SearchParams params, Callback<SearchMessagesResponse> callback){
+    public void searchMessages(@NonNull String query, @NonNull SearchParams params, Callback<SearchMessagesResponse> callback){
         service.searchMessages(query, params.build()).enqueue(callback);
     }
 
@@ -1231,7 +1235,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getStarsAdd(@NonNull StarAddParams params, Callback<BaseResponse> callback){
+    public void starsAdd(@NonNull StarAddParams params, Callback<BaseResponse> callback){
         service.starsAdd(params.build()).enqueue(callback);
     }
 
@@ -1243,7 +1247,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getStarsList(@NonNull StarListParams params, Callback<StarListResponse> callback){
+    public void starsList(@NonNull StarListParams params, Callback<StarListResponse> callback){
         service.starsList(params.build()).enqueue(callback);
     }
 
@@ -1257,7 +1261,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getStarsRemove(@NonNull StarRemoveParams params, Callback<BaseResponse> callback){
+    public void starsRemove(@NonNull StarRemoveParams params, Callback<BaseResponse> callback){
         service.starsRemove(params.build()).enqueue(callback);
     }
 
@@ -1269,7 +1273,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getTeamAccessLogs(@NonNull TeamAccessLogParams params, Callback<AccessLogResponse> callback){
+    public void teamAccessLogs(@NonNull TeamAccessLogParams params, Callback<AccessLogResponse> callback){
         service.teamAccessLogs(params.build()).enqueue(callback);
     }
 
@@ -1282,7 +1286,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getTeamBillableInfo(@NonNull TeamBillableInfoParams params, Callback<TeamBillableInfoResponse> callback){
+    public void teamBillableInfo(@NonNull TeamBillableInfoParams params, Callback<TeamBillableInfoResponse> callback){
         service.teamBillableInfo(params.build()).enqueue(callback);
     }
 
@@ -1293,7 +1297,7 @@ public class SlackWebApiAsync {
      *
      * @param callback
      */
-    public void getTeamInfo(Callback<TeamInfoResponse> callback){
+    public void teamInfo(Callback<TeamInfoResponse> callback){
         service.teamInfo().enqueue(callback);
     }
 
@@ -1306,7 +1310,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getTeamIntegrationLogs(@NonNull TeamIntegrationLogsParams params, Callback<TeamIntegrationLogsResponse> callback){
+    public void teamIntegrationLogs(@NonNull TeamIntegrationLogsParams params, Callback<TeamIntegrationLogsResponse> callback){
         service.teamIntegrationLogs(params.build()).enqueue(callback);
     }
 
@@ -1318,7 +1322,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getTeamProfile(@NonNull TeamProfileGetParams params, Callback<TeamProfileGetResponse> callback){
+    public void teamProfile(@NonNull TeamProfileGetParams params, Callback<TeamProfileGetResponse> callback){
         service.teamProfileGet(params.build()).enqueue(callback);
     }
 
@@ -1331,7 +1335,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getUsergroupCreate(@NonNull String name, @NonNull UsergroupCreateParams params, Callback<UsergroupResponse> callback){
+    public void usergroupsCreate(@NonNull String name, @NonNull UsergroupCreateParams params, Callback<UsergroupResponse> callback){
         service.usergroupsCreate(name, params.build()).enqueue(callback);
     }
 
@@ -1344,7 +1348,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getUsergroupDisable(@NonNull String usergroupId, @NonNull UsergroupDisableParams params, Callback<UsergroupResponse> callback){
+    public void usergroupsDisable(@NonNull String usergroupId, @NonNull UsergroupDisableParams params, Callback<UsergroupResponse> callback){
         service.usergroupsDisable(usergroupId, params.build()).enqueue(callback);
     }
 
@@ -1357,7 +1361,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getUsergroupEnable(@NonNull String usergroupId, @NonNull UsergroupEnableParams params, Callback<UsergroupResponse> callback){
+    public void usergroupsEnable(@NonNull String usergroupId, @NonNull UsergroupEnableParams params, Callback<UsergroupResponse> callback){
         service.usergroupsEnable(usergroupId, params.build()).enqueue(callback);
     }
 
@@ -1370,7 +1374,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getUsergroupList(@NonNull UsergroupsListParams params, Callback<UsergroupListResponse> callback) {
+    public void usergroupsList(@NonNull UsergroupsListParams params, Callback<UsergroupListResponse> callback) {
         service.usergroupsList(params.build()).enqueue(callback);
     }
 
@@ -1383,7 +1387,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getUsergroupUpdate(@NonNull String usergroupId, @NonNull UsergroupUpdateParams params, Callback<UsergroupResponse> callback){
+    public void usergroupsUpdate(@NonNull String usergroupId, @NonNull UsergroupUpdateParams params, Callback<UsergroupResponse> callback){
         service.usergroupsUpdate(usergroupId, params.build()).enqueue(callback);
     }
 
@@ -1396,7 +1400,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getUsergroupUserList(@NonNull String usergroupId, @NonNull UsergroupUsersListParams params, Callback<UsergroupUserListResponse> callback){
+    public void usergroupsUserList(@NonNull String usergroupId, @NonNull UsergroupUsersListParams params, Callback<UsergroupUserListResponse> callback){
         service.usergroupsUsersList(usergroupId, params.build()).enqueue(callback);
     }
 
@@ -1412,7 +1416,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getUsergroupUserUpdate(@NonNull String usergroupId, @NonNull String users, @NonNull UsergroupUserUpdateParams params, Callback<UsergroupResponse> callback){
+    public void usergroupsUserUpdate(@NonNull String usergroupId, @NonNull String users, @NonNull UsergroupUserUpdateParams params, Callback<UsergroupResponse> callback){
         service.usergroupsUsersUpdate(usergroupId, users, params.build()).enqueue(callback);
     }
 
@@ -1425,7 +1429,7 @@ public class SlackWebApiAsync {
      *
      * @param callback
      */
-    public void getUserDeletePhoto(Callback<BaseResponse> callback){
+    public void usersDeletePhoto(Callback<BaseResponse> callback){
         service.usersDeletePhoto().enqueue(callback);
     }
 
@@ -1437,7 +1441,7 @@ public class SlackWebApiAsync {
      * @param userId User to get presence info on. Defaults to the authed user.
      * @param callback
      */
-    public void getUserPresence(@NonNull String userId, Callback<UserGetPresenceResponse> callback){
+    public void usersPresence(@NonNull String userId, Callback<UserGetPresenceResponse> callback){
        service.usersGetPresence(userId).enqueue(callback);
     }
 
@@ -1452,7 +1456,7 @@ public class SlackWebApiAsync {
      *
      * @param callback
      */
-    public void getUserIdentity(Callback<UserIdentityResponse> callback){
+    public void usersIdentity(Callback<UserIdentityResponse> callback){
         service.usersIdentify().enqueue(callback);
     }
 
@@ -1464,7 +1468,7 @@ public class SlackWebApiAsync {
      * @param userId User to get info on
      * @param callback
      */
-    public void getUserInfo(@NonNull String userId, Callback<UserInfoResponse> callback){
+    public void usersInfo(@NonNull String userId, Callback<UserInfoResponse> callback){
         service.usersInfo(userId).enqueue(callback);
     }
 
@@ -1476,7 +1480,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getUserList(@NonNull UserListParams params, Callback<UserListResponse> callback){
+    public void usersList(@NonNull UserListParams params, Callback<UserListResponse> callback){
         service.usersList(params.build()).enqueue(callback);
     }
 
@@ -1487,7 +1491,7 @@ public class SlackWebApiAsync {
      *
      * @param callback
      */
-    public void getUserSetActive(Callback<BaseResponse> callback){
+    public void usersSetActive(Callback<BaseResponse> callback){
         service.usersSetActive().enqueue(callback);
     }
 
@@ -1512,7 +1516,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getUserSetPhoto(@NonNull String imageContentType, @NonNull File file, @NonNull UserSetPhotoParams params, Callback<BaseResponse> callback){
+    public void usersSetPhoto(@NonNull String imageContentType, @NonNull File file, @NonNull UserSetPhotoParams params, Callback<BaseResponse> callback){
         RequestBody body = RequestBody.create(MediaType.parse(imageContentType), file);
 
         service.usersSetPhoto(body, params.build()).enqueue(callback);
@@ -1526,7 +1530,7 @@ public class SlackWebApiAsync {
      * @param presence Either auto or away
      * @param callback
      */
-    public void getUserSetPresence(@NonNull String presence, Callback<BaseResponse> callback){
+    public void usersSetPresence(@NonNull String presence, Callback<BaseResponse> callback){
         service.usersSetPresence(presence).enqueue(callback);
     }
 
@@ -1538,7 +1542,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getUserProfile(@NonNull UserProfileGetParams params, Callback<UserProfileResponse> callback){
+    public void usersProfile(@NonNull UserProfileGetParams params, Callback<UserProfileResponse> callback){
         service.usersProfileGet(params.build()).enqueue(callback);
     }
 
@@ -1550,7 +1554,7 @@ public class SlackWebApiAsync {
      * @param params
      * @param callback
      */
-    public void getUserProfileSet(@NonNull UserProfileSetParams params, Callback<UserProfileResponse> callback){
+    public void usersProfileSet(@NonNull UserProfileSetParams params, Callback<UserProfileResponse> callback){
         service.usersProfileSet(params.build()).enqueue(callback);
     }
 }
