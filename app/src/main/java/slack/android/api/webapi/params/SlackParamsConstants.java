@@ -68,4 +68,12 @@ public interface SlackParamsConstants {
     String INCLUDE_COUNT    = "include_count";
     String INCLUDE_DISABLED = "include_disabled";
     String INCLUDE_USERS    = "include_users";
+    String INCLUDE_LABELS   = "include_labels";
+    String PRESENCE         = "presence";
+    String CROP_X           = "crop_x";
+    String CROP_Y           = "crop_y";
+    String CROP_W           = "crop_w";
+    String IMAGE            = "image";
+    String PROFILE          = "profile";
+    String VALUE            = "value";
 }

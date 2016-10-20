@@ -2,11 +2,14 @@ package slack.android.api.webapi;
 
 import java.util.Map;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.QueryMap;
 import slack.android.api.webapi.params.SlackParamsConstants;
 import slack.android.api.webapi.response.AccessLogResponse;
@@ -52,6 +55,11 @@ import slack.android.api.webapi.response.TeamBillableInfoResponse;
 import slack.android.api.webapi.response.TeamInfoResponse;
 import slack.android.api.webapi.response.TeamIntegrationLogsResponse;
 import slack.android.api.webapi.response.TeamProfileGetResponse;
+import slack.android.api.webapi.response.UserGetPresenceResponse;
+import slack.android.api.webapi.response.UserIdentityResponse;
+import slack.android.api.webapi.response.UserInfoResponse;
+import slack.android.api.webapi.response.UserListResponse;
+import slack.android.api.webapi.response.UserProfileResponse;
 import slack.android.api.webapi.response.UsergroupListResponse;
 import slack.android.api.webapi.response.UsergroupResponse;
 import slack.android.api.webapi.response.UsergroupUserListResponse;
@@ -409,28 +417,35 @@ public interface SlackWebApiInterface {
     Call<UsergroupResponse> usergroupsUsersUpdate(@Field(SlackParamsConstants.USERGROUP) String usergroupId, @Field(SlackParamsConstants.USERS) String users, @QueryMap Map<String, String> params);
 
     // users
+    @GET(SlackWebApiConstants.USERS_DELETE_PHOTO)
+    Call<BaseResponse> usersDeletePhoto();
+
     @GET(SlackWebApiConstants.USERS_GET_PRESENCE)
-    Call<BaseResponse> usersGetPresence();
+    Call<UserGetPresenceResponse> usersGetPresence(@Field(SlackParamsConstants.USER) String user);
 
     @GET(SlackWebApiConstants.USERS_IDENTIFY)
-    Call<BaseResponse> usersIdentify();
+    Call<UserIdentityResponse> usersIdentify();
 
     @GET(SlackWebApiConstants.USERS_INFO)
-    Call<BaseResponse> usersInfo();
+    Call<UserInfoResponse> usersInfo(@Field(SlackParamsConstants.USER) String user);
 
     @GET(SlackWebApiConstants.USERS_LIST)
-    Call<BaseResponse> usersList();
+    Call<UserListResponse> usersList(@QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.USERS_SET_ACTIVE)
     Call<BaseResponse> usersSetActive();
 
+    @Multipart
+    @POST(SlackWebApiConstants.USERS_SET_PHOTO)
+    Call<BaseResponse> usersSetPhoto(@Part(SlackParamsConstants.IMAGE) RequestBody image, @QueryMap Map<String, String> params);
+
     @GET(SlackWebApiConstants.USERS_SET_PRESENCE)
-    Call<BaseResponse> usersSetPresence();
+    Call<BaseResponse> usersSetPresence(@Field(SlackParamsConstants.PRESENCE) String presence);
 
     //users.profile
     @GET(SlackWebApiConstants.USERS_PROFILE_GET)
-    Call<BaseResponse> usersProfileGet();
+    Call<UserProfileResponse> usersProfileGet(@QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.USERS_PROFILE_SET)
-    Call<BaseResponse> usersProfileSet();
+    Call<UserProfileResponse> usersProfileSet(@QueryMap Map<String, String> params);
 }

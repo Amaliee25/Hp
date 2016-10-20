@@ -15,11 +15,11 @@ Add Slack Web Api methods; (in progress):
 |dnd (Do Not Disturb)               |OK          |
 |emoji                              |OK          |
 |files.comments                     |OK          |
-|files                              |Stopped     |
+|files                              |In progress |
 |group (team's private channels)    |OK          |
 |im (direct messages)               |OK          |
 |mipm (multiparty direct messages)  |OK          |
-|oauth                              |Stopped     |
+|oauth                              |In progress |
 |pins                               |OK          |
 |reactions                          |OK          |
 |reminders                          |OK          |
@@ -30,8 +30,8 @@ Add Slack Web Api methods; (in progress):
 |team.profile                       |OK          |
 |usergroups                         |OK          |
 |usergroups.users                   |OK          |
-|users                              |In progress |
-|users.profile                      |In progress |
+|users                              |OK          |
+|users.profile                      |OK          |
 
 
 ## Usage

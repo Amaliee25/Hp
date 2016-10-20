@@ -151,11 +151,13 @@ public interface SlackWebApiConstants {
     String USERGROUPS_USERS_UPDATE      = "usergroups.users.update";
 
     // users
+    String USERS_DELETE_PHOTO           = "users.deletePhoto";
     String USERS_GET_PRESENCE           = "users.getPresence";
     String USERS_IDENTIFY               = "user.identity";
     String USERS_INFO                   = "users.info";
     String USERS_LIST                   = "users.list";
     String USERS_SET_ACTIVE             = "users.setActive";
+    String USERS_SET_PHOTO              = "users.setPhoto";
     String USERS_SET_PRESENCE           = "users.setPresence";
 
     //users.profile
