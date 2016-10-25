@@ -1,6 +1,7 @@
 package slack.android.api.webapi;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import retrofit2.Callback;
 import slack.android.api.webapi.params.PinAddParams;
@@ -26,7 +27,7 @@ public class SlackPartPins extends BaseSlackPart {
      * @param callback
      */
     public void add(@NonNull String channelId, @NonNull PinAddParams params, Callback<BaseResponse> callback){
-        service.pinsAdd(channelId, params.build()).enqueue(callback);
+        service.pinsAdd(channelId, verifyParams(params)).enqueue(callback);
     }
 
     /**
@@ -53,6 +54,6 @@ public class SlackPartPins extends BaseSlackPart {
      * @param callback
      */
     public void remove(@NonNull String channelId, @NonNull PinRemoveParams params, Callback<BaseResponse> callback){
-        service.pinsRemove(channelId, params.build()).enqueue(callback);
+        service.pinsRemove(channelId, verifyParams(params)).enqueue(callback);
     }
 }

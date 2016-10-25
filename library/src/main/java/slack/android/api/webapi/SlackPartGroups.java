@@ -88,11 +88,25 @@ public class SlackPartGroups extends BaseSlackPart {
      * Requires scope: groups:history
      *
      * @param channelId Private channel to fetch history for.
+     * @param callback
+     */
+    public void history(@NonNull String channelId, Callback<HistoryResponse> callback){
+        history(channelId, null, callback);
+    }
+
+    /**
+     * This method returns a portion of messages/events from the specified private channel.
+     * To read the entire history for a private channel, call the method with no latest or
+     * oldest arguments, and then continue paging using the instructions below.
+     *
+     * Requires scope: groups:history
+     *
+     * @param channelId Private channel to fetch history for.
      * @param params
      * @param callback
      */
-    public void history(@NonNull String channelId, @NonNull HistoryParams params, Callback<HistoryResponse> callback){
-        service.groupsHistory(channelId, params.build()).enqueue(callback);
+    public void history(@NonNull String channelId, HistoryParams params, Callback<HistoryResponse> callback){
+        service.groupsHistory(channelId, verifyParams(params)).enqueue(callback);
     }
 
     /**
@@ -156,11 +170,24 @@ public class SlackPartGroups extends BaseSlackPart {
      *
      * Requires scope: groups:read
      *
+     * @param callback
+     */
+    public void list(Callback<GroupListResponse> callback){
+        list(null, callback);
+    }
+
+    /**
+     * This method returns a list of private channels in the team that the caller is in and
+     * archived groups that the caller was in. The list of (non-deactivated) members in each
+     * private channel is also returned.
+     *
+     * Requires scope: groups:read
+     *
      * @param params
      * @param callback
      */
-    public void list(@NonNull GroupListParams params, Callback<GroupListResponse> callback){
-        service.groupsList(params.build()).enqueue(callback);
+    public void list(GroupListParams params, Callback<GroupListResponse> callback){
+        service.groupsList(verifyParams(params)).enqueue(callback);
     }
 
     /**

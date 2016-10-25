@@ -4,9 +4,6 @@ import retrofit2.Callback;
 import slack.android.api.webapi.params.BotsInfoParams;
 import slack.android.api.webapi.response.BotsInfoResponse;
 
-/**
- * Created by flaviokreis on 20/10/16.
- */
 public class SlackPartBots extends BaseSlackPart {
 
     protected SlackPartBots(SlackWebApiInterface service){

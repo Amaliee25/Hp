@@ -24,11 +24,34 @@ public class SlackPartTeam extends BaseSlackPart {
      *
      * Requires scope: admin
      *
+     * @param callback
+     */
+    public void accessLogs(Callback<AccessLogResponse> callback){
+        accessLogs(null, callback);
+    }
+
+    /**
+     * This method is used to get the access logs for users on a team.
+     *
+     * Requires scope: admin
+     *
      * @param params
      * @param callback
      */
-    public void accessLogs(@NonNull TeamAccessLogParams params, Callback<AccessLogResponse> callback){
-        service.teamAccessLogs(params.build()).enqueue(callback);
+    public void accessLogs(TeamAccessLogParams params, Callback<AccessLogResponse> callback){
+        service.teamAccessLogs(verifyParams(params)).enqueue(callback);
+    }
+
+    /**
+     * This method lists billable information for each user on the team. Currently this consists
+     * solely of whether the user is subject to billing per Slack's Fair Billing policy.
+     *
+     * Requires scope: admin
+     *
+     * @param callback
+     */
+    public void billableInfo(Callback<TeamBillableInfoResponse> callback){
+        billableInfo(null, callback);
     }
 
     /**
@@ -40,8 +63,8 @@ public class SlackPartTeam extends BaseSlackPart {
      * @param params
      * @param callback
      */
-    public void billableInfo(@NonNull TeamBillableInfoParams params, Callback<TeamBillableInfoResponse> callback){
-        service.teamBillableInfo(params.build()).enqueue(callback);
+    public void billableInfo(TeamBillableInfoParams params, Callback<TeamBillableInfoResponse> callback){
+        service.teamBillableInfo(verifyParams(params)).enqueue(callback);
     }
 
     /**
@@ -61,11 +84,34 @@ public class SlackPartTeam extends BaseSlackPart {
      *
      * Requires scope: admin
      *
+     * @param callback
+     */
+    public void integrationLogs(Callback<TeamIntegrationLogsResponse> callback){
+        integrationLogs(null, callback);
+    }
+
+    /**
+     * This method lists the integration activity logs for a team, including when integrations are
+     * added, modified and removed. This method can only be called by Admins.
+     *
+     * Requires scope: admin
+     *
      * @param params
      * @param callback
      */
-    public void integrationLogs(@NonNull TeamIntegrationLogsParams params, Callback<TeamIntegrationLogsResponse> callback){
-        service.teamIntegrationLogs(params.build()).enqueue(callback);
+    public void integrationLogs(TeamIntegrationLogsParams params, Callback<TeamIntegrationLogsResponse> callback){
+        service.teamIntegrationLogs(verifyParams(params)).enqueue(callback);
+    }
+
+    /**
+     * This method is used to get the profile field definitions for this team.
+     *
+     * Requires scope: users.profile:get
+     *
+     * @param callback
+     */
+    public void profile(Callback<TeamProfileGetResponse> callback){
+        profile(null, callback);
     }
 
     /**
@@ -76,8 +122,8 @@ public class SlackPartTeam extends BaseSlackPart {
      * @param params
      * @param callback
      */
-    public void profile(@NonNull TeamProfileGetParams params, Callback<TeamProfileGetResponse> callback){
-        service.teamProfileGet(params.build()).enqueue(callback);
+    public void profile(TeamProfileGetParams params, Callback<TeamProfileGetResponse> callback){
+        service.teamProfileGet(verifyParams(params)).enqueue(callback);
     }
 
 }

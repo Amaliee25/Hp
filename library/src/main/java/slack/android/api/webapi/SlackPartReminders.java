@@ -23,11 +23,26 @@ public class SlackPartReminders extends BaseSlackPart {
      * @param time When this reminder should happen: the Unix timestamp (up to five years from now),
      *             the number of seconds until the reminder (if within 24 hours), or a natural language
      *             description (Ex. "in 15 minutes," or "every Thursday")
+     * @param callback
+     */
+    public void add(@NonNull String text, @NonNull String time, Callback<ReminderAddResponse> callback){
+        add(text, time, null, callback);
+    }
+
+    /**
+     * This method creates a reminder.
+     *
+     * Requires scope: reminders:write
+     *
+     * @param text The content of the reminder
+     * @param time When this reminder should happen: the Unix timestamp (up to five years from now),
+     *             the number of seconds until the reminder (if within 24 hours), or a natural language
+     *             description (Ex. "in 15 minutes," or "every Thursday")
      * @param params
      * @param callback
      */
-    public void add(@NonNull String text, @NonNull String time, @NonNull ReminderAddParams params, Callback<ReminderAddResponse> callback){
-        service.remindersAdd(text, time, params.build()).enqueue(callback);
+    public void add(@NonNull String text, @NonNull String time, ReminderAddParams params, Callback<ReminderAddResponse> callback){
+        service.remindersAdd(text, time, verifyParams(params)).enqueue(callback);
     }
 
     /**

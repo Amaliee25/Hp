@@ -2,10 +2,7 @@ package slack.android.api.webapi;
 
 import android.support.annotation.NonNull;
 
-import java.util.HashMap;
-
 import retrofit2.Callback;
-import slack.android.api.webapi.params.ChannelCreateParams;
 import slack.android.api.webapi.params.ChannelListParams;
 import slack.android.api.webapi.params.HistoryParams;
 import slack.android.api.webapi.response.BaseResponse;
@@ -15,9 +12,6 @@ import slack.android.api.webapi.response.ChannelResponse;
 import slack.android.api.webapi.response.ChannelTopicResponse;
 import slack.android.api.webapi.response.HistoryResponse;
 
-/**
- * Created by flaviokreis on 20/10/16.
- */
 public class SlackPartChannels extends BaseSlackPart {
 
     protected SlackPartChannels(SlackWebApiInterface service){
@@ -50,25 +44,7 @@ public class SlackPartChannels extends BaseSlackPart {
      * @param callback
      */
     public void create(@NonNull String channelName, Callback<ChannelResponse> callback){
-        create(channelName, null, callback);
-    }
-
-    /**
-     * This method is used to create a channel.
-     *
-     * Requires scope: channels:write
-     *
-     * Channel names can only contain lowercase letters, numbers, hyphens, and underscores, and
-     * must be 21 characters or less. We will validate the submitted channel name and modify it
-     * to meet the above criteria. When calling this method, we recommend storing the channel's
-     * name value that is returned in the response.
-     *
-     * @param channelName Name of channel to create
-     * @param params
-     * @param callback
-     */
-    public void create(@NonNull String channelName, ChannelCreateParams params, Callback<ChannelResponse> callback){
-        service.channelsCreate(channelName, (params != null) ? params.build() : new HashMap<String, String>()).enqueue(callback);
+        service.channelsCreate( channelName ).enqueue( callback );
     }
 
     /**
@@ -93,7 +69,7 @@ public class SlackPartChannels extends BaseSlackPart {
      * @param callback
      */
     public void history(@NonNull String channelId, HistoryParams params, Callback<HistoryResponse> callback){
-        service.channelsHistory(channelId, (params != null) ? params.build() : new HashMap<String, String>()).enqueue(callback);
+        service.channelsHistory( channelId, verifyParams(params) ).enqueue( callback );
     }
 
     /**
@@ -163,11 +139,24 @@ public class SlackPartChannels extends BaseSlackPart {
      *
      * Requires scope: channels:read
      *
+     * @param callback
+     */
+    public void list(Callback<ChannelListResponse> callback){
+        list(null, callback);
+    }
+
+    /**
+     * This method returns a list of all channels in the team. This includes channels the caller
+     * is in, channels they are not currently in, and archived channels but does not include private
+     * channels. The number of (non-deactivated) members in each channel is also returned.
+     *
+     * Requires scope: channels:read
+     *
      * @param params
      * @param callback
      */
-    public void list(@NonNull ChannelListParams params, Callback<ChannelListResponse> callback){
-        service.channelsList((params != null) ? params.build() : new HashMap<String, String>()).enqueue(callback);
+    public void list(ChannelListParams params, Callback<ChannelListResponse> callback){
+        service.channelsList( verifyParams(params) ).enqueue( callback );
     }
 
     /**

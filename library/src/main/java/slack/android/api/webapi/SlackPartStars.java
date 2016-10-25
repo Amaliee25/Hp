@@ -34,10 +34,21 @@ public class SlackPartStars extends BaseSlackPart {
      *
      * Requires scope: stars:read
      *
+     * @param callback
+     */
+    public void list(Callback<StarListResponse> callback){
+        list(null, callback);
+    }
+
+    /**
+     * This method lists the items starred by the authed user.
+     *
+     * Requires scope: stars:read
+     *
      * @param params
      * @param callback
      */
-    public void list(@NonNull StarListParams params, Callback<StarListResponse> callback){
+    public void list(StarListParams params, Callback<StarListResponse> callback){
         service.starsList(params.build()).enqueue(callback);
     }
 

@@ -20,11 +20,35 @@ public class SlackPartSearch extends BaseSlackPart {
      * Requires scope: search:read
      *
      * @param query Search query. May contains booleans, etc.
+     * @param callback
+     */
+    public void all(@NonNull String query, Callback<SearchAllResponse> callback){
+        all(query, null, callback);
+    }
+
+    /**
+     * This method allows users and applications to search both messages and files in a single call.
+     *
+     * Requires scope: search:read
+     *
+     * @param query Search query. May contains booleans, etc.
      * @param params
      * @param callback
      */
-    public void all(@NonNull String query, @NonNull SearchParams params, Callback<SearchAllResponse> callback){
-        service.searchAll(query, params.build()).enqueue(callback);
+    public void all(@NonNull String query, SearchParams params, Callback<SearchAllResponse> callback){
+        service.searchAll(query, verifyParams(params)).enqueue(callback);
+    }
+
+    /**
+     * This method returns files matching a search query.
+     *
+     * Requires scope: search:read
+     *
+     * @param query Search query. May contains booleans, etc.
+     * @param callback
+     */
+    public void files(@NonNull String query, Callback<SearchFilesResponse> callback){
+        files(query, null, callback);
     }
 
     /**
@@ -36,8 +60,20 @@ public class SlackPartSearch extends BaseSlackPart {
      * @param params
      * @param callback
      */
-    public void files(@NonNull String query, @NonNull SearchParams params, Callback<SearchFilesResponse> callback){
-        service.searchFiles(query, params.build()).enqueue(callback);
+    public void files(@NonNull String query, SearchParams params, Callback<SearchFilesResponse> callback){
+        service.searchFiles(query, verifyParams(params)).enqueue(callback);
+    }
+
+    /**
+     * This method returns messages matching a search query.
+     *
+     * Requires scope: search:read
+     *
+     * @param query Search query. May contains booleans, etc.
+     * @param callback
+     */
+    public void messages(@NonNull String query, Callback<SearchMessagesResponse> callback){
+        messages(query, null, callback);
     }
 
     /**
@@ -49,7 +85,7 @@ public class SlackPartSearch extends BaseSlackPart {
      * @param params
      * @param callback
      */
-    public void messages(@NonNull String query, @NonNull SearchParams params, Callback<SearchMessagesResponse> callback){
-        service.searchMessages(query, params.build()).enqueue(callback);
+    public void messages(@NonNull String query, SearchParams params, Callback<SearchMessagesResponse> callback){
+        service.searchMessages(query, verifyParams(params)).enqueue(callback);
     }
 }

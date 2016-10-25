@@ -81,6 +81,17 @@ public class SlackPartUsers extends BaseSlackPart {
      *
      * Requires scope: users:read
      *
+     * @param callback
+     */
+    public void list(Callback<UserListResponse> callback){
+        list(null, callback);
+    }
+
+    /**
+     * This method returns a list of all users in the team. This includes deleted/deactivated users.
+     *
+     * Requires scope: users:read
+     *
      * @param params
      * @param callback
      */
@@ -117,13 +128,37 @@ public class SlackPartUsers extends BaseSlackPart {
      * @param imageContentType When providing the image parameter, provide your image data directly
      *                         but present its correct Content-type, such as image/gif, image/jpeg, image/png, etc.
      * @param file Image file
+     * @param callback
+     */
+    public void setPhoto(@NonNull String imageContentType, @NonNull File file, Callback<BaseResponse> callback){
+        setPhoto(imageContentType, file, null, callback);
+    }
+
+    /**
+     * This method allows the user to set their profile image. The caller can pass image data via
+     * image.
+     *
+     * Providing a "crop box" with crop_x, crop_y, and crop_w is optional. Otherwise, the whole
+     * image will be used. If cropping instructions are not specified and the source image is not
+     * square, the image will be letterboxed, just like your favorite old laserdiscs.
+     *
+     * Please limit your images to a maximum size of 1024 by 1024 pixels. 512x512 pixels is the
+     * minimum.
+     *
+     * To remove a profile image, use the companion method users.deletePhoto.
+     *
+     * Requires scope: users.profile:write
+     *
+     * @param imageContentType When providing the image parameter, provide your image data directly
+     *                         but present its correct Content-type, such as image/gif, image/jpeg, image/png, etc.
+     * @param file Image file
      * @param params
      * @param callback
      */
-    public void setPhoto(@NonNull String imageContentType, @NonNull File file, @NonNull UserSetPhotoParams params, Callback<BaseResponse> callback){
+    public void setPhoto(@NonNull String imageContentType, @NonNull File file, UserSetPhotoParams params, Callback<BaseResponse> callback){
         RequestBody body = RequestBody.create(MediaType.parse(imageContentType), file);
 
-        service.usersSetPhoto(body, params.build()).enqueue(callback);
+        service.usersSetPhoto(body, verifyParams(params)).enqueue(callback);
     }
 
     /**
@@ -136,6 +171,17 @@ public class SlackPartUsers extends BaseSlackPart {
      */
     public void setPresence(@NonNull String presence, Callback<BaseResponse> callback){
         service.usersSetPresence(presence).enqueue(callback);
+    }
+
+    /**
+     * This method is used to get the profile information for a user.
+     *
+     * Requires scope: users.profile:read
+     *
+     * @param callback
+     */
+    public void profile(Callback<UserProfileResponse> callback){
+        profile(null, callback);
     }
 
     /**
@@ -158,7 +204,7 @@ public class SlackPartUsers extends BaseSlackPart {
      * @param params
      * @param callback
      */
-    public void profileSet(@NonNull UserProfileSetParams params, Callback<UserProfileResponse> callback){
+    public void setProfile(@NonNull UserProfileSetParams params, Callback<UserProfileResponse> callback){
         service.usersProfileSet(params.build()).enqueue(callback);
     }
 }

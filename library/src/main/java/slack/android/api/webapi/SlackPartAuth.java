@@ -13,7 +13,9 @@ public class SlackPartAuth extends BaseSlackPart {
 
     /**
      * This method revokes an access token. Use it when you no longer need a token.
+     *
      * @see <a href="https://api.slack.com/methods/auth.revoke">https://api.slack.com/methods/auth.revoke</a>
+     *
      * @param callback
      */
     public void revoke(Callback<AuthRevokeResponse> callback){
@@ -22,7 +24,9 @@ public class SlackPartAuth extends BaseSlackPart {
 
     /**
      * This method revokes an access token. Use it when you no longer need a token.
+     *
      * @see <a href="https://api.slack.com/methods/auth.revoke">https://api.slack.com/methods/auth.revoke</a>
+     *
      * @param params @see {@link slack.android.api.webapi.params.AuthRevokeParams}
      * @param callback
      */
@@ -36,6 +40,7 @@ public class SlackPartAuth extends BaseSlackPart {
      * Requires scope: identify
      *
      * @see <a href="https://api.slack.com/methods/auth.test">https://api.slack.com/methods/auth.test</a>
+     *
      * @param callback
      */
     public void test(Callback<AuthTestResponse> callback){

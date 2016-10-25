@@ -31,15 +31,29 @@ public class SlackPartFiles extends BaseSlackPart {
      *
      * @param fileId File to add a comment to.
      * @param comment Text of the comment to add.
-     * @param params
      * @param callback
      */
-    public void commentsAdd(@NonNull String fileId, @NonNull String comment, @NonNull FileCommentAddParams params, Callback<FileCommentResponse> callback){
-        service.filesCommentsAdd(fileId, comment, params.build()).enqueue(callback);
+    public void commentsAdd(@NonNull String fileId, @NonNull String comment, Callback<FileCommentResponse> callback){
+        commentsAdd(fileId, comment, null, callback);
     }
 
     /**
-     * Delete an existing comment on a file. Only the original author of the comment or a Team Administrator may delete a file comment.
+     * Add a comment to an existing file.
+     *
+     * Requires scope: files:write:user
+     *
+     * @param fileId File to add a comment to.
+     * @param comment Text of the comment to add.
+     * @param params
+     * @param callback
+     */
+    public void commentsAdd(@NonNull String fileId, @NonNull String comment, FileCommentAddParams params, Callback<FileCommentResponse> callback){
+        service.filesCommentsAdd(fileId, comment, verifyParams(params)).enqueue(callback);
+    }
+
+    /**
+     * Delete an existing comment on a file. Only the original author of the comment or a Team
+     * Administrator may delete a file comment.
      *
      * Requires scope: files:write:user
      *
@@ -52,7 +66,8 @@ public class SlackPartFiles extends BaseSlackPart {
     }
 
     /**
-     * Edit an existing comment on a file. Only the user who created a comment may make edits. Teams may configure a limited time window during which file comment edits are allowed.
+     * Edit an existing comment on a file. Only the user who created a comment may make edits.
+     * Teams may configure a limited time window during which file comment edits are allowed.
      *
      * Requires scope: files:write:user
      *
@@ -83,11 +98,34 @@ public class SlackPartFiles extends BaseSlackPart {
      * Requires scope: files:read
      *
      * @param fileId Specify a file by providing its ID.
+     * @param callback
+     */
+    public void info(@NonNull String fileId, Callback<FileInfoResponse> callback){
+        info(fileId, null, callback);
+    }
+
+    /**
+     * This method returns information about a file in your team.
+     *
+     * Requires scope: files:read
+     *
+     * @param fileId Specify a file by providing its ID.
      * @param params
      * @param callback
      */
-    public void info(@NonNull String fileId, @NonNull FileInfoParams params, Callback<FileInfoResponse> callback){
-        service.filesInfo(fileId, params.build()).enqueue(callback);
+    public void info(@NonNull String fileId, FileInfoParams params, Callback<FileInfoResponse> callback){
+        service.filesInfo(fileId, verifyParams(params)).enqueue(callback);
+    }
+
+    /**
+     * This method returns a list of files within the team. It can be filtered and sliced in various ways.
+     *
+     * Requires scope: files:read
+     *
+     * @param callback
+     */
+    public void list(Callback<FileListResponse> callback){
+        list(null, callback);
     }
 
     /**
@@ -98,8 +136,8 @@ public class SlackPartFiles extends BaseSlackPart {
      * @param params
      * @param callback
      */
-    public void list(@NonNull FileListParams params, Callback<FileListResponse> callback){
-        service.filesList(params.build()).enqueue(callback);
+    public void list(FileListParams params, Callback<FileListResponse> callback){
+        service.filesList(verifyParams(params)).enqueue(callback);
     }
 
     /**

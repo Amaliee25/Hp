@@ -90,7 +90,7 @@ public interface SlackWebApiInterface {
 
     @FormUrlEncoded
     @POST(SlackWebApiConstants.CHANNELS_CREATE)
-    Call<ChannelResponse> channelsCreate(@Field(SlackParamsConstants.NAME) String name, @QueryMap Map<String, String> params);
+    Call<ChannelResponse> channelsCreate(@Field(SlackParamsConstants.NAME) String name);
 
     @GET(SlackWebApiConstants.CHANNELS_HISTORY)
     Call<HistoryResponse> channelsHistory(@Field(SlackParamsConstants.CHANNEL) String channelId, @QueryMap Map<String, String> params);

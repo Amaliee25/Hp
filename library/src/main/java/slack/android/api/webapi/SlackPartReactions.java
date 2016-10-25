@@ -29,7 +29,7 @@ public class SlackPartReactions extends BaseSlackPart {
      * @param callback
      */
     public void add(@NonNull String name, @NonNull ReactionAddParams params, Callback<BaseResponse> callback){
-        service.reactionsAdd(name, params.build()).enqueue(callback);
+        service.reactionsAdd(name, verifyParams(params)).enqueue(callback);
     }
 
     /**
@@ -42,7 +42,19 @@ public class SlackPartReactions extends BaseSlackPart {
      * @param callback
      */
     public void get(@NonNull ReactionGetParams params, Callback<ReactionGetResponse> callback){
-        service.reactionsGet(params.build()).enqueue(callback);
+        service.reactionsGet(verifyParams(params)).enqueue(callback);
+    }
+
+    /**
+     * This method returns a list of all items (file, file comment, channel message, group message,
+     * or direct message) reacted to by a user.
+     *
+     * Requires scope: reactions:read
+     *
+     * @param callback
+     */
+    public void list(Callback<ReactionListResponse> callback){
+        list(null, callback);
     }
 
     /**
@@ -54,8 +66,8 @@ public class SlackPartReactions extends BaseSlackPart {
      * @param params
      * @param callback
      */
-    public void list(@NonNull ReactionListParams params, Callback<ReactionListResponse> callback){
-        service.reactionsList(params.build()).enqueue(callback);
+    public void list(ReactionListParams params, Callback<ReactionListResponse> callback){
+        service.reactionsList(verifyParams(params)).enqueue(callback);
     }
 
     /**
@@ -70,6 +82,6 @@ public class SlackPartReactions extends BaseSlackPart {
      * @param callback
      */
     public void remove(@NonNull String name, @NonNull ReactionRemoveParams params, Callback<BaseResponse> callback){
-        service.reactionsRemove(name, params.build()).enqueue(callback);
+        service.reactionsRemove(name, verifyParams(params)).enqueue(callback);
     }
 }

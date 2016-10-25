@@ -36,11 +36,26 @@ public class SlackPartMpim extends BaseSlackPart {
      * Requires scope: mpim:history
      *
      * @param channelId Multiparty direct message to fetch history for.
+     * @param callback
+     */
+    public void history(@NonNull String channelId, Callback<HistoryResponse> callback){
+        history(channelId, null, callback);
+    }
+
+    /**
+     * This method returns a portion of messages/events from the specified multiparty direct
+     * message channel. To read the entire history for a multiparty direct message, call the
+     * method with no latest or oldest arguments, and then continue paging using the
+     * instructions below.
+     *
+     * Requires scope: mpim:history
+     *
+     * @param channelId Multiparty direct message to fetch history for.
      * @param params
      * @param callback
      */
-    public void history(@NonNull String channelId, @NonNull HistoryParams params, Callback<HistoryResponse> callback){
-        service.mpimHistory(channelId, params.build()).enqueue(callback);
+    public void history(@NonNull String channelId, HistoryParams params, Callback<HistoryResponse> callback){
+        service.mpimHistory(channelId, verifyParams(params)).enqueue(callback);
     }
 
     /**

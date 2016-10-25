@@ -36,11 +36,25 @@ public class SlackPartIm extends BaseSlackPart {
      * Requires scope: im:history
      *
      * @param channelId Direct message channel to fetch history for.
+     * @param callback
+     */
+    public void history(@NonNull String channelId, Callback<HistoryResponse> callback){
+        history(channelId, null, callback);
+    }
+
+    /**
+     * This method returns a portion of messages/events from the specified direct message channel.
+     * To read the entire history for a direct message channel, call the method with no latest or
+     * oldest arguments, and then continue paging using the instructions below.
+     *
+     * Requires scope: im:history
+     *
+     * @param channelId Direct message channel to fetch history for.
      * @param params
      * @param callback
      */
-    public void history(@NonNull String channelId, @NonNull HistoryParams params, Callback<HistoryResponse> callback){
-        service.imHistory(channelId, params.build()).enqueue(callback);
+    public void history(@NonNull String channelId, HistoryParams params, Callback<HistoryResponse> callback){
+        service.imHistory(channelId, verifyParams(params)).enqueue(callback);
     }
 
     /**
@@ -76,10 +90,25 @@ public class SlackPartIm extends BaseSlackPart {
      * Requires scope: im:write
      *
      * @param userId User to open a direct message channel with.
+     * @param callback
+     */
+    public void open(@NonNull String userId, Callback<ImOpenResponse> callback){
+        open(userId, null, callback);
+    }
+
+    /**
+     * This method opens a direct message channel with another member of your Slack team.
+     *
+     * If the return_im argument was passed, the channel object will contain the
+     * full channel definition:
+     *
+     * Requires scope: im:write
+     *
+     * @param userId User to open a direct message channel with.
      * @param params
      * @param callback
      */
-    public void open(@NonNull String userId, @NonNull ImOpenParams params, Callback<ImOpenResponse> callback){
-        service.imOpen(userId, params.build()).enqueue(callback);
+    public void open(@NonNull String userId, ImOpenParams params, Callback<ImOpenResponse> callback){
+        service.imOpen(userId, verifyParams(params)).enqueue(callback);
     }
 }

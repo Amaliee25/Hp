@@ -44,11 +44,22 @@ public class SlackPartDnd extends BaseSlackPart {
      *
      * Requires scope: dnd:read
      *
+     * @param callback
+     */
+    public void info(Callback<DndInfoResponse> callback){
+        info(null, callback);
+    }
+
+    /**
+     * Provides information about a user's current Do Not Disturb settings.
+     *
+     * Requires scope: dnd:read
+     *
      * @param params
      * @param callback
      */
-    public void info(@NonNull DndInfoParams params, Callback<DndInfoResponse> callback){
-        service.dndInfo(params.build()).enqueue(callback);
+    public void info(DndInfoParams params, Callback<DndInfoResponse> callback){
+        service.dndInfo(verifyParams(params)).enqueue(callback);
     }
 
     /**
@@ -69,10 +80,21 @@ public class SlackPartDnd extends BaseSlackPart {
      *
      * Requires scope: dnd:read
      *
+     * @param callback
+     */
+    public void teamInfo(Callback<DndTeamInfoResponse> callback){
+        teamInfo(null, callback);
+    }
+
+    /**
+     * Provides information about the current Do Not Disturb settings for users of a Slack team.
+     *
+     * Requires scope: dnd:read
+     *
      * @param params
      * @param callback
      */
-    public void teamInfo(@NonNull DndTeamInfoParams params, Callback<DndTeamInfoResponse> callback){
-        service.dndTeamInfo(params.build()).enqueue(callback);
+    public void teamInfo(DndTeamInfoParams params, Callback<DndTeamInfoResponse> callback){
+        service.dndTeamInfo(verifyParams(params)).enqueue(callback);
     }
 }

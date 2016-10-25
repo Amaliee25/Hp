@@ -23,11 +23,24 @@ public class SlackPartChat extends BaseSlackPart {
      *
      * @param ts Timestamp of the message to be deleted.
      * @param channelId Channel containing the message to be deleted.
+     * @param callback
+     */
+    public void delete(@NonNull String ts, @NonNull String channelId, Callback<ChatResponse> callback){
+        delete(ts, channelId, null, callback);
+    }
+
+    /**
+     * This method deletes a message from a channel.
+     *
+     * Requires scope: chat:write:bot or chat:write:user
+     *
+     * @param ts Timestamp of the message to be deleted.
+     * @param channelId Channel containing the message to be deleted.
      * @param params
      * @param callback
      */
-    public void delete(@NonNull String ts, @NonNull String channelId, @NonNull ChatParams params, Callback<ChatResponse> callback){
-        service.chatDelete(ts, channelId, params.build()).enqueue(callback);
+    public void delete(@NonNull String ts, @NonNull String channelId, ChatParams params, Callback<ChatResponse> callback){
+        service.chatDelete(ts, channelId, verifyParams(params)).enqueue(callback);
     }
 
     /**
@@ -50,11 +63,38 @@ public class SlackPartChat extends BaseSlackPart {
      *
      * @param channelId Channel to send message to. Can be a public channel, private group or IM channel. Can be an encoded ID, or a name.
      * @param text Text of the message to send.
+     * @param callback
+     */
+    public void postMessage(@NonNull String channelId, @NonNull String text, Callback<ChatPostResponse> callback){
+        postMessage(channelId, text, null, callback);
+    }
+
+    /**
+     * This method posts a message to a public channel, private channel, or direct message/IM channel.
+     *
+     * Requires scope: chat:write:bot or chat:write:user
+     *
+     * @param channelId Channel to send message to. Can be a public channel, private group or IM channel. Can be an encoded ID, or a name.
+     * @param text Text of the message to send.
      * @param params
      * @param callback
      */
     public void postMessage(@NonNull String channelId, @NonNull String text, ChatPostParams params, Callback<ChatPostResponse> callback){
-        service.chatPostMessage(channelId, text, params.build()).enqueue(callback);
+        service.chatPostMessage(channelId, text, verifyParams(params)).enqueue(callback);
+    }
+
+    /**
+     * This method updates a message in a channel. Though related to chat.postMessage, some parameters of chat.update are handled differently.
+     *
+     * Requires scope: chat:write:bot or chat:write:user
+     *
+     * @param ts Timestamp of the message to be updated.
+     * @param channelId Channel containing the message to be updated.
+     * @param text New text for the message
+     * @param callback
+     */
+    public void update(@NonNull String ts, @NonNull String channelId, @NonNull String text, Callback<ChatUpdateResponse> callback){
+        update(ts, channelId, text, null, callback);
     }
 
     /**
@@ -69,6 +109,6 @@ public class SlackPartChat extends BaseSlackPart {
      * @param callback
      */
     public void update(@NonNull String ts, @NonNull String channelId, @NonNull String text, ChatUpdateParams params, Callback<ChatUpdateResponse> callback){
-        service.chatUpdate(ts, channelId, text, params.build()).enqueue(callback);
+        service.chatUpdate(ts, channelId, text, verifyParams(params)).enqueue(callback);
     }
 }
