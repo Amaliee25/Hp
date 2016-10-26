@@ -17,6 +17,6 @@ public class SlackPartEmoji extends BaseSlackPart {
      * @param callback
      */
     public void list(Callback<EmojiListResponse> callback){
-        service.emojList().enqueue(callback);
+        service.emojiList().enqueue(callback);
     }
 }

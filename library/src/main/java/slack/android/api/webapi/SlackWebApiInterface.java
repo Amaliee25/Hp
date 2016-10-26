@@ -92,10 +92,12 @@ public interface SlackWebApiInterface {
     @POST(SlackWebApiConstants.CHANNELS_CREATE)
     Call<ChannelResponse> channelsCreate(@Field(SlackParamsConstants.NAME) String name);
 
-    @GET(SlackWebApiConstants.CHANNELS_HISTORY)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.CHANNELS_HISTORY)
     Call<HistoryResponse> channelsHistory(@Field(SlackParamsConstants.CHANNEL) String channelId, @QueryMap Map<String, String> params);
 
-    @GET(SlackWebApiConstants.CHANNELS_INFO)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.CHANNELS_INFO)
     Call<ChannelResponse> channelsInfo(@Field(SlackParamsConstants.CHANNEL) String channelId);
 
     @FormUrlEncoded
@@ -155,12 +157,10 @@ public interface SlackWebApiInterface {
     Call<ChatUpdateResponse> chatUpdate(@Field(SlackParamsConstants.TS) String ts, @Field(SlackParamsConstants.CHANNEL) String channelId, @Field(SlackParamsConstants.TEXT) String text, @QueryMap Map<String, String> params);
 
     // dnd (Do Not Disturb)
-    @FormUrlEncoded
-    @POST(SlackWebApiConstants.DND_END_DND)
+    @GET(SlackWebApiConstants.DND_END_DND)
     Call<BaseResponse> dndEndDnd();
 
-    @FormUrlEncoded
-    @POST(SlackWebApiConstants.DND_END_SNOOZE)
+    @GET(SlackWebApiConstants.DND_END_SNOOZE)
     Call<DndEndSnoozeResponse> dndEndSnooze();
 
     @GET(SlackWebApiConstants.DND_INFO)
@@ -175,7 +175,7 @@ public interface SlackWebApiInterface {
 
     // emoji
     @GET(SlackWebApiConstants.EMOJI_LIST)
-    Call<EmojiListResponse> emojList();
+    Call<EmojiListResponse> emojiList();
 
     // files.comments
     @FormUrlEncoded
@@ -195,16 +195,19 @@ public interface SlackWebApiInterface {
     @POST(SlackWebApiConstants.FILES_DELETE)
     Call<BaseResponse> filesDelete(@Field(SlackParamsConstants.FILE) String file);
 
-    @GET(SlackWebApiConstants.FILES_INFO)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.FILES_INFO)
     Call<FileInfoResponse> filesInfo(@Field(SlackParamsConstants.FILE) String file, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.FILES_LIST)
     Call<FileListResponse> filesList(@QueryMap Map<String, String> params);
 
-    @GET(SlackWebApiConstants.FILES_REVOKE_PUBLIC_URL)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.FILES_REVOKE_PUBLIC_URL)
     Call<FileResponse> filesRevokePublicUrl(@Field(SlackParamsConstants.FILE) String file);
 
-    @GET(SlackWebApiConstants.FILES_SHARED_PUBLIC_URL)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.FILES_SHARED_PUBLIC_URL)
     Call<FileInfoResponse> filesSharedPublicUrl(@Field(SlackParamsConstants.FILE) String file);
 
     @Multipart
@@ -228,10 +231,12 @@ public interface SlackWebApiInterface {
     @POST(SlackWebApiConstants.GROUPS_CREATE_CHILD)
     Call<GroupCreateResponse> groupsCreateChild(@Field(SlackParamsConstants.CHANNEL) String channelId);
 
-    @GET(SlackWebApiConstants.GROUPS_HISTORY)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.GROUPS_HISTORY)
     Call<HistoryResponse> groupsHistory(@Field(SlackParamsConstants.CHANNEL) String channelId, @QueryMap Map<String, String> params);
 
-    @GET(SlackWebApiConstants.GROUPS_INFO)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.GROUPS_INFO)
     Call<GroupCreateResponse> groupsInfo(@Field(SlackParamsConstants.CHANNEL) String channelId);
 
     @FormUrlEncoded
@@ -274,54 +279,67 @@ public interface SlackWebApiInterface {
     Call<BaseResponse> groupsUnarchive(@Field(SlackParamsConstants.CHANNEL) String channelId);
 
     // im (direct messages)
-    @GET(SlackWebApiConstants.IM_CLOSE)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.IM_CLOSE)
     Call<BaseResponse> imClose(@Field(SlackParamsConstants.CHANNEL) String channelId);
 
-    @GET(SlackWebApiConstants.IM_HISTORY)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.IM_HISTORY)
     Call<HistoryResponse> imHistory(@Field(SlackParamsConstants.CHANNEL) String channelId, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.IM_LIST)
     Call<ImListResponse> imList();
 
-    @GET(SlackWebApiConstants.IM_MARK)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.IM_MARK)
     Call<BaseResponse> imMark(@Field(SlackParamsConstants.CHANNEL) String channelId, @Field(SlackParamsConstants.TS) String ts);
 
-    @GET(SlackWebApiConstants.IM_OPEN)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.IM_OPEN)
     Call<ImOpenResponse> imOpen(@Field(SlackParamsConstants.USER) String userId, @QueryMap Map<String, String> params);
 
     // mipm (multiparty direct messages)
-    @GET(SlackWebApiConstants.MPIM_CLOSE)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.MPIM_CLOSE)
     Call<BaseResponse> mpimClose(@Field(SlackParamsConstants.CHANNEL) String channelId);
 
-    @GET(SlackWebApiConstants.MPIM_HISTORY)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.MPIM_HISTORY)
     Call<HistoryResponse> mpimHistory(@Field(SlackParamsConstants.CHANNEL) String channelId, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.MPIM_LIST)
     Call<GroupListResponse> mpimList();
 
-    @GET(SlackWebApiConstants.MPIM_MARK)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.MPIM_MARK)
     Call<BaseResponse> mpimMark(@Field(SlackParamsConstants.CHANNEL) String channelId, @Field(SlackParamsConstants.TS) String ts);
 
-    @GET(SlackWebApiConstants.MPIM_OPEN)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.MPIM_OPEN)
     Call<MpimCreateResponse> mpimOpen(@Field(SlackParamsConstants.USERS) String users);
 
     // oauth
-    @GET(SlackWebApiConstants.OAUTH_ACCESS)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.OAUTH_ACCESS)
     Call<OauthAccessResponse> oauthAccess(@Field(SlackParamsConstants.CLIENT_ID) String clientId, @Field(SlackParamsConstants.CLIENT_SECRET) String clientSecret,
                                           @Field(SlackParamsConstants.CODE) String code, @QueryMap Map<String, String> params);
 
     // pins
-    @GET(SlackWebApiConstants.PINS_ADD)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.PINS_ADD)
     Call<BaseResponse> pinsAdd(@Field(SlackParamsConstants.CHANNEL) String channelId, @QueryMap Map<String, String> params);
 
-    @GET(SlackWebApiConstants.PINS_LIST)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.PINS_LIST)
     Call<PinListResponse> pinsList(@Field(SlackParamsConstants.CHANNEL) String channelId);
 
-    @GET(SlackWebApiConstants.PINS_REMOVE)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.PINS_REMOVE)
     Call<BaseResponse> pinsRemove(@Field(SlackParamsConstants.CHANNEL) String channelId, @QueryMap Map<String, String> params);
 
     // reactions
-    @GET(SlackWebApiConstants.REACTIONS_ADD)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.REACTIONS_ADD)
     Call<BaseResponse> reactionsAdd(@Field(SlackParamsConstants.NAME) String name, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.REACTIONS_GET)
@@ -330,20 +348,25 @@ public interface SlackWebApiInterface {
     @GET(SlackWebApiConstants.REACTIONS_LIST)
     Call<ReactionListResponse> reactionsList(@QueryMap Map<String, String> params);
 
-    @GET(SlackWebApiConstants.REACTIONS_REMOVE)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.REACTIONS_REMOVE)
     Call<BaseResponse> reactionsRemove(@Field(SlackParamsConstants.NAME) String name, @QueryMap Map<String, String> params);
 
     // reminders
-    @GET(SlackWebApiConstants.REMINDERS_ADD)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.REMINDERS_ADD)
     Call<ReminderAddResponse> remindersAdd(@Field(SlackParamsConstants.TEXT) String text, @Field(SlackParamsConstants.TIME) String time, @QueryMap Map<String, String> params);
 
-    @GET(SlackWebApiConstants.REMINDERS_COMPLETE)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.REMINDERS_COMPLETE)
     Call<BaseResponse> remindersComplete(@Field(SlackParamsConstants.REMINDER) String reminder);
 
-    @GET(SlackWebApiConstants.REMINDERS_DELETE)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.REMINDERS_DELETE)
     Call<BaseResponse> remindersDelete(@Field(SlackParamsConstants.REMINDER) String reminder);
 
-    @GET(SlackWebApiConstants.REMINDERS_INFO)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.REMINDERS_INFO)
     Call<ReminderAddResponse> remindersInfo(@Field(SlackParamsConstants.REMINDER) String reminder);
 
     @GET(SlackWebApiConstants.REMINDERS_LIST)
@@ -354,23 +377,26 @@ public interface SlackWebApiInterface {
     Call<RtmStartResponse> rtmStart(@QueryMap Map<String, String> params);
 
     // search
-    @GET(SlackWebApiConstants.SEARCH_ALL)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.SEARCH_ALL)
     Call<SearchAllResponse> searchAll(@Field(SlackParamsConstants.QUERY) String query, @QueryMap Map<String, String> params);
 
-    @GET(SlackWebApiConstants.SEARCH_FILES)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.SEARCH_FILES)
     Call<SearchFilesResponse> searchFiles(@Field(SlackParamsConstants.QUERY) String query, @QueryMap Map<String, String> params);
 
-    @GET(SlackWebApiConstants.SEARCH_MESSAGES)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.SEARCH_MESSAGES)
     Call<SearchMessagesResponse> searchMessages(@Field(SlackParamsConstants.QUERY) String query, @QueryMap Map<String, String> params);
 
     // stars
-    @GET(SlackWebApiConstants.STARS_ADD)
+    @POST(SlackWebApiConstants.STARS_ADD)
     Call<BaseResponse> starsAdd(@QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.STARS_LIST)
     Call<StarListResponse> starsList(@QueryMap Map<String, String> params);
 
-    @GET(SlackWebApiConstants.STARS_REMOVE)
+    @POST(SlackWebApiConstants.STARS_REMOVE)
     Call<BaseResponse> starsRemove(@QueryMap Map<String, String> params);
 
     // team
@@ -391,39 +417,47 @@ public interface SlackWebApiInterface {
     Call<TeamProfileGetResponse> teamProfileGet(@QueryMap Map<String, String> params);
 
     // usergroups
-    @GET(SlackWebApiConstants.USERGROUPS_CREATE)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.USERGROUPS_CREATE)
     Call<UsergroupResponse> usergroupsCreate(@Field(SlackParamsConstants.NAME) String name, @QueryMap Map<String, String> params);
 
-    @GET(SlackWebApiConstants.USERGROUPS_DISABLE)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.USERGROUPS_DISABLE)
     Call<UsergroupResponse> usergroupsDisable(@Field(SlackParamsConstants.USERGROUP) String usergroupId, @QueryMap Map<String, String> params);
 
-    @GET(SlackWebApiConstants.USERGROUPS_ENABLE)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.USERGROUPS_ENABLE)
     Call<UsergroupResponse> usergroupsEnable(@Field(SlackParamsConstants.USERGROUP) String usergroupId, @QueryMap Map<String, String> params);
 
     @GET(SlackWebApiConstants.USERGROUPS_LIST)
     Call<UsergroupListResponse> usergroupsList(@QueryMap Map<String, String> params);
 
-    @GET(SlackWebApiConstants.USERGROUPS_UPDATE)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.USERGROUPS_UPDATE)
     Call<UsergroupResponse> usergroupsUpdate(@Field(SlackParamsConstants.USERGROUP) String usergroupId, @QueryMap Map<String, String> params);
 
     // usergroups.users
-    @GET(SlackWebApiConstants.USERGROUPS_USERS_LIST)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.USERGROUPS_USERS_LIST)
     Call<UsergroupUserListResponse> usergroupsUsersList(@Field(SlackParamsConstants.USERGROUP) String usergroupId, @QueryMap Map<String, String> params);
 
-    @GET(SlackWebApiConstants.USERGROUPS_USERS_UPDATE)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.USERGROUPS_USERS_UPDATE)
     Call<UsergroupResponse> usergroupsUsersUpdate(@Field(SlackParamsConstants.USERGROUP) String usergroupId, @Field(SlackParamsConstants.USERS) String users, @QueryMap Map<String, String> params);
 
     // users
     @GET(SlackWebApiConstants.USERS_DELETE_PHOTO)
     Call<BaseResponse> usersDeletePhoto();
 
-    @GET(SlackWebApiConstants.USERS_GET_PRESENCE)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.USERS_GET_PRESENCE)
     Call<UserGetPresenceResponse> usersGetPresence(@Field(SlackParamsConstants.USER) String user);
 
     @GET(SlackWebApiConstants.USERS_IDENTIFY)
     Call<UserIdentityResponse> usersIdentify();
 
-    @GET(SlackWebApiConstants.USERS_INFO)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.USERS_INFO)
     Call<UserInfoResponse> usersInfo(@Field(SlackParamsConstants.USER) String user);
 
     @GET(SlackWebApiConstants.USERS_LIST)
@@ -436,7 +470,8 @@ public interface SlackWebApiInterface {
     @POST(SlackWebApiConstants.USERS_SET_PHOTO)
     Call<BaseResponse> usersSetPhoto(@Part(SlackParamsConstants.IMAGE) RequestBody image, @QueryMap Map<String, String> params);
 
-    @GET(SlackWebApiConstants.USERS_SET_PRESENCE)
+    @FormUrlEncoded
+    @POST(SlackWebApiConstants.USERS_SET_PRESENCE)
     Call<BaseResponse> usersSetPresence(@Field(SlackParamsConstants.PRESENCE) String presence);
 
     //users.profile
