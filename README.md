@@ -4,10 +4,6 @@
 
 slack-android-api is a library to integrate Android project to [Slack Api](https://api.slack.com).
 
-## Version 0.1 (Alpha)
-Created Library;
-Added Slack Web Api methods;
-
 ## Usage
 
 Add internet permission in AndroidManifest
@@ -15,22 +11,34 @@ Add internet permission in AndroidManifest
 <uses-permission android:name="android.permission.INTERNET" />
 ```
 
-Call the SlackWebApiAsync
+Call the SlackWebApiAsync using the Oauth token:
 ```java
-SlackWebApiAsync.getService("YOUR_TOKEN").apiTest(new ApiTestParams(), new Callback<ApiTestResponse>() {
-    @Override
-    public void onResponse(Call<ApiTestResponse> call, Response<ApiTestResponse> response) {
-        if(response.isSuccessful()){
-            Log.d(TAG, "Server response: " + response.message());
-        }
-    }
-
-    @Override
-    public void onFailure(Call<ApiTestResponse> call, Throwable t) {
-        //Ops !!
-    }
-});
+SlackWebApiAsync async = SlackWebApiAsync.getService("TOKEN");
 ```
+
+Call Slack Web Api methods:
+```java
+async.api().test(new Callback<ApiTestResponse>() {
+            @Override
+            public void onResponse(Call<ApiTestResponse> call, Response<ApiTestResponse> response) {
+                if(response.isSuccessful()){
+                    //Add your code here
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiTestResponse> call, Throwable t) {
+                //Ops !!
+            }
+        });
+```
+
+### Version 0.2.0 (Alpha)
+Changed Web Api structure to call methods;<br />
+
+### Version 0.1 (Alpha)
+Created Library;<br />
+Added Slack Web Api methods;<br />
 
 
 ## Future
