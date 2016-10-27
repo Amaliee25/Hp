@@ -6,7 +6,24 @@ slack-android-api is a library to integrate Android project to [Slack Api](https
 
 ## Usage
 
-Add internet permission in AndroidManifest
+Add it in your root build.gradle at the end of repositories:
+```gradle
+allprojects {
+	repositories {
+	            ...
+		maven { url "https://jitpack.io" }
+	}
+}
+```
+
+Add the dependency:
+```gradle
+dependencies {
+	compile 'com.github.flaviokreis:slack-android-api:0.2.1'
+}
+```
+
+Add internet permission in AndroidManifest:
 ```java
 <uses-permission android:name="android.permission.INTERNET" />
 ```
@@ -21,9 +38,9 @@ Call Slack Web Api methods:
 async.api().test(new Callback<ApiTestResponse>() {
             @Override
             public void onResponse(Call<ApiTestResponse> call, Response<ApiTestResponse> response) {
-                if(response.isSuccessful()){
-                    //Add your code here
-                }
+                        if(response.isSuccessful()){
+                                    //Add your code here
+                        }
             }
 
             @Override
